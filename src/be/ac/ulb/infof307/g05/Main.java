@@ -1,13 +1,14 @@
 package be.ac.ulb.infof307.g05;
 
+import be.ac.ulb.infof307.g05.MainWindow;
+
 public class Main {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		java.awt.EventQueue.invokeLater(new Runnable(){
+			public void run(){
+				new MainWindow("Projet Génie logiciel 2014-2015");
+			}
+		});
 	}
-
 }
