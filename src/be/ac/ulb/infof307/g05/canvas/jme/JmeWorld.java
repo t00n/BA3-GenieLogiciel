@@ -8,6 +8,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.debug.Grid;
 import com.jme3.scene.shape.Box;
 
 
@@ -40,6 +41,10 @@ public class JmeWorld extends SimpleApplication {
 	   createViews();
 	   
 	   test();
+	   
+	   flyCam.setMoveSpeed(30f); //Augmente la vitesse de la caméra
+	   Geometry grid = createGrid(new Vector3f(), 100, 0.5f, ColorRGBA.Blue); //Crée une grille de 50x50 carrés de taille 0,5 de couleure bleu
+       rootNode.attachChild(grid);
 	}
 	
 	private void disable2d(){
@@ -63,4 +68,14 @@ public class JmeWorld extends SimpleApplication {
         _view[1].attachScene(rootNode);
         disable2d();
 	}
+	
+    private Geometry createGrid(Vector3f pos, int gridSize, float squareSize, ColorRGBA color){
+        Geometry grid = new Geometry("wireframe grid", new Grid(gridSize, gridSize, squareSize) );
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.getAdditionalRenderState().setWireframe(true);
+        mat.setColor("Color", color);
+        grid.setMaterial(mat);
+        grid.center().move(pos);
+        return grid;
+      }
 }
