@@ -54,6 +54,17 @@ public class JmeWorld extends SimpleApplication {
 	        float aspect = (float) _camera[1].getWidth() / _camera[1].getHeight();
 	        float zoom = _camera[1].getFrustumNear()*10; 							//FIXME replace 10 by the size of the biggest object
 	        _camera[1].setFrustum(1, 1000, -aspect * zoom, aspect * zoom, zoom, -zoom);
+		}else if(set2d){
+			_view[0].setEnabled(false);
+			_view[1].setEnabled(true);
+
+			_camera[1].setViewPort(0.0f, 1.0f, 0.0f, 1.0f);
+	        float aspect = (float) _camera[1].getWidth() / _camera[1].getHeight();
+	        float zoom = _camera[1].getFrustumNear()*10; 							//FIXME replace 10 by the size of the biggest object
+	        _camera[1].setFrustum(1, 1000, -aspect * zoom, aspect * zoom, zoom, -zoom);
+		}else if(set3d){
+			_view[0].setEnabled(true);
+			_view[1].setEnabled(false);
 		}
 	}
 	

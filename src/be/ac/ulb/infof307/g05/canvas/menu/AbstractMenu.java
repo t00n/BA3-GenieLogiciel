@@ -12,7 +12,11 @@ public abstract class AbstractMenu extends JMenu {
 	protected EventControler    _eventControler;
 	protected Vector<JMenuItem> _items = new Vector<JMenuItem>();
 
-	abstract protected void createItems();
+	
+	protected void createItem(String command){
+		_items.add(new JMenuItem(command));
+		_items.lastElement().addActionListener(_eventControler);
+	}
 	
 	protected void appendItems(){
 		for(JMenuItem item:_items){

@@ -14,6 +14,7 @@ public class CanvasJme extends AbstractCanvas<Canvas> {
 	
 	public CanvasJme(EventControler eventControler){
 		/** constructor **/
+		eventControler.setJmeWorld(_jmeWorld);
 		_jmeWorld.createCanvas();
 		_panel = (Canvas) ((JmeCanvasContext) _jmeWorld.getContext()).getCanvas();
 		_jmeWorld.startCanvas();

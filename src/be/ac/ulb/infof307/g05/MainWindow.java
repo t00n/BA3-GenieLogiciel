@@ -19,7 +19,7 @@ public class MainWindow extends JFrame {
 	private ToolCanvas    _canvasUI = new ToolCanvas(_eventControler);
 	private CanvasJme     _canvasJme = new CanvasJme(_eventControler);
 	private MenuBarCanvas _menuBar = new MenuBarCanvas(_eventControler);
-		
+	
 	
 	public MainWindow(String title){
 		/** constructor **/
