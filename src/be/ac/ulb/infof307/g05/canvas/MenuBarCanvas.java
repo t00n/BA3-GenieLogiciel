@@ -9,6 +9,7 @@ import be.ac.ulb.infof307.g05.EventControler;
 import be.ac.ulb.infof307.g05.canvas.menu.AbstractMenu;
 import be.ac.ulb.infof307.g05.canvas.menu.EditMenu;
 import be.ac.ulb.infof307.g05.canvas.menu.FileMenu;
+import be.ac.ulb.infof307.g05.canvas.menu.ViewMenu;
 
 
 public class MenuBarCanvas extends AbstractCanvas<JMenuBar>{
@@ -21,6 +22,7 @@ public class MenuBarCanvas extends AbstractCanvas<JMenuBar>{
 		
 		_menu.add(new FileMenu(eventControler));
 		_menu.add(new EditMenu(eventControler));
+		_menu.add(new ViewMenu(eventControler));
 		
 		appendMenu();
 	}
