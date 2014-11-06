@@ -12,6 +12,10 @@ import com.j256.ormlite.table.TableUtils;
 
 public class TestMain {
 
+	private final String connectionString = "jdbc:mysql://localhost/HomePlans";
+	private final String connectionUser = "HomePlans";
+	private final String connectionPwd = "HomePlans";
+	
 	@Test
 	public void test() {
 		fail("Not yet implemented");
@@ -22,7 +26,7 @@ public class TestMain {
 		JdbcConnectionSource connectionSource = null;
 		try {
 			connectionSource = // in order = connector:driver//host/database, user, password
-				    new JdbcConnectionSource("jdbc:mysql://localhost/HomePlans", "HomePlans", "HomePlans");
+				    new JdbcConnectionSource(this.connectionString, this.connectionUser, this.connectionPwd);
 			// auto create tables but you still need to create the database
 			// create testMany before testORM because testORM has a testMany foreign key
 			// create testOneToOne after testORM because it has a testORM foreign key
@@ -55,6 +59,28 @@ public class TestMain {
 			e.printStackTrace();
 		} finally {
 		    try {
+				connectionSource.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@Test
+	public void loadDB() {
+		JdbcConnectionSource connectionSource = null;
+		try {
+			connectionSource = new JdbcConnectionSource(this.connectionString, this.connectionUser, this.connectionPwd);
+			Dao<TestORM, Integer> daoORM = DaoManager.createDao(connectionSource, TestORM.class);
+			TestORM testORM = daoORM.queryForId(1);
+			System.out.print(testORM);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
 				connectionSource.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
