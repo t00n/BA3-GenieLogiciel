@@ -24,12 +24,32 @@ public class TestMain {
 			connectionSource = // in order = connector:driver//host/database, user, password
 				    new JdbcConnectionSource("jdbc:mysql://localhost/HomePlans", "HomePlans", "HomePlans");
 			// auto create tables but you still need to create the database
+			// create testMany before testORM because testORM has a testMany foreign key
+			// create testOneToOne after testORM because it has a testORM foreign key
+			TableUtils.createTableIfNotExists(connectionSource, TestMany.class);
 			TableUtils.createTableIfNotExists(connectionSource, TestORM.class);
+			TableUtils.createTableIfNotExists(connectionSource, TestOneToOne.class);
 			// object that handles database queries
-			Dao<TestORM, Integer> daoTest = DaoManager.createDao(connectionSource, TestORM.class);
+			Dao<TestORM, Integer> daoORM = DaoManager.createDao(connectionSource, TestORM.class);
+			Dao<TestMany, Integer> daoMany = DaoManager.createDao(connectionSource, TestMany.class);
+			Dao<TestOneToOne, Integer> daoOne = DaoManager.createDao(connectionSource, TestOneToOne.class);
+			TestMany testMany = new TestMany();
+			daoMany.create(testMany);
 			TestORM testORM = new TestORM();
 			testORM.setSomeString("grosTestDeOuf");
-			daoTest.create(testORM);
+			testORM.setTestMany(testMany);
+			TestORM testORM2 = new TestORM();
+			testORM2.setSomeString("2eTESTDEOUF");
+			testORM2.setTestMany(testMany);
+			daoORM.create(testORM);
+			daoORM.create(testORM2);
+			TestOneToOne testOne = new TestOneToOne();
+			testOne.setTestORM(testORM);
+			TestOneToOne testTwo = new TestOneToOne();
+			// testTwo.setTestORM(testORM); // would violate unique constraint on TestOneToOne.testORM => one-to-one relationship
+			testTwo.setTestORM(testORM2);
+			daoOne.create(testOne);
+			daoOne.create(testTwo);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
