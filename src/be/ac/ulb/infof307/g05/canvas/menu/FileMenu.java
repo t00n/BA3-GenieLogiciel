@@ -3,11 +3,14 @@ package be.ac.ulb.infof307.g05.canvas.menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
+import com.jme3.export.binary.BinaryExporter;
 
 import be.ac.ulb.infof307.g05.EventControler;
 
@@ -57,7 +60,8 @@ public class FileMenu extends AbstractMenu implements ActionListener {
 			int returnVal = fc.showSaveDialog(FileMenu.this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
-                //This is where a real application would save the file.
+                String userHome = System.getProperty("user.home");
+                BinaryExporter exporter = BinaryExporter.getInstance();
             } else {
                 
             }
