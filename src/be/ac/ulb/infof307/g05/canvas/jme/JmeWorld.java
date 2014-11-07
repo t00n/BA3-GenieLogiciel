@@ -23,6 +23,7 @@ public class JmeWorld extends SimpleApplication {
 	private Camera[] _camera = new Camera[2];
 	private ViewPort[] _view = new ViewPort[2];
 	private Geometry _grid = null;
+	final int GRID_LENGHT = 50
 	
 
 	private void initMultiViews(){
@@ -80,7 +81,7 @@ public class JmeWorld extends SimpleApplication {
 	
 	public void setGrid(Node father, boolean attach){
 		if(_grid == null)
-			_grid = createGrid(new Vector3f(), 100, 0.5f, ColorRGBA.Blue); //Crée une grille de 50x50 carrés de taille 0,5 de couleure bleu
+			_grid = createGrid(new Vector3f(), GRID_LENGHT, 1f, ColorRGBA.Gray); //Crée une grille de 50x50 carrés de taille 1 de couleure grise
 		
 		if(attach == false)
 			father.detachChild(_grid);
@@ -105,6 +106,36 @@ public class JmeWorld extends SimpleApplication {
         inputManager.addListener(flyCam, new String[] {"FLYCAM_Forward", "FLYCAM_Backward", "FLYCAM_StrafeRight", "FLYCAM_StrafeLeft", "FLYCAM_Lower", "FLYCAM_Rise"});
         flyCam.setMoveSpeed(10f);
     }
+    
+	public void plotAxesXYZ(int lenght, float lineWidth){ //Dessine les 3 axes X,Y,Z de longueur lenght
+		//Axe X
+		plotAxis((lenght/2), 0, 0, ColorRGBA.Red, lineWidth);		
+		//Axe Y
+		plotAxis(0, (lenght/2), 0, ColorRGBA.Green, lineWidth);			
+		//Axe Z
+		plotAxis(0, 0, (lenght/2), ColorRGBA.Blue, lineWidth);
+	}
+	
+	public void plotAxis(int coordX, int coordY, int coordZ, ColorRGBA axisColor, float lineWidth){ //Dessine 1 axe
+		Vector3f[] lineVerticies = new Vector3f[2]; //Liste de 2 points (x,y,z)
+		lineVerticies[0]=new Vector3f(-coordX,-coordY,-coordZ);
+		lineVerticies[1]=new Vector3f( coordX, coordY, coordZ);
+		plotLine(lineVerticies, axisColor, lineWidth);		
+	}
+	
+    public void plotLine(Vector3f[] lineVerticies, ColorRGBA lineColor, float lineWidth){ //Dessine une ligne d'une coord (x,y,z) à une autre coord (x,y,z)
+        Mesh m = new Mesh();
+        m.setMode(Mesh.Mode.Lines);
+        m.setBuffer(VertexBuffer.Type.Position, 3, BufferUtils.createFloatBuffer(lineVerticies));
+        m.setLineWidth(lineWidth); //Largeur de la ligne
+
+        Geometry geo = new Geometry("line",m);
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", lineColor);
+        geo.setMaterial(mat);
+
+        rootNode.attachChild(geo);
+    }
 	
 	public void simpleInitApp(){
 	   guiViewPort.setEnabled(false);
@@ -113,6 +144,7 @@ public class JmeWorld extends SimpleApplication {
 	   setViews(true, true);
 	   setGrid(rootNode, true);
 	   flyCam.setDragToRotate(true);
+	   plotAxesXYZ(GRID_LENGHT, 3f);
 	   test();
 	   
 	   
