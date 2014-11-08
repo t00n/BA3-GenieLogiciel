@@ -62,7 +62,7 @@ public class Reference {
       }
 	
 
-	public void createAxis(int lenght, float lineWidth){
+	private void createAxis(int lenght, float lineWidth){
 		//Axe X
 		Geometry x_axis = new Geometry("x axis", getMeshAxis((lenght/2), 0, 0, lineWidth));
 		setAxisColor(x_axis, ColorRGBA.Red);
@@ -83,7 +83,7 @@ public class Reference {
         axis.setMaterial(mat);
 	}
 	
-	public Mesh getMeshAxis(int coordX, int coordY, int coordZ, float lineWidth){
+	private Mesh getMeshAxis(int coordX, int coordY, int coordZ, float lineWidth){
 		Mesh mesh = new Mesh();
 		Vector3f[] lineVerticies = new Vector3f[2];
 		lineVerticies[0]=new Vector3f(-coordX,-coordY,-coordZ);

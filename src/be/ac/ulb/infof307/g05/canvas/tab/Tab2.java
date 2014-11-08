@@ -2,7 +2,6 @@ package be.ac.ulb.infof307.g05.canvas.tab;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JPanel;
 
 import be.ac.ulb.infof307.g05.EventControler;
 

@@ -1,7 +1,5 @@
 package be.ac.ulb.infof307.g05.canvas;
 
-import java.awt.GridBagConstraints;
-
 import be.ac.ulb.infof307.g05.EventControler;
 
 public abstract class AbstractCanvas<PanelType> {

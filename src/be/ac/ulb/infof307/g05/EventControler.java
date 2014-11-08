@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 
 import be.ac.ulb.infof307.g05.canvas.jme.JmeWorld;
 
-import com.jme3.app.SimpleApplication;
-
 
 public class EventControler implements ActionListener {
 
