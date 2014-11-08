@@ -16,12 +16,12 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 
 
-
 public class JmeWorld extends SimpleApplication {
 
 	private Camera[]   _camera = new Camera[2];
 	private ViewPort[] _view = new ViewPort[2];
 	private Reference  _reference;
+	private FlyCamera  _flyCam;
 	
 
 	private void initMultiViews(){
@@ -62,45 +62,20 @@ public class JmeWorld extends SimpleApplication {
 			_view[1].setEnabled(false);
 		}
 	}
-	
-
-    private void redefineKeys() {
-        inputManager.deleteMapping("FLYCAM_Forward");
-        inputManager.deleteMapping("FLYCAM_Backward");
-        inputManager.deleteMapping("FLYCAM_StrafeLeft");
-        inputManager.deleteMapping("FLYCAM_StrafeRight");
-        inputManager.deleteMapping("FLYCAM_Lower");
-        inputManager.deleteMapping("FLYCAM_Rise");
-        
-        inputManager.addMapping("FLYCAM_Forward", new KeyTrigger(KeyInput.KEY_UP));
-        inputManager.addMapping("FLYCAM_Backward", new KeyTrigger(KeyInput.KEY_DOWN));
-        inputManager.addMapping("FLYCAM_StrafeRight", new KeyTrigger(KeyInput.KEY_RIGHT));
-        inputManager.addMapping("FLYCAM_StrafeLeft", new KeyTrigger(KeyInput.KEY_LEFT));
-        inputManager.addMapping("FLYCAM_Lower", new KeyTrigger(KeyInput.KEY_D));
-        inputManager.addMapping("FLYCAM_Rise", new KeyTrigger(KeyInput.KEY_U));
-        inputManager.addListener(flyCam, new String[] {"FLYCAM_Forward", "FLYCAM_Backward", "FLYCAM_StrafeRight", "FLYCAM_StrafeLeft", "FLYCAM_Lower", "FLYCAM_Rise"});
-        flyCam.setMoveSpeed(10f);
-    }
     
 
 	public void simpleInitApp(){
 	   guiViewPort.setEnabled(false);
+	   flyCam.setEnabled(false);
 	   
 	   initMultiViews();
 	   setViews(true, true);
 	   _reference = new Reference(assetManager, 50);
 	   _reference.setNode(rootNode, true);
+	   _flyCam = new FlyCamera(_camera[0], _camera[1], inputManager, stateManager);
+	   _flyCam.setDragToRotate(true);
 	   
-	   flyCam.setDragToRotate(true);
 	   test();
-	   
-	   stateManager.attach(new AbstractAppState() {
-           public void initialize(AppStateManager stateManager, Application app) {
-                   super.initialize(stateManager, app);
-                   redefineKeys();
-                   stateManager.detach(this);
-           }
-       });
 	}
 	
 	
