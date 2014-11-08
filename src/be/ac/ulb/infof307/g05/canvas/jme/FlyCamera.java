@@ -21,7 +21,7 @@ public class FlyCamera extends FlyByCamera {
 	private Vector3f _initialUpVec3d;
 	private boolean  _cam2dEnabled = false;
 	private boolean  _cam3dEnabled = false;
-	private boolean _dragIn2d = false;
+	private Vector2f  _lastPostClick;
 	
 	
 	public FlyCamera(Camera cam2d, Camera cam3d, InputManager inputManager, AppStateManager stateManager){
@@ -72,11 +72,12 @@ public class FlyCamera extends FlyByCamera {
 	
 	private boolean isIn2dViewport(){
 		boolean isIn2d = false;
-		
 		Vector2f position = inputManager.getCursorPosition();
-		if(_dragIn2d){
+		System.out.println(_lastPostClick);
+		
+		if(canRotate && (_lastPostClick.getX() > (_cam3d.getWidth()*_cam2d.getViewPortLeft())) && (_lastPostClick.getY() < (_cam3d.getHeight()*_cam2d.getViewPortTop())) )
 			isIn2d = true;
-		}else if(!canRotate && (position.getX()>(_cam3d.getWidth()*_cam2d.getViewPortLeft()) && position.getY()<(_cam3d.getHeight()*_cam2d.getViewPortTop())))
+		else if(!canRotate && (position.getX() > (_cam3d.getWidth()*_cam2d.getViewPortLeft())) && (position.getY() < (_cam3d.getHeight()*_cam2d.getViewPortTop())) )
 			isIn2d = true;
 		
 		return isIn2d;
@@ -133,12 +134,9 @@ public class FlyCamera extends FlyByCamera {
 	        if (name.equals("FLYCAM_RotateDrag") && dragToRotate){
 	            canRotate = value;
 	            inputManager.setCursorVisible(!value);
-	    		Vector2f position = inputManager.getCursorPosition();
-
-	            if(canRotate && (position.getX()>(_cam3d.getWidth()*_cam2d.getViewPortLeft()) && position.getY()<(_cam3d.getHeight()*_cam2d.getViewPortTop())))
-	    			_dragIn2d = true;
-	            else
-	            	_dragIn2d = false;
+	    		
+	            if(canRotate && _cam2dEnabled && _cam3dEnabled)
+	            	_lastPostClick = inputManager.getCursorPosition().clone();
 	        }
     }
 }
