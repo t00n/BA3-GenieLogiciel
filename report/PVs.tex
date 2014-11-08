@@ -9,6 +9,7 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \usepackage{color}
+\usepackage{url}
 \title{Génie logiciel et gestion de projet \\ PV des réunions}
 \author{Groupe 5}
 
@@ -54,7 +55,7 @@
 			\end{itemize}
 		\subsubsection{Rappels sur quelques principes de l'Extreme Programming}
 			\begin{itemize}
-				\item Peer programming
+				\item Pair programming
 				\item Tests unitaires
 				\item Communication entre membres
 			\end{itemize}
@@ -81,6 +82,74 @@
 				\item Configurer GIT
 				\item Faire une première ébauche de diagramme UML
 				\item Relire ce qu'est l'Extreme Programming
+			\end{itemize}
+
+\newpage
+\section{2ème réunion : 29/10/2014}
+	\subsection{Présences}
+		Tous les membres étaient présents à la réunion.
+	\subsection{Points abordés}
+		\subsubsection{Outils choisis pour la réalisation du projet}
+			\begin{itemize}
+				\item jMonkey pour la 3D
+				\item Swing pour l'interface graphique
+			\end{itemize}
+			Remarque : petit problèmes de threads avec Swing, à régler.
+		\subsubsection{UML}
+			Mise en commun des différents graphes UML réalisés par le groupe. Choix final : reprendre l'UML de Martin en y ajoutant des détails de celui de Daniele. Martin le pushera dès qu'il sera fini.
+		\subsubsection{Répartition des tâches}
+			\begin{itemize}
+				\item Martin : création de la fenêtre graphique
+				\item Franklin : se renseigner sur la serialisation pour les sauvegardes (automatiques) $\rightarrow$ plus efficace que .obj ? Sauvegardes en cascade ?
+				\item Daniele : se renseigner sur les threads et swing
+				\item Antoine D. : affichage 2D/3D
+				\item Antoine C. : ouvrir/modifier les anciens fichiers ou en créer un nouveau
+				\item Ségolène : SQL + se renseigner sur les tests unitaire pour l'interface graphique
+			\end{itemize}
+		\subsubsection{Remarque}
+			\begin{itemize}
+				\item Example pour la serialisation : \url{www.tutorialspoint.com/java/java_serialization.htm}
+			\end{itemize}
+			
+		\subsection{Prochaine réunion}
+			\subsubsection{Date}
+				Lundi 3/11 à 15h.
+			\subsubsection{À faire}
+				\begin{itemize}
+					\item Priorité sur les parties de Martin et Antoine D.
+					\item Perfectionner ses connaissances sur Swing, jMonkey et l'UML (pour ceux qui ne le connaissent pas bien)
+					\item S'informer sur MVC
+				\end{itemize}
+			
+\newpage
+\section{3ème réunion}
+	\subsection{Présences}
+		Tous les membres étaient présents à la réunion.
+	\subsection{Points abordés}
+		\subsubsection{Eclipse et jMonkey}
+			Installation sur tous les ordinateurs des membres.
+		\subsubsection{Fenêtre graphique}
+			Problème d'affichage : les parties 2D et 3D sont "écrasées" si on les affiche sur un seul écran $\rightarrow$ choix : les afficher sur des écrans différents (appuyer sur un bouton pour passer de l'un à l'autre).
+		\subsubsection{Sauvegarde des objets}
+			Préférence pour les bases de données (en ORM) plutôt que pour la serialization, qui semble plus complexe.			
+			
+			Pour enregister les objets (les murs, etc...), on pourrait utiliser hibernate ou ormlite, si les assistants sont d'accord (à vérifier).
+			%(table projet, table scène -> liste de référence vers des objets qui ont des coordonnées vers leurs parents.)
+			
+			Utiliser le type blob dans la base de données pour stocker les objets ou les stocker sous forme de fichier dans un ordinateur ?
+		\subsubsection{Création de la maison}
+			Il faut tout d'abord créer le terrain, puis les murs afin de délimiter la maison. Un système de node (inclu dans jMonkey) pourrait être utilisé pour attacher chaque objet à son étage ou aux objets sur lequel il est posé/lié. Pour le modèle, regarder du coté des design patterns.
+			
+	\subsection{Prochaine réunion}
+		\subsubsection{Date}
+			Lundi 10/11 à 15h.
+			
+		\subsubsection{À faire}
+			\begin{itemize}
+				\item Antoine D. : faire le terrain
+				\item Daniele et Ségolène : créer les classes principales du modèle + créer/modifier les murs
+				\item Franklin et Antoine C.: sauvegardes/investiguer hibernate et ormline et les formats des objets
+				\item Martin : affichage 2D/3D 
 			\end{itemize}
 \end{document}
 
