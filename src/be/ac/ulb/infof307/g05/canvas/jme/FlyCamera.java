@@ -73,7 +73,6 @@ public class FlyCamera extends FlyByCamera {
 	private boolean isIn2dViewport(){
 		boolean isIn2d = false;
 		Vector2f position = inputManager.getCursorPosition();
-		System.out.println(_lastPostClick);
 		
 		if(canRotate && (_lastPostClick.getX() > (_cam3d.getWidth()*_cam2d.getViewPortLeft())) && (_lastPostClick.getY() < (_cam3d.getHeight()*_cam2d.getViewPortTop())) )
 			isIn2d = true;
@@ -82,6 +81,31 @@ public class FlyCamera extends FlyByCamera {
 		
 		return isIn2d;
 	}
+	
+    protected void moveCamera(float value, boolean sideways){
+        Vector3f vel = new Vector3f();
+        Vector3f pos = cam.getLocation().clone();
+
+        if (sideways){
+            cam.getLeft(vel);
+        }else if(cam.equals(_cam3d)){
+            cam.getDirection(vel);
+        }else
+        	cam.getUp(vel);
+        
+        if(cam.equals(_cam2d))
+        	value *= 2;
+        
+        vel.multLocal(value * moveSpeed);
+
+        pos.addLocal(vel);
+        pos.setY(cam.getLocation().getY());
+
+        
+        System.out.println(pos);
+        cam.setLocation(pos);
+    }
+
 	
     public void onAnalog(String name, float value, float tpf) {
     	if(_cam2dEnabled && _cam3dEnabled){
@@ -102,13 +126,25 @@ public class FlyCamera extends FlyByCamera {
 
 		if(enabled){
 	        if (name.equals("FLYCAM_Left")){
-	            rotateCamera(value, initialUpVec);
+	        	if(cam.equals(_cam3d))
+	        		rotateCamera(value, initialUpVec);
+	        	else if(canRotate)
+		            moveCamera(value, true);
 	        }else if (name.equals("FLYCAM_Right")){
-	            rotateCamera(-value, initialUpVec);
+	        	if(cam.equals(_cam3d))
+	        		rotateCamera(-value, initialUpVec);
+	        	else if(canRotate)
+		            moveCamera(-value, true);
 	        }else if (name.equals("FLYCAM_Up")){
-	            rotateCamera(-value, cam.getLeft());
+	        	if(cam.equals(_cam3d))
+	        		rotateCamera(-value, cam.getLeft());
+	        	else if(canRotate)
+	        		moveCamera(value, false);
 	        }else if (name.equals("FLYCAM_Down")){
-	            rotateCamera(value, cam.getLeft());
+	        	if(cam.equals(_cam3d))
+	        		rotateCamera(value, cam.getLeft());
+	        	else if(canRotate)
+	        		moveCamera(-value, false);
 	        }else if (name.equals("FLYCAM_Forward")){
 	            moveCamera(value, false);
 	        }else if (name.equals("FLYCAM_Backward")){

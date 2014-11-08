@@ -36,7 +36,7 @@ public class JmeWorld extends SimpleApplication {
         
         _camera[1] = _camera[0].clone();
         _camera[1].setViewPort(0.0f, 1.0f, 0.0f, 1.0f);
-        _camera[1].setLocation(new Vector3f(0.0f, 10.0f, 0.0f));
+        _camera[1].setLocation(new Vector3f(0.0f, 5.0f, 0.0f));
         _camera[1].lookAt(new Vector3f(0f, 0f, 0f), new Vector3f(0f, 1f, 0f));
         _view[1] = renderManager.createMainView("2D view", _camera[1]);
         _view[1].setClearFlags(true, true, true);
