@@ -61,6 +61,7 @@ public class JmeWorld extends SimpleApplication {
 			_view[0].setEnabled(true);
 			_view[1].setEnabled(false);
 		}
+		_flyCam.setCamEnable(set2d, set3d);
 	}
     
 
@@ -69,11 +70,10 @@ public class JmeWorld extends SimpleApplication {
 	   flyCam.setEnabled(false);
 	   
 	   initMultiViews();
+	   _flyCam = new FlyCamera(_camera[1], _camera[0], inputManager, stateManager);
 	   setViews(true, true);
 	   _reference = new Reference(assetManager, 50);
 	   _reference.setNode(rootNode, true);
-	   _flyCam = new FlyCamera(_camera[0], _camera[1], inputManager, stateManager);
-	   _flyCam.setDragToRotate(true);
 	   
 	   test();
 	}
