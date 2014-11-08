@@ -13,17 +13,15 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.Node;
-import com.jme3.scene.debug.Grid;
 import com.jme3.scene.shape.Box;
+
 
 
 public class JmeWorld extends SimpleApplication {
 
-	private Camera[] _camera = new Camera[2];
+	private Camera[]   _camera = new Camera[2];
 	private ViewPort[] _view = new ViewPort[2];
-	private Geometry _grid = null;
-	final int GRID_LENGHT = 50
+	private Reference  _reference;
 	
 
 	private void initMultiViews(){
@@ -43,7 +41,9 @@ public class JmeWorld extends SimpleApplication {
         _view[1] = renderManager.createMainView("2D view", _camera[1]);
         _view[1].setClearFlags(true, true, true);
         _camera[1].setParallelProjection(true);
-
+        float aspect = (float) _camera[1].getWidth() / _camera[1].getHeight();
+        float zoom = _camera[1].getFrustumNear()*10; 							//FIXME replace 10 by the size of the biggest object
+        _camera[1].setFrustum(1, 1000, -aspect * zoom, aspect * zoom, zoom, -zoom);
 	}
 
 	public void setViews(boolean set2d, boolean set3d){
@@ -52,42 +52,17 @@ public class JmeWorld extends SimpleApplication {
 			_view[1].setEnabled(true);
 
 			_camera[1].setViewPort(0.66f, 1.0f, 0.0f, 0.33f);
-	        float aspect = (float) _camera[1].getWidth() / _camera[1].getHeight();
-	        float zoom = _camera[1].getFrustumNear()*10; 							//FIXME replace 10 by the size of the biggest object
-	        _camera[1].setFrustum(1, 1000, -aspect * zoom, aspect * zoom, zoom, -zoom);
 		}else if(set2d){
 			_view[0].setEnabled(false);
 			_view[1].setEnabled(true);
 
 			_camera[1].setViewPort(0.0f, 1.0f, 0.0f, 1.0f);
-	        float aspect = (float) _camera[1].getWidth() / _camera[1].getHeight();
-	        float zoom = _camera[1].getFrustumNear()*10; 							//FIXME replace 10 by the size of the biggest object
-	        _camera[1].setFrustum(1, 1000, -aspect * zoom, aspect * zoom, zoom, -zoom);
 		}else if(set3d){
 			_view[0].setEnabled(true);
 			_view[1].setEnabled(false);
 		}
 	}
 	
-    private Geometry createGrid(Vector3f pos, int gridSize, float squareSize, ColorRGBA color){
-        Geometry grid = new Geometry("wireframe grid", new Grid(gridSize, gridSize, squareSize) );
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.getAdditionalRenderState().setWireframe(true);
-        mat.setColor("Color", color);
-        grid.setMaterial(mat);
-        grid.center().move(pos);
-        return grid;
-      }
-	
-	public void setGrid(Node father, boolean attach){
-		if(_grid == null)
-			_grid = createGrid(new Vector3f(), GRID_LENGHT, 1f, ColorRGBA.Gray); //Crée une grille de 50x50 carrés de taille 1 de couleure grise
-		
-		if(attach == false)
-			father.detachChild(_grid);
-		else
-			father.attachChild(_grid);
-	}
 
     private void redefineKeys() {
         inputManager.deleteMapping("FLYCAM_Forward");
@@ -107,47 +82,17 @@ public class JmeWorld extends SimpleApplication {
         flyCam.setMoveSpeed(10f);
     }
     
-	public void plotAxesXYZ(int lenght, float lineWidth){ //Dessine les 3 axes X,Y,Z de longueur lenght
-		//Axe X
-		plotAxis((lenght/2), 0, 0, ColorRGBA.Red, lineWidth);		
-		//Axe Y
-		plotAxis(0, (lenght/2), 0, ColorRGBA.Green, lineWidth);			
-		//Axe Z
-		plotAxis(0, 0, (lenght/2), ColorRGBA.Blue, lineWidth);
-	}
-	
-	public void plotAxis(int coordX, int coordY, int coordZ, ColorRGBA axisColor, float lineWidth){ //Dessine 1 axe
-		Vector3f[] lineVerticies = new Vector3f[2]; //Liste de 2 points (x,y,z)
-		lineVerticies[0]=new Vector3f(-coordX,-coordY,-coordZ);
-		lineVerticies[1]=new Vector3f( coordX, coordY, coordZ);
-		plotLine(lineVerticies, axisColor, lineWidth);		
-	}
-	
-    public void plotLine(Vector3f[] lineVerticies, ColorRGBA lineColor, float lineWidth){ //Dessine une ligne d'une coord (x,y,z) à une autre coord (x,y,z)
-        Mesh m = new Mesh();
-        m.setMode(Mesh.Mode.Lines);
-        m.setBuffer(VertexBuffer.Type.Position, 3, BufferUtils.createFloatBuffer(lineVerticies));
-        m.setLineWidth(lineWidth); //Largeur de la ligne
 
-        Geometry geo = new Geometry("line",m);
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", lineColor);
-        geo.setMaterial(mat);
-
-        rootNode.attachChild(geo);
-    }
-	
 	public void simpleInitApp(){
 	   guiViewPort.setEnabled(false);
 	   
 	   initMultiViews();
 	   setViews(true, true);
-	   setGrid(rootNode, true);
+	   _reference = new Reference(assetManager, 50);
+	   _reference.setNode(rootNode, true);
+	   
 	   flyCam.setDragToRotate(true);
-	   plotAxesXYZ(GRID_LENGHT, 3f);
 	   test();
-	   
-	   
 	   
 	   stateManager.attach(new AbstractAppState() {
            public void initialize(AppStateManager stateManager, Application app) {
@@ -158,6 +103,7 @@ public class JmeWorld extends SimpleApplication {
        });
 	}
 	
+	
 	void test(){
 		Box b = new Box(1, 1, 1);
         Geometry geom = new Geometry("Box", b);
@@ -165,7 +111,6 @@ public class JmeWorld extends SimpleApplication {
         mat.setColor("Color", ColorRGBA.Red);
         geom.setMaterial(mat);
         rootNode.attachChild(geom);
-
 
         _view[0].attachScene(rootNode);
         _view[1].attachScene(rootNode);
