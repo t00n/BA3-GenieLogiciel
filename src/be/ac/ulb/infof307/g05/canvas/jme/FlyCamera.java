@@ -9,6 +9,7 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 
@@ -18,6 +19,9 @@ public class FlyCamera extends FlyByCamera {
 	private Camera _cam3d;
 	private Vector3f _initialUpVec2d;
 	private Vector3f _initialUpVec3d;
+	private boolean  _cam2dEnabled = false;
+	private boolean  _cam3dEnabled = false;
+	private boolean _dragIn2d = false;
 	
 	
 	public FlyCamera(Camera cam2d, Camera cam3d, InputManager inputManager, AppStateManager stateManager){
@@ -62,12 +66,79 @@ public class FlyCamera extends FlyByCamera {
 	}
 	
 	public void setCamEnable(boolean cam2d, boolean cam3d){
-		if(cam2d){
+		_cam2dEnabled = cam2d;
+		_cam3dEnabled = cam3d;
+	}
+	
+	private boolean isIn2dViewport(){
+		boolean isIn2d = false;
+		
+		Vector2f position = inputManager.getCursorPosition();
+		if(_dragIn2d){
+			isIn2d = true;
+		}else if(!canRotate && (position.getX()>(_cam3d.getWidth()*_cam2d.getViewPortLeft()) && position.getY()<(_cam3d.getHeight()*_cam2d.getViewPortTop())))
+			isIn2d = true;
+		
+		return isIn2d;
+	}
+	
+    public void onAnalog(String name, float value, float tpf) {
+    	if(_cam2dEnabled && _cam3dEnabled){
+    		if(isIn2dViewport()){
+    			this.cam = _cam2d;
+    			this.initialUpVec = _initialUpVec2d;
+    		}else{
+    			this.cam = _cam3d;
+    			this.initialUpVec = _initialUpVec3d;
+    		}
+    	}else if(_cam2dEnabled){
 			this.cam = _cam2d;
 			this.initialUpVec = _initialUpVec2d;
-		}else if(cam3d){
+		}else if(_cam3dEnabled){
 			this.cam = _cam3d;
-			this.initialUpVec = _initialUpVec3d;	
+			this.initialUpVec = _initialUpVec3d;
 		}
-	}
+
+		if(enabled){
+	        if (name.equals("FLYCAM_Left")){
+	            rotateCamera(value, initialUpVec);
+	        }else if (name.equals("FLYCAM_Right")){
+	            rotateCamera(-value, initialUpVec);
+	        }else if (name.equals("FLYCAM_Up")){
+	            rotateCamera(-value, cam.getLeft());
+	        }else if (name.equals("FLYCAM_Down")){
+	            rotateCamera(value, cam.getLeft());
+	        }else if (name.equals("FLYCAM_Forward")){
+	            moveCamera(value, false);
+	        }else if (name.equals("FLYCAM_Backward")){
+	            moveCamera(-value, false);
+	        }else if (name.equals("FLYCAM_StrafeLeft")){
+	            moveCamera(value, true);
+	        }else if (name.equals("FLYCAM_StrafeRight")){
+	            moveCamera(-value, true);
+	        }else if (name.equals("FLYCAM_Rise")){
+	            riseCamera(value);
+	        }else if (name.equals("FLYCAM_Lower")){
+	            riseCamera(-value);
+	        }else if (name.equals("FLYCAM_ZoomIn")){
+	            zoomCamera(value);
+	        }else if (name.equals("FLYCAM_ZoomOut")){
+	            zoomCamera(-value);
+	        }
+		}
+    }
+
+    public void onAction(String name, boolean value, float tpf) {
+        if (enabled)
+	        if (name.equals("FLYCAM_RotateDrag") && dragToRotate){
+	            canRotate = value;
+	            inputManager.setCursorVisible(!value);
+	    		Vector2f position = inputManager.getCursorPosition();
+
+	            if(canRotate && (position.getX()>(_cam3d.getWidth()*_cam2d.getViewPortLeft()) && position.getY()<(_cam3d.getHeight()*_cam2d.getViewPortTop())))
+	    			_dragIn2d = true;
+	            else
+	            	_dragIn2d = false;
+	        }
+    }
 }

@@ -63,7 +63,6 @@ public class JmeWorld extends SimpleApplication {
 		}
 		_flyCam.setCamEnable(set2d, set3d);
 	}
-    
 
 	public void simpleInitApp(){
 	   guiViewPort.setEnabled(false);
@@ -77,7 +76,6 @@ public class JmeWorld extends SimpleApplication {
 	   
 	   test();
 	}
-	
 	
 	void test(){
 		Box b = new Box(1, 1, 1);
