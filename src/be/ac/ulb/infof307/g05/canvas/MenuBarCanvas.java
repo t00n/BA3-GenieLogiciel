@@ -4,32 +4,62 @@ import java.util.Vector;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 import be.ac.ulb.infof307.g05.EventControler;
-import be.ac.ulb.infof307.g05.canvas.menu.AbstractMenu;
-import be.ac.ulb.infof307.g05.canvas.menu.EditMenu;
-import be.ac.ulb.infof307.g05.canvas.menu.FileMenu;
-import be.ac.ulb.infof307.g05.canvas.menu.ViewMenu;
+
 
 
 public class MenuBarCanvas extends AbstractCanvas<JMenuBar>{
 	
-	private Vector<AbstractMenu> _menu = new Vector<AbstractMenu>();
+	private Vector<JMenu> _menu = new Vector<JMenu>();
 	
-	
+
 	public MenuBarCanvas(EventControler eventControler){
 		_panel = new JMenuBar();
+		_eventControler = eventControler;
 		
-		_menu.add(new FileMenu(eventControler));
-		_menu.add(new EditMenu(eventControler));
-		_menu.add(new ViewMenu(eventControler));
-		
-		appendMenu();
+		createFileMenu();
+		createEditMenu();
+		createViewMenu();
 	}
+	
+	protected JMenuItem createItem(String command){
+		JMenuItem item = new JMenuItem(command);
+		item.addActionListener(_eventControler);
+		return item;
+	}
+	
+	private void createFileMenu(){
+		JMenu menu = new JMenu("File");
+		_menu.add(menu);
+		
+		menu.add(createItem("New"));
+		menu.add(createItem("Open File.."));
+		menu.add(createItem("Save"));
+		
+		_panel.add(menu);
+	}
+	
+	private void createEditMenu(){
+		JMenu menu = new JMenu("Edit");
+		_menu.add(menu);
+		
+		menu.add(createItem("Element 1"));
+		menu.add(createItem("Element 2"));
+		menu.add(createItem("Element 3"));
+		
+		_panel.add(menu);
+	}
+	
+	private void createViewMenu(){
+		JMenu menu = new JMenu("View");
+		_menu.add(menu);
 
-	protected void appendMenu(){
-		for(JMenu menu:_menu){
-			_panel.add(menu);
-		}
+		menu.add(createItem("2D view"));
+		menu.add(createItem("3D view"));
+		menu.add(createItem("2D/3D view"));
+		
+		_panel.add(menu);
 	}
 }
