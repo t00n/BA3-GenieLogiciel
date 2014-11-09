@@ -6,15 +6,13 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 
 public class Database {
 	
-	private final static String connectionString = "jdbc:mysql://localhost/HomePlans";
-	private final static String connectionUser = "HomePlans";
-	private final static String connectionPwd = "HomePlans";
+	private final static String connectionString = "jdbc:sqlite:HomePlans.db";
 	private static JdbcConnectionSource connectionSource = null;
 	
 	public static JdbcConnectionSource getConnectionSource() {
 		if (connectionSource == null) {
 			try {
-				connectionSource = new JdbcConnectionSource(connectionString, connectionUser, connectionPwd);
+				connectionSource = new JdbcConnectionSource(connectionString);
 			}
 			catch (SQLException e) {
 				e.printStackTrace();
