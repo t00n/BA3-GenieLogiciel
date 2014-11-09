@@ -12,9 +12,7 @@ import com.j256.ormlite.table.TableUtils;
 
 public class TestMain {
 
-	private final String connectionString = "jdbc:sqlite:HomePlans.db";
-	private final String connectionUser = "HomePlans";
-	private final String connectionPwd = "HomePlans";
+	private final String connectionString = "jdbc:sqlite:test.db";
 	
 	@Test
 	public void test() {
@@ -26,7 +24,7 @@ public class TestMain {
 		JdbcConnectionSource connectionSource = null;
 		try {
 			connectionSource = // in order = connector:driver//host/database, user, password
-				    new JdbcConnectionSource(this.connectionString, this.connectionUser, this.connectionPwd);
+				    new JdbcConnectionSource(this.connectionString);
 			// auto create tables but you still need to create the database
 			// create testMany before testORM because testORM has a testMany foreign key
 			// create testOneToOne after testORM because it has a testORM foreign key
@@ -71,10 +69,15 @@ public class TestMain {
 	public void loadDB() {
 		JdbcConnectionSource connectionSource = null;
 		try {
-			connectionSource = new JdbcConnectionSource(this.connectionString, this.connectionUser, this.connectionPwd);
+			connectionSource = new JdbcConnectionSource(this.connectionString);
 			Dao<TestORM, Integer> daoORM = DaoManager.createDao(connectionSource, TestORM.class);
 			TestORM testORM = daoORM.queryForId(1);
-			System.out.print(testORM);
+			Dao<TestMany, Integer> daoMany = DaoManager.createDao(connectionSource, TestMany.class);
+			TestMany testMany = daoMany.queryForId(1);
+//			System.out.println(testORM);
+//			for (TestORM t : testMany.getTestOrms()) {
+//				System.out.println(t);
+//			}
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
