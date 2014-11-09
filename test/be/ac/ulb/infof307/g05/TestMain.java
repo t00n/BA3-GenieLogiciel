@@ -12,7 +12,7 @@ import com.j256.ormlite.table.TableUtils;
 
 public class TestMain {
 
-	private final String connectionString = "jdbc:mysql://localhost/HomePlans";
+	private final String connectionString = "jdbc:sqlite:HomePlans.db";
 	private final String connectionUser = "HomePlans";
 	private final String connectionPwd = "HomePlans";
 	
