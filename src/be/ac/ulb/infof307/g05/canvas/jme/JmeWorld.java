@@ -25,6 +25,7 @@ public class JmeWorld extends SimpleApplication {
         _camera[0].setViewPort(0.0f, 1.0f, 0.0f, 1.0f);
         _camera[0].setLocation(new Vector3f(5f, 5f, 5f));
         _camera[0].lookAt(new Vector3f(0f, 0f, 0f), new Vector3f(0f, 1f, 0f));
+        _camera[0].setFrustumFar(50);
         _view[0].setBackgroundColor(ColorRGBA.White);
         _view[0].setClearFlags(true, true, true);
 
@@ -66,7 +67,7 @@ public class JmeWorld extends SimpleApplication {
 	   initMultiViews();
 	   _flyCam = new FlyCamera(_camera[1], _camera[0], inputManager, stateManager);
 	   setViews(true, true);
-	   _reference = new Reference(assetManager, 50);
+	   _reference = new Reference(assetManager, 1000);
 	   _reference.setNode(rootNode, true);
 	   
 	   test();
