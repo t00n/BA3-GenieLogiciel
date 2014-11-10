@@ -9,6 +9,8 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
+import com.jme3.math.Matrix3f;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
@@ -17,8 +19,6 @@ public class FlyCamera extends FlyByCamera {
 
 	private Camera _cam2d;
 	private Camera _cam3d;
-	private Vector3f _initialUpVec2d;
-	private Vector3f _initialUpVec3d;
 	private boolean  _cam2dEnabled = false;
 	private boolean  _cam3dEnabled = false;
 	private Vector2f  _lastPostClick;
@@ -28,8 +28,6 @@ public class FlyCamera extends FlyByCamera {
 		super(cam3d);
 		_cam2d = cam2d;
 		_cam3d = cam3d;
-		_initialUpVec2d = _cam2d.getUp().clone();
-		_initialUpVec3d = _cam3d.getUp().clone();
 
 		this.inputManager = inputManager;
 		this.setDragToRotate(true);
@@ -99,40 +97,55 @@ public class FlyCamera extends FlyByCamera {
         vel.multLocal(value * moveSpeed);
 
         pos.addLocal(vel);
-        pos.setY(cam.getLocation().getY());
-
+        if(cam.equals(_cam2d))
+        	pos.setY(cam.getLocation().getY());
         
-        System.out.println(pos);
         cam.setLocation(pos);
     }
 
+    protected void rotateCamera(float value, Vector3f axis){
+        if(canRotate){
+	        Matrix3f mat = new Matrix3f();
+	        mat.fromAngleNormalAxis(rotationSpeed * value, axis);
+	
+	        Vector3f up = cam.getUp();
+	        Vector3f left = cam.getLeft();
+	        Vector3f dir = cam.getDirection();
+	
+	        left.setY(0);
+	        mat.mult(up, up);
+	        mat.mult(left, left);
+	        mat.mult(dir, dir);
+	
+	        Quaternion q = new Quaternion();
+	        q.fromAxes(left, up, dir);
+	        q.normalizeLocal();
+	
+	        cam.setAxes(q);
+	    }
+    }
 	
     public void onAnalog(String name, float value, float tpf) {
     	if(_cam2dEnabled && _cam3dEnabled){
-    		if(isIn2dViewport()){
+    		if(isIn2dViewport())
     			this.cam = _cam2d;
-    			this.initialUpVec = _initialUpVec2d;
-    		}else{
+    		else
     			this.cam = _cam3d;
-    			this.initialUpVec = _initialUpVec3d;
-    		}
-    	}else if(_cam2dEnabled){
+
+    	}else if(_cam2dEnabled)
 			this.cam = _cam2d;
-			this.initialUpVec = _initialUpVec2d;
-		}else if(_cam3dEnabled){
+		else if(_cam3dEnabled)
 			this.cam = _cam3d;
-			this.initialUpVec = _initialUpVec3d;
-		}
 
 		if(enabled){
 	        if (name.equals("FLYCAM_Left")){
 	        	if(cam.equals(_cam3d))
-	        		rotateCamera(value, initialUpVec);
+	        		rotateCamera(value, new Vector3f(0,1,0));
 	        	else if(canRotate)
 		            moveCamera(value, true);
 	        }else if (name.equals("FLYCAM_Right")){
 	        	if(cam.equals(_cam3d))
-	        		rotateCamera(-value, initialUpVec);
+	        		rotateCamera(-value, new Vector3f(0,1,0));
 	        	else if(canRotate)
 		            moveCamera(-value, true);
 	        }else if (name.equals("FLYCAM_Up")){
