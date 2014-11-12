@@ -34,7 +34,6 @@ public class EventController implements ActionListener {
 	
 	public void actionPerformed(ActionEvent event){
 		String command = event.getActionCommand();
-		System.out.println(command);
 		
 		if(command == "2D view"){
 			_flag2D = true;

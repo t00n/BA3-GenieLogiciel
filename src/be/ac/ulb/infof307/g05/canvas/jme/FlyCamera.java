@@ -29,7 +29,7 @@ public class FlyCamera extends FlyByCamera {
 	private Camera _cam2d;
 	private Camera _cam3d;
 	private Node _node;
-	private EventController _eventController;
+	private EventController _eventControler;
 	private boolean  _cam2dEnabled = false;
 	private boolean  _cam3dEnabled = false;
 	private CollisionResults _collisions = new CollisionResults();
@@ -42,7 +42,7 @@ public class FlyCamera extends FlyByCamera {
 		_cam2d = cam2d;
 		_cam3d = cam3d;
 		_node = node;
-		_eventController = eventController;
+		_eventControler = eventController;
 		
 		this.inputManager = inputManager;
 		this.setDragToRotate(true);
@@ -141,7 +141,7 @@ public class FlyCamera extends FlyByCamera {
     }
 	
     public void onAnalog(String name, float value, float tpf){
-        _eventController.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "cursor_move"));
+        _eventControler.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "cursor_move"));
 
 		if(enabled){
 	    	if(_cam2dEnabled && _cam3dEnabled){
@@ -203,8 +203,11 @@ public class FlyCamera extends FlyByCamera {
         Vector3f dir = cam.getWorldCoordinates(inputManager.getCursorPosition().clone(), cam.getFrustumNear()).subtractLocal(click3d).normalizeLocal();
 
         _node.collideWith(new Ray(click3d, dir), _collisions);
-        if(_collisions.size() != 0)
+        if(_collisions.size() != 0){
         	position  = _collisions.getClosestCollision().getContactPoint().clone();
+        	position.set((float)Math.round(position.getX()*1000)/1000,(float)Math.round(position.getY()*1000)/1000, (float)Math.round(position.getZ()*1000)/1000);
+        }
+        
 
         return position;
     }
