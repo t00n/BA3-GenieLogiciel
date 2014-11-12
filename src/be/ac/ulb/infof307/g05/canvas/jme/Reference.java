@@ -22,7 +22,7 @@ public class Reference {
 	public Reference(AssetManager assetManager, int size){
 		_assetManager = assetManager;
 		createGrid(new Vector3f(), size, 1f, ColorRGBA.Gray);
-		createAxis(size, 1f);
+		createAxis(size, 1.5f);
 	}
 	
 	public void setNode(Node node, boolean attach){
@@ -86,7 +86,7 @@ public class Reference {
 	private Mesh getMeshAxis(int coordX, int coordY, int coordZ, float lineWidth){
 		Mesh mesh = new Mesh();
 		Vector3f[] lineVerticies = new Vector3f[2];
-		lineVerticies[0]=new Vector3f(-coordX,-coordY,-coordZ);
+		lineVerticies[0]=new Vector3f(-coordX,0,-coordZ);
 		lineVerticies[1]=new Vector3f( coordX, coordY, coordZ);
 
         mesh.setMode(Mesh.Mode.Lines);

@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g05.canvas;
 
 import java.awt.Canvas;
+import java.util.logging.Level;
 
 import com.jme3.system.JmeCanvasContext;
 
@@ -14,6 +15,7 @@ public class CanvasJme extends AbstractCanvas<Canvas> {
 	
 	public CanvasJme(EventController eventController){
 		/** constructor **/
+		java.util.logging.Logger.getLogger("").setLevel(Level.WARNING);
 		_eventController = eventController;
 		_jmeWorld = new JmeWorld(_eventController);
 		_jmeWorld.createCanvas();

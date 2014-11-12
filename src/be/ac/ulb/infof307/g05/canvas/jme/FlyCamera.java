@@ -174,13 +174,25 @@ public class FlyCamera extends FlyByCamera {
 	        	else if(canRotate)
 		    		moveCamera(-value, false);
 		    }else if (name.equals("FLYCAM_Forward")){
-		        moveCamera(-value, false);
+		    	if(cam.equals(_cam3d))
+		    		moveCamera(value, false);
+		    	else
+		    		moveCamera(-value, false);
 		    }else if (name.equals("FLYCAM_Backward")){
-		        moveCamera(value, false);
+		    	if(cam.equals(_cam3d))
+		    		moveCamera(-value, false);
+		    	else
+		    		moveCamera(value, false);
 		    }else if (name.equals("FLYCAM_StrafeLeft")){
-		        moveCamera(-value, true);
+		    	if(cam.equals(_cam3d))
+		    		moveCamera(value, true);
+		    	else
+		    		moveCamera(-value, true);
 		    }else if (name.equals("FLYCAM_StrafeRight")){
-		        moveCamera(value, true);
+		    	if(cam.equals(_cam3d))
+		    		moveCamera(-value, true);
+		    	else
+		    		moveCamera(value, true);
 		    }else if (name.equals("FLYCAM_Rise")){
 		        riseCamera(value);
 		    }else if (name.equals("FLYCAM_Lower")){
