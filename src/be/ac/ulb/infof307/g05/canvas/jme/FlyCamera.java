@@ -1,8 +1,15 @@
 package be.ac.ulb.infof307.g05.canvas.jme;
 
+
+import java.awt.event.ActionEvent;
+import java.util.Vector;
+
+import be.ac.ulb.infof307.g05.EventController;
+
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.collision.CollisionResults;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
@@ -11,24 +18,32 @@ import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.Matrix3f;
 import com.jme3.math.Quaternion;
+import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
+import com.jme3.scene.Node;
 
 public class FlyCamera extends FlyByCamera {
 
 	private Camera _cam2d;
 	private Camera _cam3d;
+	private Node _node;
+	private EventController _eventController;
 	private boolean  _cam2dEnabled = false;
 	private boolean  _cam3dEnabled = false;
-	private Vector2f  _lastPostClick;
+	private CollisionResults _collisions = new CollisionResults();
+	private Vector2f _lastScreenClick;
+	private Vector<Vector3f> _clickQueue;
 	
 	
-	public FlyCamera(Camera cam2d, Camera cam3d, InputManager inputManager, AppStateManager stateManager){
+	public FlyCamera(Camera cam2d, Camera cam3d, Node node, InputManager inputManager, AppStateManager stateManager, EventController eventController){
 		super(cam3d);
 		_cam2d = cam2d;
 		_cam3d = cam3d;
-
+		_node = node;
+		_eventController = eventController;
+		
 		this.inputManager = inputManager;
 		this.setDragToRotate(true);
 		
@@ -72,7 +87,7 @@ public class FlyCamera extends FlyByCamera {
 		boolean isIn2d = false;
 		Vector2f position = inputManager.getCursorPosition();
 		
-		if(canRotate && (_lastPostClick.getX() > (_cam3d.getWidth()*_cam2d.getViewPortLeft())) && (_lastPostClick.getY() < (_cam3d.getHeight()*_cam2d.getViewPortTop())) )
+		if(canRotate && (_lastScreenClick.getX() > (_cam3d.getWidth()*_cam2d.getViewPortLeft())) && (_lastScreenClick.getY() < (_cam3d.getHeight()*_cam2d.getViewPortTop())) )
 			isIn2d = true;
 		else if(!canRotate && (position.getX() > (_cam3d.getWidth()*_cam2d.getViewPortLeft())) && (position.getY() < (_cam3d.getHeight()*_cam2d.getViewPortTop())) )
 			isIn2d = true;
@@ -125,19 +140,21 @@ public class FlyCamera extends FlyByCamera {
 	    }
     }
 	
-    public void onAnalog(String name, float value, float tpf) {
-    	if(_cam2dEnabled && _cam3dEnabled){
-    		if(isIn2dViewport())
-    			this.cam = _cam2d;
-    		else
-    			this.cam = _cam3d;
-
-    	}else if(_cam2dEnabled)
-			this.cam = _cam2d;
-		else if(_cam3dEnabled)
-			this.cam = _cam3d;
+    public void onAnalog(String name, float value, float tpf){
+        _eventController.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "cursor_move"));
 
 		if(enabled){
+	    	if(_cam2dEnabled && _cam3dEnabled){
+	    		if(isIn2dViewport())
+	    			this.cam = _cam2d;
+	    		else
+	    			this.cam = _cam3d;
+	
+	    	}else if(_cam2dEnabled)
+				this.cam = _cam2d;
+			else if(_cam3dEnabled)
+				this.cam = _cam3d;
+	
 	        if (name.equals("FLYCAM_Left")){
 	        	if(cam.equals(_cam3d))
 	        		rotateCamera(value, new Vector3f(0,1,0));
@@ -148,44 +165,61 @@ public class FlyCamera extends FlyByCamera {
 	        		rotateCamera(-value, new Vector3f(0,1,0));
 	        	else if(canRotate)
 		            moveCamera(-value, true);
-	        }else if (name.equals("FLYCAM_Up")){
+		    }else if (name.equals("FLYCAM_Up")){
 	        	if(cam.equals(_cam3d))
 	        		rotateCamera(-value, cam.getLeft());
 	        	else if(canRotate)
 	        		moveCamera(value, false);
-	        }else if (name.equals("FLYCAM_Down")){
+		    }else if (name.equals("FLYCAM_Down")){
 	        	if(cam.equals(_cam3d))
 	        		rotateCamera(value, cam.getLeft());
 	        	else if(canRotate)
-	        		moveCamera(-value, false);
-	        }else if (name.equals("FLYCAM_Forward")){
-	            moveCamera(value, false);
-	        }else if (name.equals("FLYCAM_Backward")){
-	            moveCamera(-value, false);
-	        }else if (name.equals("FLYCAM_StrafeLeft")){
-	            moveCamera(value, true);
-	        }else if (name.equals("FLYCAM_StrafeRight")){
-	            moveCamera(-value, true);
-	        }else if (name.equals("FLYCAM_Rise")){
-	            riseCamera(value);
-	        }else if (name.equals("FLYCAM_Lower")){
-	            riseCamera(-value);
-	        }else if (name.equals("FLYCAM_ZoomIn")){
-	            zoomCamera(value);
-	        }else if (name.equals("FLYCAM_ZoomOut")){
-	            zoomCamera(-value);
-	        }
+		    		moveCamera(-value, false);
+		    }else if (name.equals("FLYCAM_Forward")){
+		        moveCamera(value, false);
+		    }else if (name.equals("FLYCAM_Backward")){
+		        moveCamera(-value, false);
+		    }else if (name.equals("FLYCAM_StrafeLeft")){
+		        moveCamera(value, true);
+		    }else if (name.equals("FLYCAM_StrafeRight")){
+		        moveCamera(-value, true);
+		    }else if (name.equals("FLYCAM_Rise")){
+		        riseCamera(value);
+		    }else if (name.equals("FLYCAM_Lower")){
+		        riseCamera(-value);
+		    }else if (name.equals("FLYCAM_ZoomIn")){
+		        zoomCamera(value);
+		    }else if (name.equals("FLYCAM_ZoomOut")){
+		        zoomCamera(-value);
+		    }
 		}
     }
 
+    public Vector3f getPositionVec(){
+        _collisions.clear();
+
+    	Vector3f position = new Vector3f();
+        Vector3f click3d = cam.getWorldCoordinates(inputManager.getCursorPosition().clone(), 0f).clone();
+        Vector3f dir = cam.getWorldCoordinates(inputManager.getCursorPosition().clone(), cam.getFrustumNear()).subtractLocal(click3d).normalizeLocal();
+
+        _node.collideWith(new Ray(click3d, dir), _collisions);
+        if(_collisions.size() != 0)
+        	position  = _collisions.getClosestCollision().getContactPoint().clone();
+
+        return position;
+    }
+    
     public void onAction(String name, boolean value, float tpf) {
-        if (enabled)
+        if (enabled){
 	        if (name.equals("FLYCAM_RotateDrag") && dragToRotate){
 	            canRotate = value;
 	            inputManager.setCursorVisible(!value);
 	    		
 	            if(canRotate && _cam2dEnabled && _cam3dEnabled)
-	            	_lastPostClick = inputManager.getCursorPosition().clone();
+	            	_lastScreenClick = inputManager.getCursorPosition().clone();
 	        }
+	    }else if(!value){
+	    	_clickQueue.add(getPositionVec().clone());
+        }
     }
 }

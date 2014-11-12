@@ -3,14 +3,12 @@ package be.ac.ulb.infof307.g05.canvas.tab;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-import be.ac.ulb.infof307.g05.EventControler;
 
 public class Tab2 extends AbstractTab {
 		
-	public Tab2(EventControler eventControler){
+	public Tab2(){
 		/** constructor **/
 		_name = new String("Tab2");
-		_eventControler = eventControler;
 		
 		JButton button = new JButton("button2");
 		this.add(button);

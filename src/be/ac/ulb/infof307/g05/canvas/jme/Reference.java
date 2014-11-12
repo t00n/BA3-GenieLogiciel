@@ -53,7 +53,7 @@ public class Reference {
 	}
 	
     private void createGrid(Vector3f pos, int gridSize, float squareSize, ColorRGBA color){
-        _grid = new Geometry("grid", new Grid(gridSize+1, gridSize, squareSize) );
+        _grid = new Geometry("grid", new Grid(gridSize+1, gridSize+1, squareSize) );
         Material mat = new Material(_assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.getAdditionalRenderState().setWireframe(true);
         mat.setColor("Color", color);

@@ -6,8 +6,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import be.ac.ulb.infof307.g05.EventControler;
-
+import be.ac.ulb.infof307.g05.EventController;
 
 
 public class MenuBarCanvas extends AbstractCanvas<JMenuBar>{
@@ -15,9 +14,9 @@ public class MenuBarCanvas extends AbstractCanvas<JMenuBar>{
 	private Vector<JMenu> _menu = new Vector<JMenu>();
 	
 
-	public MenuBarCanvas(EventControler eventControler){
+	public MenuBarCanvas(EventController eventController){
 		_panel = new JMenuBar();
-		_eventControler = eventControler;
+		_eventController = eventController;
 		
 		createFileMenu();
 		createEditMenu();
@@ -26,7 +25,7 @@ public class MenuBarCanvas extends AbstractCanvas<JMenuBar>{
 	
 	protected JMenuItem createItem(String command){
 		JMenuItem item = new JMenuItem(command);
-		item.addActionListener(_eventControler);
+		item.addActionListener(_eventController);
 		return item;
 	}
 	

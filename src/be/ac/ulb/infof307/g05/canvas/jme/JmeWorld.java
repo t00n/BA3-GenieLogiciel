@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g05.canvas.jme;
 
 
+import be.ac.ulb.infof307.g05.EventController;
+
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -17,8 +19,12 @@ public class JmeWorld extends SimpleApplication {
 	private ViewPort[] _view = new ViewPort[2];
 	private Reference  _reference;
 	private FlyCamera  _flyCam;
+	private EventController _eventControler;
 	
-
+	public JmeWorld(EventController eventController){
+		_eventControler = eventController;
+	}
+	
 	private void initMultiViews(){
 		_camera[0] = cam;
         _view[0] = renderManager.createMainView("3D view", _camera[0]);
@@ -65,7 +71,7 @@ public class JmeWorld extends SimpleApplication {
 	   flyCam.setEnabled(false);
 	   
 	   initMultiViews();
-	   _flyCam = new FlyCamera(_camera[1], _camera[0], inputManager, stateManager);
+	   _flyCam = new FlyCamera(_camera[1], _camera[0], rootNode, inputManager, stateManager, _eventControler);
 	   setViews(true, true);
 	   _reference = new Reference(assetManager, 1000);
 	   _reference.setNode(rootNode, true);
