@@ -2,7 +2,6 @@ package be.ac.ulb.infof307.g05.canvas.jme;
 
 
 import java.awt.event.ActionEvent;
-import java.util.Vector;
 
 import be.ac.ulb.infof307.g05.EventController;
 
@@ -34,7 +33,6 @@ public class FlyCamera extends FlyByCamera {
 	private boolean  _cam3dEnabled = false;
 	private CollisionResults _collisions = new CollisionResults();
 	private Vector2f _lastScreenClick;
-	private Vector<Vector3f> _clickQueue;
 	
 	
 	public FlyCamera(Camera cam2d, Camera cam3d, Node node, InputManager inputManager, AppStateManager stateManager, EventController eventController){
@@ -59,10 +57,10 @@ public class FlyCamera extends FlyByCamera {
 	public void redefineKeys(){
 		inputManager.clearMappings();
         
-        inputManager.addMapping("FLYCAM_Left", new MouseAxisTrigger(0, true));
-        inputManager.addMapping("FLYCAM_Right", new MouseAxisTrigger(0, false));
-        inputManager.addMapping("FLYCAM_Up", new MouseAxisTrigger(1, false));
-        inputManager.addMapping("FLYCAM_Down", new MouseAxisTrigger(1, true));
+        inputManager.addMapping("FLYCAM_Left", new MouseAxisTrigger(0, false));
+        inputManager.addMapping("FLYCAM_Right", new MouseAxisTrigger(0, true));
+        inputManager.addMapping("FLYCAM_Up", new MouseAxisTrigger(1, true));
+        inputManager.addMapping("FLYCAM_Down", new MouseAxisTrigger(1, false));
         
         inputManager.addMapping("FLYCAM_ZoomIn", new MouseAxisTrigger(2, false));
         inputManager.addMapping("FLYCAM_ZoomOut", new MouseAxisTrigger(2, true));
@@ -176,13 +174,13 @@ public class FlyCamera extends FlyByCamera {
 	        	else if(canRotate)
 		    		moveCamera(-value, false);
 		    }else if (name.equals("FLYCAM_Forward")){
-		        moveCamera(value, false);
-		    }else if (name.equals("FLYCAM_Backward")){
 		        moveCamera(-value, false);
+		    }else if (name.equals("FLYCAM_Backward")){
+		        moveCamera(value, false);
 		    }else if (name.equals("FLYCAM_StrafeLeft")){
-		        moveCamera(value, true);
-		    }else if (name.equals("FLYCAM_StrafeRight")){
 		        moveCamera(-value, true);
+		    }else if (name.equals("FLYCAM_StrafeRight")){
+		        moveCamera(value, true);
 		    }else if (name.equals("FLYCAM_Rise")){
 		        riseCamera(value);
 		    }else if (name.equals("FLYCAM_Lower")){
@@ -216,13 +214,10 @@ public class FlyCamera extends FlyByCamera {
         if (enabled){
 	        if (name.equals("FLYCAM_RotateDrag") && dragToRotate){
 	            canRotate = value;
-	            inputManager.setCursorVisible(!value);
 	    		
 	            if(canRotate && _cam2dEnabled && _cam3dEnabled)
 	            	_lastScreenClick = inputManager.getCursorPosition().clone();
 	        }
-	    }else if(!value){
-	    	_clickQueue.add(getPositionVec().clone());
-        }
+	    }
     }
 }
