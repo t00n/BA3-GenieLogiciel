@@ -2,13 +2,16 @@ package be.ac.ulb.infof307.g05.canvas.jme;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.VertexBuffer;
 import com.jme3.scene.debug.Grid;
+import com.jme3.scene.shape.Box;
 import com.jme3.util.BufferUtils;
 
 
@@ -17,24 +20,29 @@ public class Reference {
 	private Node		 _node;
 	private Geometry 	 _grid;
 	private Node    	 _coordinate = new Node("test");
+	private Geometry     _floor;
 
 	
 	public Reference(AssetManager assetManager, int size){
 		_assetManager = assetManager;
 		createGrid(new Vector3f(), size, 1f, ColorRGBA.Gray);
 		createAxis(size, 1.5f);
+		createFloor(size);
 	}
+
 	
 	public void setNode(Node node, boolean attach){
 		if(_node != null){
 			setGridEnable(false);
 			setCoordEnable(false);
+			setFloorEnable(false);
 		}
 		_node = node;
 		
 		if(attach){
 			setGridEnable(true);
 			setCoordEnable(true);
+			setFloorEnable(true);			
 		}
 	}
 	
@@ -52,14 +60,27 @@ public class Reference {
 			_node.detachChild(_coordinate);
 	}
 	
+	public void setFloorEnable(boolean enable){
+		if(enable)
+			_node.attachChild(_floor);
+		else
+			_node.detachChild(_floor);
+	}
+	
     private void createGrid(Vector3f pos, int gridSize, float squareSize, ColorRGBA color){
         _grid = new Geometry("grid", new Grid(gridSize+1, gridSize+1, squareSize) );
         Material mat = new Material(_assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.getAdditionalRenderState().setWireframe(true);
         mat.setColor("Color", color);
         _grid.setMaterial(mat);
         _grid.center().move(pos);
       }
+    
+    private void createFloor(int floorSize){ //Sol invisible (car pas lumière ajoutée) pour la collision
+		Box b = new Box(floorSize, 0, floorSize);
+        _floor = new Geometry("Floor", b);
+        Material mat = new Material(_assetManager, "Common/MatDefs/Light/Lighting.j3md");
+        _floor.setMaterial(mat);
+    }
 	
 
 	private void createAxis(int lenght, float lineWidth){

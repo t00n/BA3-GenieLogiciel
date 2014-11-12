@@ -217,8 +217,7 @@ public class FlyCamera extends FlyByCamera {
         	position  = _collisions.getClosestCollision().getContactPoint().clone();
         	position.set((float)Math.round(position.getX()*1000)/1000,(float)Math.round(position.getY()*1000)/1000, (float)Math.round(position.getZ()*1000)/1000);
         }
-        
-
+        //System.out.print("Pos: '" + (position.getX()) + " - " + (position.getY()) + " - " + (position.getZ()) + "'\n");
         return position;
     }
     
@@ -229,7 +228,7 @@ public class FlyCamera extends FlyByCamera {
 	    		
 	            if(canRotate && _cam2dEnabled && _cam3dEnabled)
 	            	_lastScreenClick = inputManager.getCursorPosition().clone();
-	        }
+	        }	        	        
 	    }
     }
 }
