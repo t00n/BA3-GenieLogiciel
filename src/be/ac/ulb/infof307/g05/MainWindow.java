@@ -10,21 +10,42 @@ import be.ac.ulb.infof307.g05.canvas.CanvasJme;
 import be.ac.ulb.infof307.g05.canvas.MenuBarCanvas;
 import be.ac.ulb.infof307.g05.canvas.StatusBarCanvas;
 import be.ac.ulb.infof307.g05.canvas.ToolCanvas;
+import be.ac.ulb.infof307.g05.controller.Controller;
+import be.ac.ulb.infof307.g05.model.Database;
+import be.ac.ulb.infof307.g05.model.Stage;
 
 
 
 public class MainWindow extends JFrame {
 
-	private EventController _eventControler = new EventController(this);
+	private EventController _eventControler;
 
-	private ToolCanvas    _canvasUI = new ToolCanvas(_eventControler);
-	private CanvasJme     _canvasJme = new CanvasJme(_eventControler);
-	private MenuBarCanvas _canvasMenuBar = new MenuBarCanvas(_eventControler);
-	private StatusBarCanvas _canvasStatusBar = new StatusBarCanvas(_eventControler);
+	private ToolCanvas    _canvasUI;
+	private CanvasJme     _canvasJme;
+	private MenuBarCanvas _canvasMenuBar;
+	private StatusBarCanvas _canvasStatusBar;
+	
+	// MOOK CODE :
+	private Controller _controller;	
 	
 	
 	public MainWindow(String title){
 		/** constructor **/
+		
+		_eventControler = new EventController(this);
+		_canvasUI = new ToolCanvas(_eventControler);
+		_canvasJme = new CanvasJme(_eventControler);
+		_canvasMenuBar = new MenuBarCanvas(_eventControler);
+		_canvasStatusBar = new StatusBarCanvas(_eventControler);
+		
+		
+		_controller = new Controller(new Database());
+		_controller.getDatabase().addStage(0, new Stage());
+		// Si on change d'étage, ne pas oublier de le dire au controlleur
+		// _controller.setStage(_controller.getDatabase().getStage(numeroEtage));
+
+		
+		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
 		this.setTitle(title);
@@ -47,5 +68,9 @@ public class MainWindow extends JFrame {
 		_canvasJme.update();
 		_canvasMenuBar.update();
 		_canvasStatusBar.update();
+	}
+	
+	public Controller getController() {
+		return _controller;
 	}
 }

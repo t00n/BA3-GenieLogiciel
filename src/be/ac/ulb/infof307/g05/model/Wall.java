@@ -32,6 +32,12 @@ public class Wall extends Component {
 		this.thickness = thickness;
 		this.height = height;
 	}
+	
+	public Wall(Vector2f start, Vector2f end) {
+		System.out.println("Mur Créé : " + start + " - " + end);
+		this.start = start;
+		this.end = end;
+	}
 
 	public Vector2f getStart() {
 		return start;

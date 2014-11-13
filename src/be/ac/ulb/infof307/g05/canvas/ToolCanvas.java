@@ -20,7 +20,7 @@ public class ToolCanvas extends AbstractCanvas<JTabbedPane> {
 		_panel = new JTabbedPane();
 		_eventController = eventController;
 		
-		_tabs.add(new Tab1());
+		_tabs.add(new Tab1(_eventController));
 		_tabs.add(new Tab2());
 		
 		appendTabs();
