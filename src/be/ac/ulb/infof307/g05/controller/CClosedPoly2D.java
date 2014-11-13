@@ -34,14 +34,13 @@ public class CClosedPoly2D {
 	public void addCoord(Vector2f coord) {
 		System.out.println("clic " + coord);
 		m_coord.add(coord);
-		System.out.println("lalalaalalalalala");
 	}
 	
 	public void makePoly() {
 		System.out.println("hello");
 		if (m_type == "wall") {
-			for (int i = 0; i<m_coord.size(); i++) {
-					m_actualStage.add(new Wall(m_coord.get(i), m_coord.get(i+1)));
+			for (int i = 0; i<m_coord.size()-1; i++) {
+				m_actualStage.add(new Wall(m_coord.get(i), m_coord.get(i+1)));
 			}
 			if (m_coord.size() != 2) // si on mets que 2 points et on valide : un seul mur créé.
 				m_actualStage.add(new Wall(m_coord.get(m_coord.size()-1), m_coord.get(0)));
