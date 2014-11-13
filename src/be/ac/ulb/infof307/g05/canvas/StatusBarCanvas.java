@@ -20,6 +20,10 @@ public class StatusBarCanvas extends AbstractCanvas<JPanel> {
 	
 	public void update(){
 		Vector3f position = _eventController.getCursor();
-		_label.setText(String.format("X(width):%-20.3f Y(height):%-20.3f Z(depth):%-20.3f",position.getX(), position.getY(), position.getZ()));
+		if(position.getY() >= 0)
+			_label.setText(String.format("X(width):%-20.3f Y(height):%-20.3f Z(depth):%-20.3f",position.getX(), position.getY(), position.getZ()));
+		else
+			_label.setText(String.format("X(width):%-20s Y(height):%-20s Z(depth):%-20s","N/C", "N/C", "N/C"));
+
 	}
 }

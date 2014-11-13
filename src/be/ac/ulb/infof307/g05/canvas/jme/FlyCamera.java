@@ -208,7 +208,7 @@ public class FlyCamera extends FlyByCamera {
     public Vector3f getPositionVec(){
         _collisions.clear();
 
-    	Vector3f position = new Vector3f();
+    	Vector3f position = new Vector3f(0f,-1f,0f);
         Vector3f click3d = cam.getWorldCoordinates(inputManager.getCursorPosition().clone(), 0f).clone();
         Vector3f dir = cam.getWorldCoordinates(inputManager.getCursorPosition().clone(), cam.getFrustumNear()).subtractLocal(click3d).normalizeLocal();
 
