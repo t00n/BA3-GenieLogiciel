@@ -11,7 +11,7 @@ import com.jme3.math.Vector3f;
 public class EventController implements ActionListener {
 
 	private MainWindow _window;
-	
+		
 	private boolean _flag2D = true;
 	private boolean _flag3D = true;
 	private Vector3f _cursor = new Vector3f();
@@ -54,7 +54,7 @@ public class EventController implements ActionListener {
 		}else if(command == "Sol"){
 			System.out.println("lolololo");
 		} else if (command == "Murclic1") { /* Fonctions de simulation de clics a supprimer */
-			_window.getController().getCClosedPoly2D().addCoord(new Vector2f(0,0));
+			((_window.getController()).getCClosedPoly2D()).addCoord(new Vector2f(0,0));
 		} else if (command == "Murclic2") {
 			_window.getController().getCClosedPoly2D().addCoord(new Vector2f(1,0));
 		} else if (command == "Murclic3") {

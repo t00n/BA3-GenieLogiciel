@@ -5,7 +5,6 @@ package be.ac.ulb.infof307.g05.controller;
 
 import java.util.Vector;
 
-import be.ac.ulb.infof307.g05.model.Database;
 import be.ac.ulb.infof307.g05.model.Ground;
 import be.ac.ulb.infof307.g05.model.Stage;
 import be.ac.ulb.infof307.g05.model.Wall;
@@ -35,6 +34,7 @@ public class CClosedPoly2D {
 	public void addCoord(Vector2f coord) {
 		System.out.println("clic " + coord);
 		m_coord.add(coord);
+		System.out.println("lalalaalalalalala");
 	}
 	
 	public void makePoly() {

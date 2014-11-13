@@ -26,6 +26,7 @@ public class Controller {
 	}
 	
 	public CClosedPoly2D getCClosedPoly2D() {
+		System.out.println("getcclo");
 		return m_CbuttonClosedPoly2D;
 	}
 	

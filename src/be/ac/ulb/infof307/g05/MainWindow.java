@@ -41,6 +41,7 @@ public class MainWindow extends JFrame {
 		
 		_controller = new Controller(new Database());
 		_controller.getDatabase().addStage(0, new Stage());
+		_controller.setStage(_controller.getDatabase().getStage(0));
 		// Si on change d'étage, ne pas oublier de le dire au controlleur
 		// _controller.setStage(_controller.getDatabase().getStage(numeroEtage));
 
@@ -71,6 +72,7 @@ public class MainWindow extends JFrame {
 	}
 	
 	public Controller getController() {
+		System.out.println("getcontro");
 		return _controller;
 	}
 }
