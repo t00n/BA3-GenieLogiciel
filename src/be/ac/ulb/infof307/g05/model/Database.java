@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g05;
+package be.ac.ulb.infof307.g05.model;
 
 import java.sql.SQLException;
 

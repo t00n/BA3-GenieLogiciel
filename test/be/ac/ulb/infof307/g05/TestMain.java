@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import com.j256.ormlite.dao.*;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import be.ac.ulb.infof307.g05.model.*;
 
 public class TestMain {
 
@@ -21,75 +22,37 @@ public class TestMain {
 	
 	@Test
 	public void testORM() {
-		JdbcConnectionSource connectionSource = null;
-		try {
-			connectionSource = // in order = connector:driver//host/database, user, password
-				    new JdbcConnectionSource(this.connectionString);
-			// auto create tables but you still need to create the database
-			// create testMany before testORM because testORM has a testMany foreign key
-			// create testOneToOne after testORM because it has a testORM foreign key
-			TableUtils.createTableIfNotExists(connectionSource, TestMany.class);
-			TableUtils.createTableIfNotExists(connectionSource, TestORM.class);
-			TableUtils.createTableIfNotExists(connectionSource, TestOneToOne.class);
-			// object that handles database queries
-			Dao<TestORM, Integer> daoORM = DaoManager.createDao(connectionSource, TestORM.class);
-			Dao<TestMany, Integer> daoMany = DaoManager.createDao(connectionSource, TestMany.class);
-			Dao<TestOneToOne, Integer> daoOne = DaoManager.createDao(connectionSource, TestOneToOne.class);
-			TestMany testMany = new TestMany();
-			daoMany.create(testMany);
-			TestORM testORM = new TestORM();
-			testORM.setSomeString("grosTestDeOuf");
-			testORM.setTestMany(testMany);
-			TestORM testORM2 = new TestORM();
-			testORM2.setSomeString("2eTESTDEOUF");
-			testORM2.setTestMany(testMany);
-			daoORM.create(testORM);
-			daoORM.create(testORM2);
-			TestOneToOne testOne = new TestOneToOne();
-			testOne.setTestORM(testORM);
-			TestOneToOne testTwo = new TestOneToOne();
-			// testTwo.setTestORM(testORM); // would violate unique constraint on TestOneToOne.testORM => one-to-one relationship
-			testTwo.setTestORM(testORM2);
-			daoOne.create(testOne);
-			daoOne.create(testTwo);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-		    try {
-				connectionSource.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		JdbcConnectionSource connectionSource = Database.getConnectionSource();
+		// create tables
+		TableUtils.dropTable(connectionSource, SimpleObject.class, true);
+		TableUtils.dropTable(connectionSource, CompositeObject.class, true);
+		TableUtils.dropTable(connectionSource, Stage.class, true);
+		TableUtils.dropTable(connectionSource, Project.class, true);
+		TableUtils.createTableIfNotExists(connectionSource, SimpleObject.class);
+		TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
+		TableUtils.createTableIfNotExists(connectionSource, Stage.class);
+		TableUtils.createTableIfNotExists(connectionSource, Project.class);
+		// instantiate DAOs
+		Dao<SimpleObject, Integer> daoSimpleObject = DaoManager.createDao(connectionSource, SimpleObject.class);
+		Dao<CompositeObject, Integer> daoCompositeObject = DaoManager.createDao(connectionSource, CompositeObject.class);
+		Dao<Stage, Integer> daoStage = DaoManager.createDao(connectionSource, Stage.class);
+		Dao<Project, Integer> daoProject = DaoManager.createDao(connectionSource, Project.class);
+		// create a hierarchy of objects
+		SimpleObject simpleObject1 = new SimpleObject();
+		CompositeObject compositeObject1 = new CompositeObject();
+		CompositeObject compositeObject2 = new CompositeObject();
+		simpleObject1.parent = compositeObject2;
+		compositeObject2.parent = compositeObject1;
+		
+		// create project
+		Stage stage1 = new Stage();
+		compositeObject1.stage = stage1;
+		Project project = new Project();
+		stage1.project = project;
+		daoSimpleObject.create(simpleObject1);
+		daoCompositeObject.create(compositeObject2);
+		daoCompositeObject.create(compositeObject1);
+		daoStage.create(stage1);
+		daoProject.create(project);
 	}
-	
-	@Test
-	public void loadDB() {
-		JdbcConnectionSource connectionSource = null;
-		try {
-			connectionSource = new JdbcConnectionSource(this.connectionString);
-			Dao<TestORM, Integer> daoORM = DaoManager.createDao(connectionSource, TestORM.class);
-			TestORM testORM = daoORM.queryForId(1);
-			Dao<TestMany, Integer> daoMany = DaoManager.createDao(connectionSource, TestMany.class);
-			TestMany testMany = daoMany.queryForId(1);
-//			System.out.println(testORM);
-//			for (TestORM t : testMany.getTestOrms()) {
-//				System.out.println(t);
-//			}
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			try {
-				connectionSource.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
 }
