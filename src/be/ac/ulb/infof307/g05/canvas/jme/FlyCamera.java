@@ -21,6 +21,7 @@ import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 
 public class FlyCamera extends FlyByCamera {
@@ -94,26 +95,44 @@ public class FlyCamera extends FlyByCamera {
 	}
 	
     protected void moveCamera(float value, boolean sideways){
-        Vector3f vel = new Vector3f();
-        Vector3f pos = cam.getLocation().clone();
+            Vector3f vel = new Vector3f();
+            Vector3f pos = cam.getLocation().clone();
 
-        if (sideways){
-            cam.getLeft(vel);
-        }else if(cam.equals(_cam3d)){
-            cam.getDirection(vel);
-        }else
-        	cam.getUp(vel);
-        
-        if(cam.equals(_cam2d))
-        	value *= 2;
-        
-        vel.multLocal(value * moveSpeed);
+            if (sideways){
+                cam.getLeft(vel);
+            }else if(cam.equals(_cam3d)){
+                cam.getDirection(vel);
+            }else
+            	cam.getUp(vel);
+            
+            if(cam.equals(_cam2d))
+            	value *= 2;
+                
+            vel.multLocal(value * moveSpeed);      
 
-        pos.addLocal(vel);
-        if(cam.equals(_cam2d))
-        	pos.setY(cam.getLocation().getY());
+            pos.addLocal(vel);
+            if(cam.equals(_cam2d))
+            	pos.setY(cam.getLocation().getY());
+            	        
+            cam.setLocation(pos);    		
+    }
+    
+    protected void moveGeometry(Geometry geom, float value, boolean sideways){
+    	Vector3f vecTransition = new Vector3f();
+    	Vector3f mousePosition = getPositionVec();
+    	float coordY = geom.getWorldTranslation().getY(); //Retiens la position Y de la Geometry
+        if(sideways){
+        	vecTransition.setX((float)1);
+        }
+        else{
+        	vecTransition.setZ((float)1);
+        }
         
-        cam.setLocation(pos);
+        value *= 2;
+        vecTransition.multLocal(value * moveSpeed);
+        mousePosition.addLocal(vecTransition);
+        mousePosition.setY(coordY);
+        geom.setLocalTranslation(mousePosition);      	
     }
 
     protected void rotateCamera(float value, Vector3f axis){
@@ -140,6 +159,8 @@ public class FlyCamera extends FlyByCamera {
 	
     public void onAnalog(String name, float value, float tpf){
         _eventControler.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "cursor_move"));
+        
+        Geometry geometryToMove = getGeometryCollision();
 
 		if(enabled){
 	    	if(_cam2dEnabled && _cam3dEnabled){
@@ -157,22 +178,34 @@ public class FlyCamera extends FlyByCamera {
 	        	if(cam.equals(_cam3d))
 	        		rotateCamera(value, new Vector3f(0,1,0));
 	        	else if(canRotate)
-		            moveCamera(value, true);
+	        		if((geometryToMove.getName().equals("Floor")) || (geometryToMove.getName().equals("Grid")))	        		
+	        			moveCamera(value, true);
+	        		else
+	        			moveGeometry(geometryToMove, value, true);
 	        }else if (name.equals("FLYCAM_Right")){
 	        	if(cam.equals(_cam3d))
 	        		rotateCamera(-value, new Vector3f(0,1,0));
 	        	else if(canRotate)
-		            moveCamera(-value, true);
+	        		if((geometryToMove.getName().equals("Floor")) || (geometryToMove.getName().equals("Grid")))	        		
+	        			moveCamera(-value, true);
+	        		else
+	        			moveGeometry(geometryToMove, -value, true);
 		    }else if (name.equals("FLYCAM_Up")){
 	        	if(cam.equals(_cam3d))
 	        		rotateCamera(-value, cam.getLeft());
 	        	else if(canRotate)
-	        		moveCamera(value, false);
+	        		if((geometryToMove.getName().equals("Floor")) || (geometryToMove.getName().equals("Grid")))	        		
+	        			moveCamera(value, false);
+	        		else
+	        			moveGeometry(geometryToMove, value, false);
 		    }else if (name.equals("FLYCAM_Down")){
 	        	if(cam.equals(_cam3d))
 	        		rotateCamera(value, cam.getLeft());
 	        	else if(canRotate)
-		    		moveCamera(-value, false);
+	        		if((geometryToMove.getName().equals("Floor")) || (geometryToMove.getName().equals("Grid")))	        		
+	        			moveCamera(-value, false);
+	        		else
+	        			moveGeometry(geometryToMove, -value, false);
 		    }else if (name.equals("FLYCAM_Forward")){
 		    	if(cam.equals(_cam3d))
 		    		moveCamera(value, false);
@@ -221,6 +254,14 @@ public class FlyCamera extends FlyByCamera {
         return position;
     }
     
+    
+    public Geometry getGeometryCollision(){
+    	Geometry geometry = new Geometry();
+    	if(_collisions.size() != 0)
+    		geometry = _collisions.getClosestCollision().getGeometry();   
+    	return geometry;
+    }
+    
     public void onAction(String name, boolean value, float tpf) {
         if (enabled){
 	        if (name.equals("FLYCAM_RotateDrag") && dragToRotate){
@@ -228,7 +269,9 @@ public class FlyCamera extends FlyByCamera {
 	    		
 	            if(canRotate && _cam2dEnabled && _cam3dEnabled)
 	            	_lastScreenClick = inputManager.getCursorPosition().clone();
-	        }	        	        
+		        	//System.out.print("Pos: '" + (_lastScreenClick.getX()) + " - " + (_lastScreenClick.getY()) + "'\n");
+	        }
 	    }
+        
     }
 }
