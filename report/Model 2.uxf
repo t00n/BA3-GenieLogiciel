@@ -23,8 +23,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>40</x>
-      <y>208</y>
+      <x>64</x>
+      <y>312</y>
       <w>168</w>
       <h>64</h>
     </coordinates>
@@ -148,8 +148,8 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>24</x>
-      <y>408</y>
+      <x>168</x>
+      <y>440</y>
       <w>168</w>
       <h>64</h>
     </coordinates>
@@ -163,15 +163,15 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>104</x>
-      <y>344</y>
-      <w>152</w>
-      <h>80</h>
+      <x>248</x>
+      <y>368</y>
+      <w>256</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
+m1=0..1
 m2=0..*</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0;170.0;10.0</additional_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0;300.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -203,60 +203,29 @@ m2=0..*</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>240</x>
-      <y>288</y>
-      <w>168</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes>ViewObject
---
--sceneObject: SceneObject
--position: Vector
--orientation: Vector
--mesh: Mesh
--texture: Texture
---</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
-      <x>400</x>
+      <x>224</x>
       <y>336</y>
-      <w>104</w>
+      <w>280</w>
       <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
-m2=1..*</panel_attributes>
-    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>200</x>
-      <y>232</y>
-      <w>160</w>
-      <h>72</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
 m2=0..*</panel_attributes>
-    <additional_attributes>10.0;10.0;160.0;10.0;160.0;70.0</additional_attributes>
+    <additional_attributes>10.0;10.0;330.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>392</x>
       <y>192</y>
-      <w>40</w>
-      <h>112</h>
+      <w>112</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=2
 m2=1..*</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0;120.0;150.0</additional_attributes>
   </element>
 </diagram>
