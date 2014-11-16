@@ -2,9 +2,14 @@ package be.ac.ulb.infof307.g05;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 
-import com.jme3.math.Vector2f;
+
+
 import com.jme3.math.Vector3f;
 
 
@@ -12,9 +17,11 @@ public class EventController implements ActionListener {
 
 	private MainWindow _window;
 		
-	private boolean _flag2D = true;
-	private boolean _flag3D = true;
+	private boolean  _flag2D = true;
+	private boolean  _flag3D = true;
 	private Vector3f _cursor = new Vector3f();
+	
+	private ToolController   _toolController = new ToolController();
 	
 	
 	public EventController(MainWindow window){
@@ -29,11 +36,16 @@ public class EventController implements ActionListener {
 	public boolean getFlag3D(){
 		return _flag3D;
 	}
-		
+	
 	public Vector3f getCursor(){
 		return _cursor;
 	}
 	
+	public void addTool(String tool_name){
+		_toolController.addTool(tool_name);
+	}
+	
+	@Override
 	public void actionPerformed(ActionEvent event){
 		String command = event.getActionCommand();
 		
@@ -48,20 +60,13 @@ public class EventController implements ActionListener {
 			_flag3D = true;
 		}else if(command == "cursor_move"){
 			_cursor.set((Vector3f) event.getSource());
-		}else if(command == "Mur"){
-			_window.getController().getCClosedPoly2D().setType("wall");
-			System.out.println("lalalala");
-		}else if(command == "Sol"){
-			System.out.println("lolololo");
-		} else if (command == "Murclic1") { /* Fonctions de simulation de clics a supprimer */
-			((_window.getController()).getCClosedPoly2D()).addCoord(new Vector2f(0,0));
-		} else if (command == "Murclic2") {
-			_window.getController().getCClosedPoly2D().addCoord(new Vector2f(1,0));
-		} else if (command == "Murclic3") {
-			_window.getController().getCClosedPoly2D().addCoord(new Vector2f(1,1));
-		} else if (command == "Murvalider") {
-			System.out.println("validé.");
-			_window.getController().getCClosedPoly2D().makePoly();
+		}else if(command == "ENTER"){
+			_toolController.make();
+		}else if((!_toolController.getEnabledTool().isEmpty()) && command == "cursor_click_up"){
+			_toolController.addPosition((Vector3f) event.getSource());
+
+		}else {
+			_toolController.enableTool(command);
 		}
 		
 		_window.update();

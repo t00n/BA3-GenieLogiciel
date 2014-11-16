@@ -28,7 +28,6 @@ public class Reference {
 		createFloor(size);
 	}
 
-	
 	public void setNode(Node node, boolean attach){
 		if(_node != null){
 			setGridEnable(false);

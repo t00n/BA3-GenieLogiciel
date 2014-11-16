@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import be.ac.ulb.infof307.g05.canvas.CanvasJme;
 import be.ac.ulb.infof307.g05.canvas.MenuBarCanvas;
 import be.ac.ulb.infof307.g05.canvas.StatusBarCanvas;
-import be.ac.ulb.infof307.g05.canvas.ToolCanvas;
+import be.ac.ulb.infof307.g05.canvas.TabCanvas;
 import be.ac.ulb.infof307.g05.controller.Controller;
 import be.ac.ulb.infof307.g05.model.Database;
 import be.ac.ulb.infof307.g05.model.Stage;
@@ -18,9 +18,9 @@ import be.ac.ulb.infof307.g05.model.Stage;
 
 public class MainWindow extends JFrame {
 
-	private EventController _eventControler;
+	private EventController _eventController;
 
-	private ToolCanvas    _canvasUI;
+	private TabCanvas    _canvasUI;
 	private CanvasJme     _canvasJme;
 	private MenuBarCanvas _canvasMenuBar;
 	private StatusBarCanvas _canvasStatusBar;
@@ -32,13 +32,12 @@ public class MainWindow extends JFrame {
 	public MainWindow(String title){
 		/** constructor **/
 		
-		_eventControler = new EventController(this);
-		_canvasUI = new ToolCanvas(_eventControler);
-		_canvasJme = new CanvasJme(_eventControler);
-		_canvasMenuBar = new MenuBarCanvas(_eventControler);
-		_canvasStatusBar = new StatusBarCanvas(_eventControler);
-		
-		
+		_eventController = new EventController(this);
+		_canvasUI = new TabCanvas(_eventController);
+		_canvasJme = new CanvasJme(_eventController);
+		_canvasMenuBar = new MenuBarCanvas(_eventController);
+		_canvasStatusBar = new StatusBarCanvas(_eventController);
+				
 		_controller = new Controller(new Database());
 		_controller.getDatabase().addStage(0, new Stage());
 		_controller.setStage(_controller.getDatabase().getStage(0));

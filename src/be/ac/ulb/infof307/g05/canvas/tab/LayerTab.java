@@ -4,11 +4,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 
-public class Tab2 extends AbstractTab {
+public class LayerTab extends AbstractTab {
 		
-	public Tab2(){
+	public LayerTab(){
 		/** constructor **/
-		_name = new String("Tab2");
+		_name = new String("Layers");
 		
 		JButton button = new JButton("button2");
 		this.add(button);
