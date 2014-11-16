@@ -2,13 +2,8 @@ package be.ac.ulb.infof307.g05;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-
-
+import java.util.Vector;
 
 import com.jme3.math.Vector3f;
 
@@ -16,17 +11,21 @@ import com.jme3.math.Vector3f;
 public class EventController implements ActionListener {
 
 	private MainWindow _window;
-		
+	
 	private boolean  _flag2D = true;
 	private boolean  _flag3D = true;
 	private Vector3f _cursor = new Vector3f();
 	
-	private ToolController   _toolController = new ToolController();
+	private ToolController   _toolController;
 	
 	
 	public EventController(MainWindow window){
 		/** constructor **/
 		_window = window;
+		
+		Vector<Vector3f> position_queue = new Vector<Vector3f>();
+		position_queue.add(_cursor);
+		_toolController = new ToolController(position_queue);
 	}
 	
 	public boolean getFlag2D(){
@@ -42,11 +41,13 @@ public class EventController implements ActionListener {
 	}
 	
 	public void addTool(String tool_name){
+		/** this method add a flag for the new tool **/
 		_toolController.addTool(tool_name);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent event){
+		/** this method manage events **/
 		String command = event.getActionCommand();
 		
 		if(command == "2D view"){
@@ -60,15 +61,11 @@ public class EventController implements ActionListener {
 			_flag3D = true;
 		}else if(command == "cursor_move"){
 			_cursor.set((Vector3f) event.getSource());
-		}else if(command == "ENTER"){
-			_toolController.make();
-		}else if((!_toolController.getEnabledTool().isEmpty()) && command == "cursor_click_up"){
-			_toolController.addPosition((Vector3f) event.getSource());
-
 		}else {
-			_toolController.enableTool(command);
+			_toolController.actionPerformed(event);
 		}
 		
+		_toolController.update();
 		_window.update();
 	}
 }

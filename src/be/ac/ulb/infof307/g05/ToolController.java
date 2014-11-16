@@ -1,7 +1,10 @@
 package be.ac.ulb.infof307.g05;
 
+import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Vector;
+
+import javax.swing.JComboBox;
 
 import com.jme3.math.Vector3f;
 
@@ -9,24 +12,29 @@ import com.jme3.math.Vector3f;
 public class ToolController {
 
 	private HashMap<String, Boolean> _flagTools = new HashMap<String, Boolean>();
-	private Vector<Vector3f> 		 _clickQueue = new Vector<Vector3f>();
+	private Vector<Vector3f> 		 _positionStack;
 	
 	
-	public ToolController(){
+	public ToolController(Vector<Vector3f> position_stack){
+		/** constructor **/
+		_positionStack = position_stack;
 	}
 	
 	public void addTool(String tool_name){
+		/** this method add a flag for the new tool **/
 		_flagTools.put(tool_name, false);
 	}
 	
 	public void addPosition(Vector3f position){
+		/** this method push a new vector to position stack if a tool is active **/
 		if(!getEnabledTool().isEmpty()){
-			_clickQueue.add(position);
+			_positionStack.add(0,position);
 			System.out.println("[DEBUG][ToolController::addPosition] : " + position);
 		}
 	}
 	
-	public void enableTool(String tool_name){		
+	public void enableTool(String tool_name){
+		/** this method enable a tool and disable others **/
 		if(_flagTools.containsKey(tool_name)){
 			System.out.println("[DEBUG][ToolController::enableTool] : " + tool_name);
 			for(String tool:_flagTools.keySet()){
@@ -35,11 +43,12 @@ public class ToolController {
 				else
 				_flagTools.put(tool, false);
 			}
-			_clickQueue.clear();
+			purge();
 		}
 	}
 	
 	public String getEnabledTool(){
+		/** this method return the active tool name **/
 		String enabled_tool = new String();
 		
 		for(String tool:_flagTools.keySet()){
@@ -47,30 +56,42 @@ public class ToolController {
 				enabled_tool += tool;
 			}
 		}
-		
 		return enabled_tool;
 	}
 	
-	public void make(){
-		/** this method start the execution of the tool **/
-		String tool = new String(getEnabledTool());
-
-		if(!tool.isEmpty()){
-			if(tool.equals("Wall")){
-				createWall();
-			}else if(tool.equals("Ground")){
-				createGround();
-			}
+	public void update(){
+		/** this method re-draw the "active shape" **/
+		if(!getEnabledTool().isEmpty()){
+			System.out.println("[DEBUG][ToolController::make] : " + _positionStack);
 		}
-		_clickQueue.clear();
-		_flagTools.put(tool, false);
+	}
+
+	private void purge(){
+		/** this method pop all position from position stack (except cursor) **/
+		while(_positionStack.size() > 1){
+			_positionStack.removeElementAt(0);
+		}
+		//FIXME remove selected figure
 	}
 	
-	private void createWall(){
-		System.out.println("[DEBUG][ToolController::make] : " + _clickQueue);
-	}
-	
-	private void createGround(){
-		System.out.println("[DEBUG][ToolController::make] : " + _clickQueue);
+	public void actionPerformed(ActionEvent event){
+		/** this method manage event sends from EventController **/
+		String command = event.getActionCommand();
+
+		if(!getEnabledTool().isEmpty()){
+			if(command == "ENTER"){
+				//FIXME when draw a polygon
+			}else if(command == "ESCAPE"){
+				purge();
+			}else if(command == "cursor_click_up"){
+				addPosition((Vector3f) event.getSource());
+			}else if(command == "comboBoxChanged"){
+				if(((JComboBox)event.getSource()).getSelectedItem() == "Rectangle"){
+					System.out.println("RECTANGLE");
+				}
+			}
+		}else {
+			enableTool(command);
+		}
 	}
 }

@@ -1,21 +1,14 @@
 package be.ac.ulb.infof307.g05.canvas.tab;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Vector;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
@@ -83,8 +76,9 @@ public class ToolTab extends AbstractTab implements ItemListener {
 	}
 	
 	public void setDrawOption(){
+		/** this method create options for "Draw" tool in option panel **/
 		JLabel shape_label = new JLabel("Shape :", SwingConstants.LEFT);
-		JComboBox<String> shape_choice = new JComboBox<String>(new String[] {"Polygon","Rectangle","Oval"});
+		JComboBox<String> shape_choice = new JComboBox<String>(new String[] {"Rectangle","Polygon","Oval"});
 		shape_choice.setFocusable(false);
 		shape_choice.addActionListener(_eventController);
 		_optionPanel.add(shape_label);
