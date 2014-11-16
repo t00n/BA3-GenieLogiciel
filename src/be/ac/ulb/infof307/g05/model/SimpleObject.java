@@ -5,7 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "simple_objects")
 public class SimpleObject extends SceneObject {
-	public SimpleObject() {
+	protected SimpleObject() {
 		
 	}
 	public SimpleObject(Stage stage, Vertex position,
@@ -26,5 +26,5 @@ public class SimpleObject extends SceneObject {
 	}
 	
 	@DatabaseField (generatedId = true)
-	private int id_simpleObject;
+	protected int id_simpleObject;
 }

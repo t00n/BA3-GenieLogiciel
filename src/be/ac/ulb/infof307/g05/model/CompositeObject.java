@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "composite_objects")
 public class CompositeObject extends SceneObject {
-	public CompositeObject() {
+	protected CompositeObject() {
 		
 	}
 	public CompositeObject(Stage stage, Vertex position,
@@ -28,8 +28,12 @@ public class CompositeObject extends SceneObject {
 	}
 
 	@DatabaseField (generatedId = true)
-	private int id_compositeObject;
+	protected int id_compositeObject;
 	
 	@ForeignCollectionField (eager = false)
-	public ForeignCollection<SceneObject> childs;
+	protected ForeignCollection<SceneObject> childs;
+	
+	
+	//TODO change ForeignCollection<> to something else
+	public ForeignCollection<SceneObject> getChilds() { return this.childs; }
 }

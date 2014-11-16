@@ -5,7 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "meshes")
 public class Mesh extends Database {
-	public Mesh() {
+	protected Mesh() {
 		
 	}
 	
@@ -15,11 +15,11 @@ public class Mesh extends Database {
 	}
 	
 	@DatabaseField (generatedId = true)
-	private int id_mesh;
+	protected int id_mesh;
 	
 	@DatabaseField (canBeNull = false)
-	private String name;
+	protected String name;
 	
 	@DatabaseField (canBeNull = false)
-	private String fileLocation;
+	protected String fileLocation;
 }

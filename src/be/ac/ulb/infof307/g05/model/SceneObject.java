@@ -3,7 +3,7 @@ package be.ac.ulb.infof307.g05.model;
 import com.j256.ormlite.field.DatabaseField;
 
 public abstract class SceneObject extends Database {
-	public SceneObject() {
+	protected SceneObject() {
 		
 	}
 
@@ -44,21 +44,21 @@ public abstract class SceneObject extends Database {
 	}
 	
 	@DatabaseField (canBeNull = true, foreign = true)
-	public Stage stage;
+	protected Stage stage;
 	
 	@DatabaseField (canBeNull = true, foreign = true)
-	public CompositeObject parent;
+	protected CompositeObject parent;
 
 	@DatabaseField (canBeNull = false, foreign = true)
-	private Vertex position;
+	protected Vertex position;
 	
 	@DatabaseField (canBeNull = false, foreign = true)
-	private Vertex orientation;
+	protected Vertex orientation;
 	
 	@DatabaseField (canBeNull = false, foreign = true)
-	private Mesh mesh;
+	protected Mesh mesh;
 	
 	@DatabaseField (canBeNull = true, foreign = true)
-	private Texture texture;
+	protected Texture texture;
 
 }

@@ -9,7 +9,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "projects")
 public class Project extends Database {
-	public Project() {
+	protected Project() {
 		
 	}
 	
@@ -21,20 +21,23 @@ public class Project extends Database {
 	}
 	
 	@DatabaseField (generatedId = true)
-	private int id_project;
+	protected int id_project;
 	
 	@DatabaseField (canBeNull = false)
-	private String name;
+	protected String name;
 	
 	@DatabaseField (canBeNull = false)
-	private Date creationDate;
+	protected Date creationDate;
 	
 	@DatabaseField (canBeNull = false)
-	private Date modificationDate;
+	protected Date modificationDate;
 	
 	@DatabaseField (canBeNull = false)
-	private Boolean current;
+	protected Boolean current;
 	
 	@ForeignCollectionField (eager = false)
-	public ForeignCollection<Stage> stages;
+	protected ForeignCollection<Stage> stages;
+	
+	// TODO change ForeignCollection<>
+	public ForeignCollection<Stage> getStages() { return this.stages; }
 }

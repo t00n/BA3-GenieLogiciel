@@ -5,7 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "textures")
 public class Texture extends Database {
-	public Texture() {
+	protected Texture() {
 		
 	}
 	
@@ -15,11 +15,11 @@ public class Texture extends Database {
 	}
 	
 	@DatabaseField (generatedId = true)
-	private int id_texture;
+	protected int id_texture;
 	
 	@DatabaseField (canBeNull = false)
-	private String name;
+	protected String name;
 	
 	@DatabaseField (canBeNull = false)
-	private String fileLocation;
+	protected String fileLocation;
 }

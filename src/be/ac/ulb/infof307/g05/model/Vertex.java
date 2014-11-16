@@ -5,7 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "vertexes")
 public class Vertex extends Database {
-	public Vertex() {
+	protected Vertex() {
 		
 	}
 	
@@ -16,15 +16,15 @@ public class Vertex extends Database {
 	}
 	
 	@DatabaseField (generatedId = true)
-	private int id_vertex;
+	protected int id_vertex;
 
 	@DatabaseField (canBeNull = false)
-	private double x;
+	protected double x;
 	
 	@DatabaseField (canBeNull = false)
-	private double y;
+	protected double y;
 	
 	@DatabaseField (canBeNull = false)
-	private double z;
+	protected double z;
 
 }

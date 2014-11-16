@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "stages")
 public class Stage extends Database {
-	public Stage() {
+	protected Stage() {
 		
 	}
 	
@@ -18,17 +18,19 @@ public class Stage extends Database {
 	}
 	
 	@DatabaseField (generatedId = true)
-	private int id_stage;
+	protected int id_stage;
 	
 	@DatabaseField (canBeNull = false)
-	private int level;
+	protected int level;
 	
 	@DatabaseField (canBeNull = false)
-	private double height;
+	protected double height;
 	
 	@DatabaseField (canBeNull = false, foreign = true)
-	public Project project;
+	protected Project project;
 	
 	@ForeignCollectionField (eager = false)
-	public ForeignCollection<SceneObject> sceneObjects;
+	protected ForeignCollection<SceneObject> sceneObjects;
+	
+	public ForeignCollection<SceneObject> getSceneObjects() { return this.sceneObjects; }
 }
