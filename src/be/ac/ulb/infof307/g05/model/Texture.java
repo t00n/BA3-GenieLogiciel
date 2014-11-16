@@ -4,7 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "textures")
-public class Texture {
+public class Texture extends Database {
 	public Texture() {
 		
 	}

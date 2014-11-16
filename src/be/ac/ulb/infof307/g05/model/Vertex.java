@@ -4,9 +4,15 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "vertexes")
-public class Vertex {
+public class Vertex extends Database {
 	public Vertex() {
 		
+	}
+	
+	public Vertex(double x, double y, double z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 	
 	@DatabaseField (generatedId = true)
