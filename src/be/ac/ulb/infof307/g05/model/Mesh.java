@@ -8,6 +8,12 @@ public class Mesh extends Database {
 	public Mesh() {
 		
 	}
+	
+	public Mesh(String name, String fileLocation) {
+		this.name = name;
+		this.fileLocation = fileLocation;
+	}
+	
 	@DatabaseField (generatedId = true)
 	private int id_mesh;
 	

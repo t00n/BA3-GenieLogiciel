@@ -12,6 +12,14 @@ public class Project extends Database {
 	public Project() {
 		
 	}
+	
+	public Project(String name) {
+		this.name = name;
+		this.creationDate = new Date();
+		this.modificationDate = new Date();
+		this.current = true;
+	}
+	
 	@DatabaseField (generatedId = true)
 	private int id_project;
 	

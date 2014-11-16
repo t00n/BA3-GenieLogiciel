@@ -10,7 +10,23 @@ public class CompositeObject extends SceneObject {
 	public CompositeObject() {
 		
 	}
-	
+	public CompositeObject(Stage stage, Vertex position,
+			Vertex orientation, Mesh mesh, Texture texture) {
+		super(stage, position, orientation, mesh, texture);
+	}
+	public CompositeObject(Stage stage, Vertex position,
+			Vertex orientation, Mesh mesh) {
+		super(stage, position, orientation, mesh);
+	}	
+	public CompositeObject(CompositeObject parent, Vertex position,
+			Vertex orientation, Mesh mesh, Texture texture) {
+		super(parent, position, orientation, mesh, texture);
+	}	
+	public CompositeObject(CompositeObject parent, Vertex position,
+			Vertex orientation, Mesh mesh) {
+		super(parent, position, orientation, mesh);
+	}
+
 	@DatabaseField (generatedId = true)
 	private int id_compositeObject;
 	

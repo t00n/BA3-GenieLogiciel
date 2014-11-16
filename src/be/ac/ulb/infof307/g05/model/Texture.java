@@ -9,6 +9,11 @@ public class Texture extends Database {
 		
 	}
 	
+	public Texture(String name, String fileLocation) {
+		this.name = name;
+		this.fileLocation = fileLocation;
+	}
+	
 	@DatabaseField (generatedId = true)
 	private int id_texture;
 	

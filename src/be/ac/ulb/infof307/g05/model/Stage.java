@@ -11,6 +11,12 @@ public class Stage extends Database {
 		
 	}
 	
+	public Stage(Project project, int level, double height) {
+		this.project = project;
+		this.level = level;
+		this.height = height;
+	}
+	
 	@DatabaseField (generatedId = true)
 	private int id_stage;
 	
