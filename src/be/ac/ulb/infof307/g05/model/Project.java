@@ -8,7 +8,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "projects")
-public class Project extends Database {
+public class Project extends Database<Project> {
 	protected Project() {
 		
 	}

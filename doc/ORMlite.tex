@@ -103,13 +103,13 @@ La doc :
 
 Pour sauver et charger de la base de données, il faut un objet en plus de la classe de base Java appelé DAO (Data Access Object) qui va utiliser les annotations de la section précédente pour interagir avec la base de données.
 
-La classe Database que j'ai créée sert également de base pour toutes les classes devant se trouver dans la base de données. Elle définit une méthode getDao() qui crée automatiquement le bon DAO pour la sous-classe et elle étend BaseDaoEnabled (une classe de ORMlite), ce qui permet d'utiliser directement les objets comme DAOs.
+La classe Database que j'ai créée sert également de base pour toutes les classes devant se trouver dans la base de données. Elle étend BaseDaoEnabled (une classe de ORMlite), ce qui permet d'utiliser directement les objets comme DAOs.
 
 Donc la classe de la section précédente devient : 
 
 \begin{lstlisting}
 @DatabaseTable {tableName = "tests"}
-public class Test extends Database {
+public class Test extends Database<Test> {
 	@DatabaseField (generatedId = true)
 	private int id_test;
 	@DatabaseField (canBeNull = false)
@@ -124,6 +124,14 @@ Test test = new Test();
 test.create(); // crée test dans la base de données
 test.update(); // met a jour test dans la base de données
 test.delete(); // supprime test dans la base de données
+\end{lstlisting}
+
+Pour utiliser le DAO directement (indispensable pour faire un SELECT ou pour gérer des listes d'objets) :
+\begin{lstlisting}
+// a partir d'un objet
+Dao<Test, Integer> = test.getDao();
+// ou d'une classe
+Dao<Test, Integer> = Test.getDao(Test.class);
 \end{lstlisting}
 
 Plein d'autres méthodes sont disponibles pour faire des requêtes complexes et pour créer/mettre à jour/supprimer plusieurs objets en même temps.

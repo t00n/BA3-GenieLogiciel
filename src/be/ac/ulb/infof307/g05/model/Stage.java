@@ -6,7 +6,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "stages")
-public class Stage extends Database {
+public class Stage extends Database<Stage> {
 	protected Stage() {
 		
 	}

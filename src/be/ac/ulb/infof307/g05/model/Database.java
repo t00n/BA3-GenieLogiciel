@@ -8,7 +8,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.TableUtils;
 
-public class Database extends BaseDaoEnabled {
+public class Database<T> extends BaseDaoEnabled<T, Integer> {
 	
 	/**
 	 *  static link to database connection source
@@ -43,24 +43,24 @@ public class Database extends BaseDaoEnabled {
 		return connectionSource;
 	}
 	
-	/** 
-	 * provide subclasses a link to their DAOs
-	 */
-	private Dao<? extends Database, ?> dao;
-	
-	public Dao<? extends Database, ?> getDao() {
-		if (dao == null) {
-			try {
-				dao = DaoManager.createDao(Database.getConnectionSource(), this.getClass());
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	@SuppressWarnings("unchecked")
+	public static <T> Dao<T, Integer> getDao(Class<?> klass) {
+		try {
+			return (Dao<T, Integer>) DaoManager.createDao(Database.getConnectionSource(), klass);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return dao;
+		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Database() {
-		this.setDao(this.getDao());
+		try {
+			this.setDao((Dao<T, Integer>) DaoManager.createDao(Database.getConnectionSource(), this.getClass()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

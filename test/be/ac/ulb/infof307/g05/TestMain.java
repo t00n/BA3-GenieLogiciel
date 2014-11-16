@@ -4,17 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import java.sql.SQLException;
+import com.j256.ormlite.dao.ForeignCollection;
 
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.table.TableUtils;
+import java.sql.SQLException;
 
 import be.ac.ulb.infof307.g05.model.*;
 
 public class TestMain {
-
-	private final String connectionString = "jdbc:sqlite:test.db";
 	
 	@Test
 	public void test() {
@@ -50,5 +46,13 @@ public class TestMain {
 		compositeObject5.create();
 		simpleObject1.create();
 		simpleObject2.create();
+		
+		// load
+		Project projectLoad = (Project) Project.getDao(Project.class).queryForId(1);
+		ForeignCollection<Stage> stagesLoad = projectLoad.getStages();
+		// another way to add a Stage to the Project
+		stagesLoad.add(new Stage(projectLoad, 1, 3));
+		stagesLoad.updateAll();
+		Stage stageLoad = (Stage) stagesLoad.toArray()[0];
 	}
 }

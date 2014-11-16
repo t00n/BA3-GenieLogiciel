@@ -4,7 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "vertexes")
-public class Vertex extends Database {
+public class Vertex extends Database<Vertex> {
 	protected Vertex() {
 		
 	}
