@@ -36,14 +36,9 @@ J'ai rajouté 3 fichiers dans le dossier lib (que vous devez rajouter dans votre 
 Si vous ajoutez ces 3 fichiers, normalement ca fonctionne.
 
 \subsection{Test}
-Dans le dossier test, j'ai rajouté 3 fichiers qui permettent de tester si la base de données et l'ORM fonctionnent. Lancez simplement TestMain et dites-moi si vous avez des erreurs. Sinon, c'est que ca fonctionne.
-Vous pouvez vérifier par vous-même en lançant "sqlite3 test.db" à la racine du projet et en faisant des select en SQL : 
-
-\begin{lstlisting}
-select * from test_orms;
-select * from test_manys;
-select * from test_onetoones;
-\end{lstlisting}
+J'ai rajouté un test dans TestMain qui permet de vérifer si la base de données et l'ORM fonctionnent.
+Lancez simplement TestMain et dites-moi si vous avez des erreurs. Sinon, c'est que ca fonctionne.
+Vous pouvez vérifier par vous-même en lançant "sqlite3 test.db" à la racine du projet et en faisant des select en SQL
 
 \section{Utilisation}
 
@@ -107,49 +102,39 @@ La doc :
 \subsection{Sauver et charger dans/de la base de données}
 
 Pour sauver et charger de la base de données, il faut un objet en plus de la classe de base Java appelé DAO (Data Access Object) qui va utiliser les annotations de la section précédente pour interagir avec la base de données.
-Avec ORMlite, on fait 
+
+La classe Database que j'ai créée sert également de base pour toutes les classes devant se trouver dans la base de données. Elle définit une méthode getDao() qui crée automatiquement le bon DAO pour la sous-classe et elle étend BaseDaoEnabled (une classe de ORMlite), ce qui permet d'utiliser directement les objets comme DAOs.
+
+Donc la classe de la section précédente devient : 
 
 \begin{lstlisting}
-// Le premier paramètre du template est la classe pour laquelle on veut 
-// un DAO et le deuxième est le type de l'id de cette classe
-Dao<Test, Integer> daoTest = new DaoManager.createDao(connectionSource, Test.class);
+@DatabaseTable {tableName = "tests"}
+public class Test extends Database {
+	@DatabaseField (generatedId = true)
+	private int id_test;
+	@DatabaseField (canBeNull = false)
+	private String aTestMember;
+}
 \end{lstlisting}
 
-Ceci crée un DAO pour la classe Test qu'on peut ensuite utiliser : 
+Ce qui permet de faire : 
 
 \begin{lstlisting}
 Test test = new Test();
-daoTest.create(test); // crée test dans la base de données
-daoTest.update(test); // met a jour test dans la base de données
-daoTest.delete(test); // supprime test dans la base de données
+test.create(); // crée test dans la base de données
+test.update(); // met a jour test dans la base de données
+test.delete(); // supprime test dans la base de données
 \end{lstlisting}
 
 Plein d'autres méthodes sont disponibles pour faire des requêtes complexes et pour créer/mettre à jour/supprimer plusieurs objets en même temps.
 
 La doc : 
 \begin{itemize}
-	\item \url{http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite_2.html#DAO-Setup}
 	\item \url{http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite_5.html#DAO-Methods}
 \end{itemize}
 
-\subsection{Créer automatiquement une table si elle n'existe pas}
-
-Pour l'instant, tout ça ne fonctionne pas parce que les tables ne sont pas crées dans la base de données.
-Par chance, on peut dire à ORMlite de tout créer tout seul en se basant sur les annotations.
-Pour cela, il suffit de faire (une seule fois dans le code) 
-
-\begin{lstlisting}
-TableUtils.createTableIfNotExists(connectionSource, Test.class);
-\end{lstlisting}
-
-C'est surtout utile pour le moment parce qu'on est en développement. Une fois qu'on passe en production, on enlève tout ça et on garde simplement la base de données finale.
-
-La doc :
-\begin{itemize}
-	\item \url{http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite_2.html#TableUtils}
-\end{itemize}
-
 \subsection{Lier les classes entres elles (foreign key dans la base de données)}
+\label{foreign_key}
 
 Une des forces d'un ORM, c'est qu'il peut faire lui-même les liens entre les tables dans la base de données. Pour ça on lui spécifie simplement les relations entre les classes avec des annotations.
 
@@ -178,13 +163,10 @@ Voici le code de OtherTest
 	
 	// C'est ici que ca se passe !
 	// le paramètre eager détermine si les objets sont chargés 
-	// directement ou seulement à la première utilisation
+	// directement (true) ou seulement à la première utilisation (false)
 	@ForeignCollectionField(eager = true)
 	private ForeignCollection<Test> tests;
 \end{lstlisting}
-
-Attention, il y a une subtilité : lorsqu'on crée les tables avec TableUtils (section précédente), il faut les créer dans le bon ordre pour ne pas référencer une table qui n'existe pas encore !
-Dans l'exemple, il faut créer d'abord OtherTest et puis Test puisque Test référence OtherTest.
 
 Si on veut créer une relation one-to-one (c'est à dire qu'un certain objet OtherTest ne référence qu'un objet Test et inversément, i.e deux objets Test différents ne peuvent pas référence le même objet OtherTest), il faut rajouter une contrainte unique sur la foreign key : 
 
@@ -210,13 +192,34 @@ La doc :
 	\item \url{http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite_2.html#Foreign-Collection}
 \end{itemize}
 
+\subsection{Créer automatiquement une table si elle n'existe pas}
+
+Pour l'instant, tout ça ne fonctionne pas parce que les tables ne sont pas crées dans la base de données.
+Par chance, on peut dire à ORMlite de tout créer tout seul en se basant sur les annotations.
+Pour cela, il suffit de faire (une seule fois dans le code) 
+
+\begin{lstlisting}
+TableUtils.createTableIfNotExists(connectionSource, Test.class);
+\end{lstlisting}
+
+C'est surtout utile pour le moment parce qu'on est en développement. Une fois qu'on passe en production, on enlève tout ça et on garde simplement la base de données finale.
+
+Pour l'instant je mets les creations de table dans la classe Database donc si vous créez une nouvelle classe il faut pas oublier d'aller rajouter la création de table dans Database.
+
+Attention, il y a une subtilité : lorsqu'on crée les tables avec TableUtils, il faut les créer dans le bon ordre pour ne pas référencer une table qui n'existe pas encore !
+Dans l'exemple à la section \ref{foreign_key}, il faut créer d'abord OtherTest et puis Test puisque Test référence OtherTest.
+
+La doc :
+\begin{itemize}
+	\item \url{http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite_2.html#TableUtils}
+\end{itemize}
+
 \section{To do}
 
 \begin{itemize}
 	\item Rajouter loadConfig et le threading dans Database
 	\item Améliorer ce tuto ??
 	\item Trouver un moyen de simplifier les relations many-to-many
-	\item Créer des query personnalisées pour stocker les .obj en BLOB
 \end{itemize}
 
 \end{document}
