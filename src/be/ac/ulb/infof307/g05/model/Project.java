@@ -29,7 +29,7 @@ public class Project extends Database<Project> {
 	@DatabaseField (canBeNull = false)
 	protected Date creationDate;
 	
-	@DatabaseField (canBeNull = false)
+	@DatabaseField (canBeNull = false, version = true)
 	protected Date modificationDate;
 	
 	@DatabaseField (canBeNull = false)
