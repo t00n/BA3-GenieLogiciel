@@ -2,6 +2,7 @@ package be.ac.ulb.infof307.g05;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import be.ac.ulb.infof307.g05.model.CompositeObject;
@@ -22,18 +23,24 @@ public class EventController implements ActionListener {
 	private Vector3f _cursor = new Vector3f();
 	
 	private ToolController   _toolController;
-	private Project		 _project = new Project("test Project");
+	private Project		 _project;
 	
 	
 	public EventController(MainWindow window){
 		/** constructor **/
 		_window = window;
+		try {
+			_project = (Project) Project.getDao(Project.class).queryForId(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Vector<Vector3f> position_queue = new Vector<Vector3f>();
 		position_queue.add(_cursor);
 		
 //		_project.loadProject(_window.popUpLoad());
-		_toolController = new ToolController(new Stage(_project, 0), position_queue);
+		_toolController = new ToolController((Stage)_project.getStages().toArray()[0], position_queue);
 	}
 	
 	public boolean getFlag2D(){

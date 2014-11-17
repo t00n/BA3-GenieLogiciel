@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g05.model;
 
 import java.sql.SQLException;
+import java.util.Vector;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -26,12 +27,17 @@ public class Database<T> extends BaseDaoEnabled<T, Integer> {
 				TableUtils.dropTable(connectionSource, CompositeObject.class, true);
 				TableUtils.dropTable(connectionSource, Stage.class, true);
 				TableUtils.dropTable(connectionSource, Project.class, true);
+				TableUtils.dropTable(connectionSource, Order.class, true);
 				TableUtils.createTableIfNotExists(connectionSource, Project.class);
 				TableUtils.createTableIfNotExists(connectionSource, Texture.class);
 				TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
 				TableUtils.createTableIfNotExists(connectionSource, Stage.class);
 				TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
 				TableUtils.createTableIfNotExists(connectionSource, Order.class);
+				Project project = new Project("test project");
+				project.create();
+				Stage stage = new Stage(project, 0);
+				stage.create();
 			}
 			catch (SQLException e) {
 				e.printStackTrace();

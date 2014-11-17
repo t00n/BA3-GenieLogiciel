@@ -26,7 +26,6 @@ public class JmeWorld extends SimpleApplication {
 	
 	public JmeWorld(EventController eventController){
 		_eventController = eventController;
-		_jmeCompositeObject = new JmeCompositeObject(_eventController.getStage(), assetManager);
 	}
 	
 	private void initViews(){
@@ -87,6 +86,7 @@ public class JmeWorld extends SimpleApplication {
 	}
 	
 	public void draw(){
+		_jmeCompositeObject = new JmeCompositeObject(_eventController.getStage(), assetManager);
 		Node stage = _jmeCompositeObject.getNode(assetManager);
 		if(_currentStage != stage){
 			rootNode.detachChild(_currentStage);

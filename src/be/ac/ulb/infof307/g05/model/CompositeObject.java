@@ -41,7 +41,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	public Texture getTexture() { return this.texture; }
 	
 	@ForeignCollectionField (eager = false)
-	private Collection<Vertex> positions;
+	private Collection<Vertex> positions = new ArrayList<Vertex>();
 	protected void setPositions(Collection<Vertex> col) { this.positions = col; }
 	protected Collection<Vertex> getPositions() { return this.positions; }
 	
@@ -56,7 +56,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	}
 	
 	@ForeignCollectionField (eager = false)
-	private Collection<Order> meshOrder;
+	private Collection<Order> meshOrder = new ArrayList<Order>();
 	protected void setMeshOrder(Collection<Order> col) { this.meshOrder = col; }
 	protected Collection<Order> getMeshOrder() { return this.meshOrder; }
 	
