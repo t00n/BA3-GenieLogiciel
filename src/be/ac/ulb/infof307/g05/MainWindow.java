@@ -51,6 +51,12 @@ public class MainWindow extends JFrame {
 		this.setVisible(true);
 	}
 	
+	public String popUpLoad(){
+		/** this method display a pop-up window to ask user which project to load **/
+		//FIXME Franklin
+		return "";
+	}
+	
 	public void update(){
 		_canvasUI.update();
 		_canvasJme.update();

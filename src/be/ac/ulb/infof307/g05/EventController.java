@@ -29,7 +29,9 @@ public class EventController implements ActionListener {
 		
 		Vector<Vector3f> position_queue = new Vector<Vector3f>();
 		position_queue.add(_cursor);
-		_toolController = new ToolController(position_queue);
+		
+		_dataBase.loadProject(_window.popUpLoad());
+		_toolController = new ToolController(_dataBase.getStage(0), position_queue);
 	}
 	
 	public boolean getFlag2D(){
@@ -68,6 +70,12 @@ public class EventController implements ActionListener {
 		}else if(command == "2D/3D view"){
 			_flag2D = true;
 			_flag3D = true;
+		}else if(command == "Open project.."){
+			//FIXME ask window to display pop-up menu, load it in database, load a stage in toolController
+		}else if(command == "Save"){
+			//FIXME ask database to save the project 
+		}else if(command == "New"){
+			//FIXME ask database to load new project (and save the current if not empty)
 		}else if(command == "cursor_move"){
 			_cursor.set((Vector3f) event.getSource());
 			_toolController.drawInConstruction();

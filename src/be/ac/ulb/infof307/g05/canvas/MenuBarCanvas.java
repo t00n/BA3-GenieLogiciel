@@ -13,7 +13,7 @@ public class MenuBarCanvas extends AbstractCanvas<JMenuBar>{
 		_panel = new JMenuBar();
 		_eventController = eventController;
 		
-		createMenu("File", new String[] {"New","Open File..","Save"});
+		createMenu("File", new String[] {"New","Open project..","Save"});
 		createMenu("Edit", new String[] {"Element 1", "Element 2", "Element 3"});
 		createMenu("View", new String[] {"2D view","3D view","2D/3D view"});
 	}
