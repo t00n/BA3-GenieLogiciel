@@ -13,8 +13,10 @@ import com.jme3.scene.Node;
 import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.util.BufferUtils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 @DatabaseTable (tableName = "composite_objects")
@@ -49,10 +51,27 @@ public abstract class CompositeObject extends Database<CompositeObject> implemen
 	protected void setPositions(Collection<Vertex> col) { this.positions = col; }
 	protected Collection<Vertex> getPositions() { return this.positions; }
 	
+	public List<Vector3f> getVectors() {
+		List<Vector3f> ret = new ArrayList<Vector3f>();
+		for (Vertex vertex: positions) {
+			ret.add(vertex.getVector());
+		}
+		return ret;
+	}
+	
 	@ForeignCollectionField (eager = false)
 	private Collection<Order> meshOrder;
 	protected void setMeshOrder(Collection<Order> col) { this.meshOrder = col; }
 	protected Collection<Order> getMeshOrder() { return this.meshOrder; }
+	
+	public List<Integer> getOrdersAsIntegers() {
+		List<Integer> ret = new ArrayList<Integer>();
+		for (Order order: meshOrder)
+		{
+			ret.add(order.getOrder());
+		}
+		return ret;
+	}
 
 	@ForeignCollectionField (eager = false)
 	private Collection<CompositeObject> childs;
