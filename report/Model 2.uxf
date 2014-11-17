@@ -50,6 +50,7 @@
 #childs: List&lt;CompositeObject&gt;
 #positions: List&lt;Vertex&gt;
 #orders: List&lt;Order&gt;
+#texture : Texture
 --
 +add()
 +remove()</panel_attributes>
