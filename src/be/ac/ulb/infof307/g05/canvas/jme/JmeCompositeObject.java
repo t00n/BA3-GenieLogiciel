@@ -32,9 +32,9 @@ public class JmeCompositeObject implements Iterable<JmeCompositeObject> {
 		/** this method convert a CompositeObject to a geometry **/
 		Mesh mesh = new Mesh();
 		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(object.getVectors()));
-		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(object.getOrders()));
+		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(object.getOrdersAsIntegers()));
 		
-		Geometry geo = new Geometry(object.getId(), mesh);
+		Geometry geo = new Geometry(object.getId().toString(), mesh);
 		if(object.getTexture() == null){
 			Material texture = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 			texture.setColor("default_color", ColorRGBA.Gray);

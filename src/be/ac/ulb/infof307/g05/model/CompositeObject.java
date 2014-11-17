@@ -45,10 +45,12 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	protected void setPositions(Collection<Vertex> col) { this.positions = col; }
 	protected Collection<Vertex> getPositions() { return this.positions; }
 	
-	public List<Vector3f> getVectors() {
-		List<Vector3f> ret = new ArrayList<Vector3f>();
+	public Vector3f[] getVectors() {
+		Vector3f[] ret = new Vector3f[positions.size()];
+		int i = 0;
 		for (Vertex vertex: positions) {
-			ret.add(vertex.getVector());
+			ret[i] = vertex.getVector();
+			++i;
 		}
 		return ret;
 	}
@@ -58,11 +60,13 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	protected void setMeshOrder(Collection<Order> col) { this.meshOrder = col; }
 	protected Collection<Order> getMeshOrder() { return this.meshOrder; }
 	
-	public List<Integer> getOrdersAsIntegers() {
-		List<Integer> ret = new ArrayList<Integer>();
+	public int[] getOrdersAsIntegers() {
+		int[] ret = new int[meshOrder.size()];
+		int i = 0;
 		for (Order order: meshOrder)
 		{
-			ret.add(order.getOrder());
+			ret[i] = order.getOrder();
+			++i;
 		}
 		return ret;
 	}
