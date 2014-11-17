@@ -6,13 +6,19 @@ import java.util.Vector;
 
 import javax.swing.JComboBox;
 
+import be.ac.ulb.infof307.g05.model.Stage;
+
+import com.jme3.asset.AssetManager;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Node;
 
 
 public class ToolController {
 
 	private HashMap<String, Boolean> _flagTools = new HashMap<String, Boolean>();
 	private Vector<Vector3f> 		 _positionStack;
+	
+	private Stage _currentStage = new Stage("init_stage",0);
 	
 	
 	public ToolController(Vector<Vector3f> position_stack){
@@ -59,8 +65,17 @@ public class ToolController {
 		return enabled_tool;
 	}
 	
-	public void update(){
-		/** this method re-draw the "active shape" **/
+	public void setCurrentStage(Stage stage){
+		_currentStage = stage;
+	}
+	
+	public Node getJmeStage(AssetManager assetManager){
+		/** this method retrun the root node of the current stage **/
+		return _currentStage.getJmeNode(assetManager);
+	}
+	
+	public void drawInConstruction(){
+		/** this method re-draw the scene object in construction **/
 		if(!getEnabledTool().isEmpty()){
 			System.out.println("[DEBUG][ToolController::make] : " + _positionStack);
 		}

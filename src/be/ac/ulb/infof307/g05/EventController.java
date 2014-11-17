@@ -2,10 +2,13 @@ package be.ac.ulb.infof307.g05;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.util.Vector;
 
+import be.ac.ulb.infof307.g05.model.DataBase;
+
+import com.jme3.asset.AssetManager;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Node;
 
 
 public class EventController implements ActionListener {
@@ -17,6 +20,7 @@ public class EventController implements ActionListener {
 	private Vector3f _cursor = new Vector3f();
 	
 	private ToolController   _toolController;
+	private DataBase		 _dataBase = new DataBase();
 	
 	
 	public EventController(MainWindow window){
@@ -45,6 +49,11 @@ public class EventController implements ActionListener {
 		_toolController.addTool(tool_name);
 	}
 	
+	public Node getJmeStage(AssetManager assetManager){
+		/** this method return the root node of the scene built by toolController **/
+		return _toolController.getJmeStage(assetManager);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent event){
 		/** this method manage events **/
@@ -61,11 +70,11 @@ public class EventController implements ActionListener {
 			_flag3D = true;
 		}else if(command == "cursor_move"){
 			_cursor.set((Vector3f) event.getSource());
+			_toolController.drawInConstruction();
 		}else {
 			_toolController.actionPerformed(event);
 		}
 		
-		_toolController.update();
 		_window.update();
 	}
 }

@@ -10,8 +10,7 @@ import be.ac.ulb.infof307.g05.canvas.CanvasJme;
 import be.ac.ulb.infof307.g05.canvas.MenuBarCanvas;
 import be.ac.ulb.infof307.g05.canvas.StatusBarCanvas;
 import be.ac.ulb.infof307.g05.canvas.TabCanvas;
-import be.ac.ulb.infof307.g05.controller.Controller;
-import be.ac.ulb.infof307.g05.model.Database;
+import be.ac.ulb.infof307.g05.model.DataBase;
 import be.ac.ulb.infof307.g05.model.Stage;
 
 
@@ -25,9 +24,6 @@ public class MainWindow extends JFrame {
 	private MenuBarCanvas _canvasMenuBar;
 	private StatusBarCanvas _canvasStatusBar;
 	
-	// MOOK CODE :
-	private Controller _controller;	
-	
 	
 	public MainWindow(String title){
 		/** constructor **/
@@ -38,14 +34,6 @@ public class MainWindow extends JFrame {
 		_canvasMenuBar = new MenuBarCanvas(_eventController);
 		_canvasStatusBar = new StatusBarCanvas(_eventController);
 				
-		_controller = new Controller(new Database());
-		_controller.getDatabase().addStage(0, new Stage());
-		_controller.setStage(_controller.getDatabase().getStage(0));
-		// Si on change d'étage, ne pas oublier de le dire au controlleur
-		// _controller.setStage(_controller.getDatabase().getStage(numeroEtage));
-
-		
-		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
 		this.setTitle(title);
@@ -68,10 +56,5 @@ public class MainWindow extends JFrame {
 		_canvasJme.update();
 		_canvasMenuBar.update();
 		_canvasStatusBar.update();
-	}
-	
-	public Controller getController() {
-		System.out.println("getcontro");
-		return _controller;
 	}
 }
