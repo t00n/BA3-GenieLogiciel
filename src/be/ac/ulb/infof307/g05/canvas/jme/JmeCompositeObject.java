@@ -14,7 +14,6 @@ import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.util.BufferUtils;
 
 import be.ac.ulb.infof307.g05.model.CompositeObject;
-import be.ac.ulb.infof307.g05.model.Order;
 
 
 public class JmeCompositeObject implements Iterable<JmeCompositeObject> {
