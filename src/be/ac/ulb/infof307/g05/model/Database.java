@@ -21,23 +21,23 @@ public class Database<T> extends BaseDaoEnabled<T, Integer> {
 		if (connectionSource == null) {
 			try {
 				connectionSource = new JdbcConnectionSource(connectionString);
-				// create tables
-				TableUtils.dropTable(connectionSource, Vertex.class, true);
-				TableUtils.dropTable(connectionSource, Texture.class, true);
-				TableUtils.dropTable(connectionSource, CompositeObject.class, true);
-				TableUtils.dropTable(connectionSource, Stage.class, true);
-				TableUtils.dropTable(connectionSource, Project.class, true);
-				TableUtils.dropTable(connectionSource, Order.class, true);
-				TableUtils.createTableIfNotExists(connectionSource, Project.class);
-				TableUtils.createTableIfNotExists(connectionSource, Texture.class);
-				TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
-				TableUtils.createTableIfNotExists(connectionSource, Stage.class);
-				TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
-				TableUtils.createTableIfNotExists(connectionSource, Order.class);
-				Project project = new Project("test project");
-				project.create();
-				Stage stage = new Stage(project, 0);
-				stage.create();
+//				// create tables
+//				TableUtils.dropTable(connectionSource, Vertex.class, true);
+//				TableUtils.dropTable(connectionSource, Texture.class, true);
+//				TableUtils.dropTable(connectionSource, CompositeObject.class, true);
+//				TableUtils.dropTable(connectionSource, Stage.class, true);
+//				TableUtils.dropTable(connectionSource, Project.class, true);
+//				TableUtils.dropTable(connectionSource, Order.class, true);
+//				TableUtils.createTableIfNotExists(connectionSource, Project.class);
+//				TableUtils.createTableIfNotExists(connectionSource, Texture.class);
+//				TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
+//				TableUtils.createTableIfNotExists(connectionSource, Stage.class);
+//				TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
+//				TableUtils.createTableIfNotExists(connectionSource, Order.class);
+//				Project project = new Project("test project");
+//				project.create();
+//				Stage stage = new Stage(project, 0);
+//				stage.create();
 			}
 			catch (SQLException e) {
 				e.printStackTrace();

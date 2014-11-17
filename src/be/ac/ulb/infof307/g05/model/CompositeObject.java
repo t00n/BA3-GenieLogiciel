@@ -25,7 +25,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	@ForeignCollectionField (eager = false)
 	private Collection<Order> meshOrder = new ArrayList<Order>();
 	@ForeignCollectionField (eager = false)
-	private Collection<CompositeObject> childs;
+	private Collection<CompositeObject> childs = new ArrayList<CompositeObject>();
 	
 	
 	protected CompositeObject() {
