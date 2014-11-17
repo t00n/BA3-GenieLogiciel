@@ -6,13 +6,9 @@ import com.jme3.math.Vector3f;
 
 
 public class Polygon extends CompositeObject {
-	
-	protected Polygon() {
-		
-	}
-	
-	public Polygon(Vector<Vertex> vectors){
-		init(vectors);
+
+	public Polygon(CompositeObject parent, Vector<Vertex> vectors){
+		super(parent, vectors);
 		buildMeshOrder();
 	}
 	

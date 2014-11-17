@@ -7,13 +7,9 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 
 public class Oval extends CompositeObject {
-
-	protected Oval() {
-		
-	}
 	
-	public Oval(Vector<Vertex> vectors){
-		this.setPositions(vectors);
+	public Oval(CompositeObject parent, Vector<Vertex> vectors){
+		super(parent, vectors);
 		buildMeshOrder();
 	}
 	

@@ -19,7 +19,7 @@ import java.util.Vector;
 
 @DatabaseTable (tableName = "composite_objects")
 public abstract class CompositeObject extends Database<CompositeObject> implements Iterable<CompositeObject> {
-	protected CompositeObject() {
+	private CompositeObject() {
 		
 	}
 

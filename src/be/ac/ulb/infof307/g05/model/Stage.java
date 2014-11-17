@@ -22,7 +22,7 @@ public class Stage extends Database<Stage> {
 	public Stage(Project project, int level) {
 		this.project = project;
 		this.level = level;
-		this.floor = new Polygon(new Vector<Vertex>());
+		this.floor = new Polygon(null, new Vector<Vertex>());
 	}
 	
 	@DatabaseField (generatedId = true)
