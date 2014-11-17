@@ -31,12 +31,14 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 
 	@DatabaseField (generatedId = true)
 	private Integer id_compositeObject;
+	public Integer getId() { return this.id_compositeObject; }
 	
 	@DatabaseField (canBeNull = true, foreign = true)
 	private CompositeObject parent;
 
 	@DatabaseField (canBeNull = true, foreign = true)
 	private Texture texture;
+	public Texture getTexture() { return this.texture; }
 	
 	@ForeignCollectionField (eager = false)
 	private Collection<Vertex> positions;
