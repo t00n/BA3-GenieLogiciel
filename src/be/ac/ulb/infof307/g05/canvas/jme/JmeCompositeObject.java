@@ -32,11 +32,12 @@ public class JmeCompositeObject implements Iterable<JmeCompositeObject> {
 		Mesh mesh = new Mesh();
 		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(object.getVectors()));
 		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(object.getOrdersAsIntegers()));
+		mesh.setDynamic();
 		
 		Geometry geo = new Geometry(object.getId().toString(), mesh);
 		if(object.getTexture() == null){
 			Material texture = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-			texture.setColor("default_color", ColorRGBA.Gray);
+			texture.setColor("Color", ColorRGBA.Gray);
 			geo.setMaterial(texture);
 		}else{
 			//FIXME how to set a different texture ?
