@@ -5,8 +5,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>752</x>
-      <y>40</y>
+      <x>720</x>
+      <y>104</y>
       <w>168</w>
       <h>104</h>
     </coordinates>
@@ -16,6 +16,7 @@
 -creationDate: DateTime
 -modificationDate: DateTime
 -current: Boolean
+-stages: List&lt;Stage&gt;
 
 </panel_attributes>
     <additional_attributes/>
@@ -23,27 +24,12 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>64</x>
-      <y>312</y>
+      <x>32</x>
+      <y>344</y>
       <w>168</w>
-      <h>64</h>
+      <h>80</h>
     </coordinates>
-    <panel_attributes>Mesh
---
--name: String
--fileLocation: String
---</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>312</x>
-      <y>136</y>
-      <w>168</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes>Vector
+    <panel_attributes>Vertex
 --
 -x: double
 -y: double
@@ -53,103 +39,27 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>488</x>
-      <y>280</y>
-      <w>240</w>
-      <h>136</h>
-    </coordinates>
-    <panel_attributes>/SceneObject/
---
-#position: Vertex
-#orientation: Vertex
-#parent: CompositeObjet
-#stage: Stage
---
-+getAbsolutePosition(): Vector
-+getAbsoluteOrientation(): Vector
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>424</x>
-      <y>448</y>
+      <x>472</x>
+      <y>256</y>
       <w>168</w>
-      <h>64</h>
+      <h>184</h>
     </coordinates>
-    <panel_attributes>SimpleObject
---</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>504</x>
-      <y>408</y>
-      <w>104</w>
-      <h>56</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>110.0;10.0;10.0;50.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>632</x>
-      <y>448</y>
-      <w>168</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes>CompositeObject
+    <panel_attributes>/CompositeObject/
 --
+#parent: CompositeObject
+#childs: List&lt;CompositeObject&gt;
+#positions: List&lt;Vertex&gt;
+#orders: List&lt;Order&gt;
 --
 +add()
 +remove()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>608</x>
-      <y>408</y>
-      <w>128</w>
-      <h>56</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;140.0;50.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>720</x>
-      <y>344</y>
-      <w>168</w>
-      <h>168</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1 parent
-m2=0..* child</panel_attributes>
-    <additional_attributes>100.0;180.0;190.0;180.0;190.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>608</x>
-      <y>80</y>
-      <w>160</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=0..*
-m2=1</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0;180.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>168</x>
-      <y>440</y>
+      <x>32</x>
+      <y>464</y>
       <w>168</w>
       <h>64</h>
     </coordinates>
@@ -163,28 +73,29 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>248</x>
-      <y>368</y>
-      <w>256</w>
+      <x>192</x>
+      <y>416</y>
+      <w>296</w>
       <h>88</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=0..1
-m2=0..*</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0;300.0;10.0</additional_attributes>
+m2=1</panel_attributes>
+    <additional_attributes>10.0;80.0;120.0;80.0;120.0;10.0;350.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>528</x>
-      <y>144</y>
+      <x>720</x>
+      <y>280</y>
       <w>168</w>
       <h>72</h>
     </coordinates>
     <panel_attributes>Stage
 --
 -level: int
--height: double
+-project: Project
+-floor: CompositeObject
 -project: Project
 --</panel_attributes>
     <additional_attributes/>
@@ -192,40 +103,129 @@ m2=0..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>592</x>
-      <y>208</y>
-      <w>40</w>
+      <x>192</x>
+      <y>384</y>
+      <w>296</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=0..*
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;350.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>528</x>
+      <y>104</y>
+      <w>56</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>Iterable
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>552</x>
+      <y>144</y>
+      <w>24</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>384</x>
+      <y>272</y>
+      <w>104</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=0..1 parent
+m2=0..* childs</panel_attributes>
+    <additional_attributes>110.0;50.0;10.0;50.0;10.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>184</x>
+      <y>88</y>
+      <w>168</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>/Database&lt;T&gt;/
+--
+_-getConnectionSource(): JdbcConnectionSource_
+_+getDao(): Dao&lt;T, Integer&gt;_
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>344</x>
+      <y>112</y>
+      <w>176</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;200.0;10.0;200.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>32</x>
+      <y>248</y>
+      <w>168</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>Ordre
+--
+-order: Integer
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>192</x>
+      <y>272</y>
+      <w>296</w>
       <h>88</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
 m2=0..*</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>350.0;80.0;120.0;80.0;120.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>224</x>
-      <y>336</y>
-      <w>280</w>
+      <x>632</x>
+      <y>296</y>
+      <w>104</w>
       <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
-m2=0..*</panel_attributes>
-    <additional_attributes>10.0;10.0;330.0;10.0</additional_attributes>
+m2=0..1</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>392</x>
-      <y>192</y>
-      <w>112</w>
-      <h>144</h>
+      <x>808</x>
+      <y>200</y>
+      <w>40</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=2
+m1=1
 m2=1..*</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;150.0;120.0;150.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
   </element>
 </diagram>
