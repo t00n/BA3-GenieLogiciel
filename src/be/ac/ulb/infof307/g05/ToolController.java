@@ -93,7 +93,7 @@ public class ToolController {
 	public void actionPerformed(ActionEvent event){
 		/** this method manage event sends from EventController **/
 		String command = event.getActionCommand();
-
+		
 		if(!getEnabledTool().isEmpty()){
 			if(command == "ENTER"){
 				//FIXME when draw a polygon
@@ -103,8 +103,11 @@ public class ToolController {
 				addPosition((Vector3f) event.getSource());
 			}else if(command == "comboBoxChanged"){
 				if(((JComboBox)event.getSource()).getSelectedItem() == "Rectangle"){
+					purge();
 					System.out.println("RECTANGLE");
 				}
+			}else{
+				enableTool(command);
 			}
 		}else {
 			enableTool(command);
