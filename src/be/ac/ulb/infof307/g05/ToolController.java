@@ -96,7 +96,7 @@ public class ToolController {
 		
 		if(!getEnabledTool().isEmpty()){
 			if(command == "ENTER"){
-				//FIXME when draw a polygon
+				//FIXME when draw a polygon, to confirm end
 			}else if(command == "ESCAPE"){
 				purge();
 			}else if(command == "cursor_click_up"){
