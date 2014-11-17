@@ -22,16 +22,12 @@ public class Database<T> extends BaseDaoEnabled<T, Integer> {
 				connectionSource = new JdbcConnectionSource(connectionString);
 				// create tables
 				TableUtils.dropTable(connectionSource, Vertex.class, true);
-				TableUtils.dropTable(connectionSource, Mesh.class, true);
 				TableUtils.dropTable(connectionSource, Texture.class, true);
-				TableUtils.dropTable(connectionSource, SimpleObject.class, true);
 				TableUtils.dropTable(connectionSource, CompositeObject.class, true);
 				TableUtils.dropTable(connectionSource, Stage.class, true);
 				TableUtils.dropTable(connectionSource, Project.class, true);
 				TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
-				TableUtils.createTableIfNotExists(connectionSource, Mesh.class);
 				TableUtils.createTableIfNotExists(connectionSource, Texture.class);
-				TableUtils.createTableIfNotExists(connectionSource, SimpleObject.class);
 				TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
 				TableUtils.createTableIfNotExists(connectionSource, Stage.class);
 				TableUtils.createTableIfNotExists(connectionSource, Project.class);

@@ -1,9 +1,9 @@
 package be.ac.ulb.infof307.g05.model;
 
-import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.jme3.asset.AssetManager;
+import com.jme3.scene.Node;
 
 @DatabaseTable (tableName = "stages")
 public class Stage extends Database<Stage> {
@@ -11,10 +11,15 @@ public class Stage extends Database<Stage> {
 		
 	}
 	
-	public Stage(Project project, int level, double height) {
+	public Stage(Project project, int level, CompositeObject floor) {
 		this.project = project;
 		this.level = level;
-		this.height = height;
+		this.floor = floor;
+	}
+	
+	public Stage(Project project, int level) {
+		this.project = project;
+		this.level = level;
 	}
 	
 	@DatabaseField (generatedId = true)
@@ -23,14 +28,25 @@ public class Stage extends Database<Stage> {
 	@DatabaseField (canBeNull = false)
 	protected int level;
 	
-	@DatabaseField (canBeNull = false)
-	protected double height;
-	
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected Project project;
 	
-	@ForeignCollectionField (eager = false)
-	protected ForeignCollection<SceneObject> sceneObjects;
+	@DatabaseField (canBeNull = false, foreign = true)
+	protected CompositeObject floor;
 	
-	public ForeignCollection<SceneObject> getSceneObjects() { return this.sceneObjects; }
+	public Node getJmeNode(AssetManager assetManager){
+		/** this method built recursively the tree of nodes, but stage is not a scene object **/
+		Node node = new Node();
+		
+		for(CompositeObject object:this.floor){
+			if(object.size() == 0){
+				// it's a simple object
+				node.attachChild(object.getJmeGeometry(assetManager));
+			}else{
+				// object has some children
+				node.attachChild(object.getJmeNode(assetManager));
+			}
+		}
+		return node;
+	}
 }

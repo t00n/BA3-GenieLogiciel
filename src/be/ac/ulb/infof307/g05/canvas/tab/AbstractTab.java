@@ -7,7 +7,7 @@ import be.ac.ulb.infof307.g05.EventController;
 
 public abstract class AbstractTab extends JPanel {
 
-	protected EventController _eventControler;
+	protected EventController _eventController;
 	protected String 		 _name;
 
 	public String getName(){

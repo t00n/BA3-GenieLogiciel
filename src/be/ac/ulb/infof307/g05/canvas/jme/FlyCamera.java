@@ -73,7 +73,11 @@ public class FlyCamera extends FlyByCamera {
         inputManager.addMapping("FLYCAM_StrafeLeft", new KeyTrigger(KeyInput.KEY_LEFT));
         inputManager.addMapping("FLYCAM_Lower", new KeyTrigger(KeyInput.KEY_D));
         inputManager.addMapping("FLYCAM_Rise", new KeyTrigger(KeyInput.KEY_U));
-        inputManager.addListener(this, new String[] {"FLYCAM_Left","FLYCAM_Right","FLYCAM_Up","FLYCAM_Down","FLYCAM_ZoomIn","FLYCAM_ZoomOut","FLYCAM_RotateDrag","FLYCAM_Forward", "FLYCAM_Backward", "FLYCAM_StrafeRight", "FLYCAM_StrafeLeft", "FLYCAM_Lower", "FLYCAM_Rise"});
+        inputManager.addMapping("FLYCAM_Enter", new KeyTrigger(KeyInput.KEY_RETURN));
+        inputManager.addMapping("FLYCAM_Escape", new KeyTrigger(KeyInput.KEY_ESCAPE));
+
+
+        inputManager.addListener(this, new String[] {"FLYCAM_Left","FLYCAM_Right","FLYCAM_Up","FLYCAM_Down","FLYCAM_ZoomIn","FLYCAM_ZoomOut","FLYCAM_RotateDrag","FLYCAM_Forward", "FLYCAM_Backward", "FLYCAM_StrafeRight", "FLYCAM_StrafeLeft", "FLYCAM_Lower", "FLYCAM_Rise", "FLYCAM_Enter", "FLYCAM_Escape"});
         inputManager.setCursorVisible(dragToRotate);
 	}
 	
@@ -263,15 +267,14 @@ public class FlyCamera extends FlyByCamera {
     }
     
     public void onAction(String name, boolean value, float tpf) {
-        if (enabled){
-	        if (name.equals("FLYCAM_RotateDrag") && dragToRotate){
-	            canRotate = value;
-	    		
-	            if(canRotate && _cam2dEnabled && _cam3dEnabled)
-	            	_lastScreenClick = inputManager.getCursorPosition().clone();
-		        	//System.out.print("Pos: '" + (_lastScreenClick.getX()) + " - " + (_lastScreenClick.getY()) + "'\n");
-	        }
-	    }
-        
+        if(!value){
+        	if(name.equals("FLYCAM_Enter")){
+            	_eventControler.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ENTER"));	
+        	}else if(name.equals("FLYCAM_Escape")){
+            	_eventControler.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ESCAPE"));	
+        	}else if(name.equals("FLYCAM_RotateDrag")){
+            	_eventControler.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "cursor_click_up"));
+        	}
+        }
     }
 }

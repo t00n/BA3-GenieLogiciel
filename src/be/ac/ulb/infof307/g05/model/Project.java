@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g05.model;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.Vector;
 
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
@@ -36,8 +38,8 @@ public class Project extends Database<Project> {
 	protected Boolean current;
 	
 	@ForeignCollectionField (eager = false)
-	protected ForeignCollection<Stage> stages;
+	protected Collection<Stage> stages;
 	
 	// TODO change ForeignCollection<>
-	public ForeignCollection<Stage> getStages() { return this.stages; }
+	public Collection<Stage> getStages() { return this.stages; }
 }
