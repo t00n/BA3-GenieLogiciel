@@ -19,6 +19,8 @@ public class Order extends Database<Order> {
 	@DatabaseField (canBeNull = false)
 	protected Integer order;
 	
+	public Integer getOrder() { return this.order; }
+	
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected CompositeObject referent;
 }

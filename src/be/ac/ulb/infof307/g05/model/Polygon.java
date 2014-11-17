@@ -5,15 +5,11 @@ import java.util.Vector;
 import com.jme3.math.Vector3f;
 
 
-public class Polygon extends CompositeObject {
+public class Polygon extends JmeCompositeObject {
 
-	public Polygon(CompositeObject parent, Vector<Vertex> vectors){
-		super(parent, vectors);
+	public Polygon(Vector<Vertex> vectors) {
+		super(vectors);
 		buildMeshOrder();
-	}
-	
-	protected void init(Vector<Vertex> vectors){
-		this.setPositions(vectors);
 	}
 
 	@Override

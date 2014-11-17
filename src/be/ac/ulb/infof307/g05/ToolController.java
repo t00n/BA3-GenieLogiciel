@@ -19,7 +19,7 @@ public class ToolController {
 	private HashMap<String, Boolean> _flagTools = new HashMap<String, Boolean>();
 	private Vector<Vector3f> 		 _positionStack;
 	
-	private Stage _currentStage = new Stage(new Project("test project"),0);
+	private Stage _currentStage;
 	
 	
 	public ToolController(Stage currentStage, Vector<Vector3f> position_stack){

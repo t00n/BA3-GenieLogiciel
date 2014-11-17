@@ -6,10 +6,10 @@ import com.jme3.asset.AssetManager;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 
-public class Oval extends CompositeObject {
+public class Oval extends JmeCompositeObject {
 	
-	public Oval(CompositeObject parent, Vector<Vertex> vectors){
-		super(parent, vectors);
+	public Oval(Vector<Vertex> vectors){
+		super(vectors);
 		buildMeshOrder();
 	}
 	

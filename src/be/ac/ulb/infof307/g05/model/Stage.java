@@ -22,7 +22,7 @@ public class Stage extends Database<Stage> {
 	public Stage(Project project, int level) {
 		this.project = project;
 		this.level = level;
-		this.floor = new Polygon(null, new Vector<Vertex>());
+		this.floor = new CompositeObject(null, new Vector<Vertex>());
 	}
 	
 	@DatabaseField (generatedId = true)
@@ -36,20 +36,4 @@ public class Stage extends Database<Stage> {
 	
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected CompositeObject floor;
-	
-	public Node getJmeNode(AssetManager assetManager){
-		/** this method built recursively the tree of nodes, but stage is not a scene object **/
-		Node node = new Node();
-		
-		for(CompositeObject object:this.floor){
-			if(object.size() == 0){
-				// it's a simple object
-				node.attachChild(object.getJmeGeometry(assetManager));
-			}else{
-				// object has some children
-				node.attachChild(object.getJmeNode(assetManager));
-			}
-		}
-		return node;
-	}
 }
