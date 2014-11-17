@@ -5,6 +5,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jme3.math.Vector3f;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Vector;
@@ -20,9 +21,9 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	@DatabaseField (canBeNull = true, foreign = true)
 	private Texture texture;
 	@ForeignCollectionField (eager = false)
-	private Collection<Vertex> positions;
+	private Collection<Vertex> positions = new ArrayList<Vertex>();
 	@ForeignCollectionField (eager = false)
-	private Collection<Order> meshOrder;
+	private Collection<Order> meshOrder = new ArrayList<Order>();
 	@ForeignCollectionField (eager = false)
 	private Collection<CompositeObject> childs;
 	
