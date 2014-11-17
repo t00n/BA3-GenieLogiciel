@@ -26,11 +26,12 @@ public class Database<T> extends BaseDaoEnabled<T, Integer> {
 				TableUtils.dropTable(connectionSource, CompositeObject.class, true);
 				TableUtils.dropTable(connectionSource, Stage.class, true);
 				TableUtils.dropTable(connectionSource, Project.class, true);
-				TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
+				TableUtils.createTableIfNotExists(connectionSource, Project.class);
 				TableUtils.createTableIfNotExists(connectionSource, Texture.class);
 				TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
 				TableUtils.createTableIfNotExists(connectionSource, Stage.class);
-				TableUtils.createTableIfNotExists(connectionSource, Project.class);
+				TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
+				TableUtils.createTableIfNotExists(connectionSource, Order.class);
 			}
 			catch (SQLException e) {
 				e.printStackTrace();

@@ -2,7 +2,6 @@ package be.ac.ulb.infof307.g05.canvas.jme;
 
 
 import be.ac.ulb.infof307.g05.EventController;
-import be.ac.ulb.infof307.g05.model.Stage;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;

@@ -8,8 +8,12 @@ import com.jme3.scene.Geometry;
 
 public class Oval extends CompositeObject {
 
+	protected Oval() {
+		
+	}
+	
 	public Oval(Vector<Vertex> vectors){
-		this.positions = vectors;
+		this.setPositions(vectors);
 		buildMeshOrder();
 	}
 	

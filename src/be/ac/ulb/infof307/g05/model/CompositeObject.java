@@ -36,22 +36,26 @@ public abstract class CompositeObject extends Database<CompositeObject> implemen
 	}
 
 	@DatabaseField (generatedId = true)
-	protected Integer id_compositeObject;
+	private Integer id_compositeObject;
 	
 	@DatabaseField (canBeNull = true, foreign = true)
-	protected CompositeObject parent;
+	private CompositeObject parent;
 
 	@DatabaseField (canBeNull = true, foreign = true)
-	protected Texture texture;
+	private Texture texture;
 	
 	@ForeignCollectionField (eager = false)
-	protected Vector<Vertex> positions;
+	private Collection<Vertex> positions;
+	protected void setPositions(Collection<Vertex> col) { this.positions = col; }
+	protected Collection<Vertex> getPositions() { return this.positions; }
 	
 	@ForeignCollectionField (eager = false)
-	protected Vector<Order> meshOrder;
+	private Collection<Order> meshOrder;
+	protected void setMeshOrder(Collection<Order> col) { this.meshOrder = col; }
+	protected Collection<Order> getMeshOrder() { return this.meshOrder; }
 
 	@ForeignCollectionField (eager = false)
-	protected Collection<CompositeObject> childs;
+	private Collection<CompositeObject> childs;
 	public Collection<CompositeObject> getChilds() { return this.childs; }
 
 	@Override
@@ -116,7 +120,7 @@ public abstract class CompositeObject extends Database<CompositeObject> implemen
 		/** this method builds the geometry of this scene object **/
 		Mesh mesh = new Mesh();
 		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer((Vector3f[]) positions.toArray()));
-		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(toIntArray(meshOrder)));
+		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(toIntArray((Vector<Order>)meshOrder)));
 		
 		Geometry object = new Geometry(this.id_compositeObject.toString(), mesh);
 		if(this.texture == null){

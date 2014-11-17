@@ -1,5 +1,7 @@
 package be.ac.ulb.infof307.g05.model;
 
+import java.util.Vector;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jme3.asset.AssetManager;
@@ -20,6 +22,7 @@ public class Stage extends Database<Stage> {
 	public Stage(Project project, int level) {
 		this.project = project;
 		this.level = level;
+		this.floor = new Polygon(new Vector<Vertex>());
 	}
 	
 	@DatabaseField (generatedId = true)

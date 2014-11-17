@@ -32,7 +32,7 @@ public class EventController implements ActionListener {
 		position_queue.add(_cursor);
 		
 //		_project.loadProject(_window.popUpLoad());
-		_toolController = new ToolController(new Stage(new Project("test project"), 0), position_queue);
+		_toolController = new ToolController(new Stage(_project, 0), position_queue);
 	}
 	
 	public boolean getFlag2D(){
