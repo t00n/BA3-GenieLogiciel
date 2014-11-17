@@ -22,9 +22,11 @@ public class JmeWorld extends SimpleApplication {
 	private FlyCamera  _flyCam;
 	private EventController _eventController;
 	private Node _currentStage = new Node();
+	private JmeCompositeObject _jmeCompositeObject;
 	
 	public JmeWorld(EventController eventController){
 		_eventController = eventController;
+		_jmeCompositeObject = new JmeCompositeObject(_eventController.getStage(), assetManager);
 	}
 	
 	private void initViews(){
@@ -85,7 +87,7 @@ public class JmeWorld extends SimpleApplication {
 	}
 	
 	public void draw(){
-		Node stage = _eventController.getJmeStage(assetManager);
+		Node stage = _jmeCompositeObject.getNode(assetManager);
 		if(_currentStage != stage){
 			rootNode.detachChild(_currentStage);
 			rootNode.attachChild(stage);

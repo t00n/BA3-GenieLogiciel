@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import javax.swing.JComboBox;
 
+import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.Project;
 import be.ac.ulb.infof307.g05.model.Stage;
 
@@ -71,9 +72,9 @@ public class ToolController {
 		_currentStage = stage;
 	}
 	
-	public Node getJmeStage(AssetManager assetManager){
+	public CompositeObject getStage(){
 		/** this method retrun the root node of the current stage **/
-		return _currentStage.getJmeNode(assetManager);
+		return _currentStage.getFloor();
 	}
 	
 	public void drawInConstruction(){

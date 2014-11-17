@@ -10,8 +10,7 @@ public class Vertex extends Database<Vertex> {
 		
 	}
 	
-	public Vertex(CompositeObject referent, float x, float y, float z) {
-		this.referent = referent;
+	public Vertex(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -20,15 +19,14 @@ public class Vertex extends Database<Vertex> {
 		this.vector.z = z;
 	}
 	
-	public Vertex(CompositeObject referent, Vector3f vec) {
-		this.referent = referent;
+	public Vertex(Vector3f vec) {
 		this.x = vec.x;
 		this.y = vec.y;
 		this.z = vec.z;
 		this.vector = vec;
 	}
 	
-	private Vector3f vector;
+	private Vector3f vector = new Vector3f();
 	
 	public Vector3f getVector() { return this.vector; }
 	

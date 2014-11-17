@@ -4,8 +4,6 @@ import java.util.Vector;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.jme3.asset.AssetManager;
-import com.jme3.scene.Node;
 
 @DatabaseTable (tableName = "stages")
 public class Stage extends Database<Stage> {
@@ -22,7 +20,10 @@ public class Stage extends Database<Stage> {
 	public Stage(Project project, int level) {
 		this.project = project;
 		this.level = level;
-		this.floor = new CompositeObject(null, new Vector<Vertex>());
+		Vector<Vertex> tmp = new Vector<Vertex>();
+		tmp.add(new Vertex(0,0,0));
+		tmp.add(new Vertex(0,2,2));
+		this.floor = new CompositeObject(null, tmp);
 	}
 	
 	@DatabaseField (generatedId = true)
@@ -36,4 +37,5 @@ public class Stage extends Database<Stage> {
 	
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected CompositeObject floor;
+	public CompositeObject getFloor() { return floor; }
 }

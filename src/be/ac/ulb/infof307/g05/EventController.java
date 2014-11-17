@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.Project;
 import be.ac.ulb.infof307.g05.model.Stage;
 
@@ -52,9 +53,9 @@ public class EventController implements ActionListener {
 		_toolController.addTool(tool_name);
 	}
 	
-	public Node getJmeStage(AssetManager assetManager){
+	public CompositeObject getStage(){
 		/** this method return the root node of the scene built by toolController **/
-		return _toolController.getJmeStage(assetManager);
+		return _toolController.getStage();
 	}
 	
 	@Override
