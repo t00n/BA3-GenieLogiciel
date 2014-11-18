@@ -35,4 +35,8 @@ public class Stage extends Database<Stage> {
 	@DatabaseField (canBeNull = false, foreign = true, foreignAutoRefresh = true)
 	protected CompositeObject floor;
 	public CompositeObject getFloor() { return floor; }
+
+	public void setFloor(CompositeObject floor) {
+		this.floor = floor;
+	}
 }
