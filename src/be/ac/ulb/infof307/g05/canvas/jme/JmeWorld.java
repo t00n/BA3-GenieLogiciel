@@ -22,6 +22,8 @@ public class JmeWorld extends SimpleApplication {
 	private FlyCamera  _flyCam;
 	private EventController _eventController;
 	private Node _currentStage = new Node();
+	private JmeConverter _converter = new JmeConverter();
+
 	
 	public JmeWorld(EventController eventController){
 		_eventController = eventController;
@@ -83,10 +85,10 @@ public class JmeWorld extends SimpleApplication {
 	}
 	
     public void simpleUpdate(float tpf) {
-    	Node stage = (new JmeCompositeObject(_eventController.getStage(), assetManager)).getNode(assetManager);
-		rootNode.detachChild(_currentStage);
-		rootNode.attachChild(_currentStage);
-		this._currentStage = stage;
+    	rootNode.detachChild(_currentStage);
+    	_currentStage.detachAllChildren();
+    	_converter.convert(_eventController.getStage(), _currentStage, assetManager);
+    	rootNode.attachChild(_currentStage);
 	}
 	
 	public void test() {
