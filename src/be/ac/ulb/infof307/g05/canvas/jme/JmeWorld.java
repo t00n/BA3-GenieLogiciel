@@ -79,7 +79,7 @@ public class JmeWorld extends SimpleApplication {
 	   _reference.setNode(rootNode, true);
 	   
        _view[0].attachScene(rootNode);
-       _view[1].attachScene(rootNode);       
+       _view[1].attachScene(rootNode);
 	}
 	
     public void simpleUpdate(float tpf) {
