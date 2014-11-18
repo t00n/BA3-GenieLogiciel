@@ -267,6 +267,15 @@ public class FlyCamera extends FlyByCamera {
     }
     
     public void onAction(String name, boolean value, float tpf) {
+        if(enabled){
+	        if (name.equals("FLYCAM_RotateDrag") && dragToRotate){
+	            canRotate = value;
+	    		
+	            if(canRotate && _cam2dEnabled && _cam3dEnabled)
+	            	_lastScreenClick = inputManager.getCursorPosition().clone();
+	        }	        	        
+	    }
+        
         if(!value){
         	if(name.equals("FLYCAM_Enter")){
             	_eventControler.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ENTER"));	
