@@ -14,7 +14,7 @@ public class Project extends Database<Project> {
 	}
 	
 	public Project(String name) {
-		this.name = name;
+		this.setName(name);
 		this.creationDate = new Date();
 		this.modificationDate = new Date();
 		this.current = true;
@@ -24,7 +24,7 @@ public class Project extends Database<Project> {
 	protected int id_project;
 	
 	@DatabaseField (canBeNull = false)
-	protected String name;
+	private String name;
 	
 	@DatabaseField (canBeNull = false)
 	protected Date creationDate;
@@ -35,9 +35,17 @@ public class Project extends Database<Project> {
 	@DatabaseField (canBeNull = false)
 	protected Boolean current;
 	
-	@ForeignCollectionField (eager = false)
+	@ForeignCollectionField (eager = true)
 	protected Collection<Stage> stages;
 	
 	// TODO change ForeignCollection<>
 	public Collection<Stage> getStages() { return this.stages; }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

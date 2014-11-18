@@ -5,6 +5,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jme3.math.Vector3f;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -21,21 +22,15 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	@DatabaseField (canBeNull = true, foreign = true)
 	private Texture texture;
 	@ForeignCollectionField (eager = false)
-	private Collection<Vertex> positions = new ArrayList<Vertex>();
+	protected Collection<Vertex> positions;
 	@ForeignCollectionField (eager = false)
-	private Collection<Order> meshOrder = new ArrayList<Order>();
+	protected Collection<Order> meshOrder;
 	@ForeignCollectionField (eager = false)
-	private Collection<CompositeObject> childs = new ArrayList<CompositeObject>();
+	protected Collection<CompositeObject> childs;
 	
 	
 	protected CompositeObject() {
 		
-	}
-
-	public CompositeObject(CompositeObject parent, Vector<Vertex> positions, Texture texture) {
-		this.parent = parent;
-		this.positions = positions;
-		this.texture = texture;
 	}
 
 	public CompositeObject(CompositeObject parent, Vector<Vertex> positions) {
@@ -53,18 +48,18 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return this.texture;
 	}
 	
-	protected void setPositions(Collection<Vertex> col) {
+	public void setPositions(Collection<Vertex> col) {
 		this.positions = col;
 	}
 	
-	protected Collection<Vertex> getPositions() {
+	public Collection<Vertex> getPositions() {
 		return this.positions;
 	}
 	
 	public Vector3f[] getVectors() {
-		Vector3f[] ret = new Vector3f[positions.size()];
+		Vector3f[] ret = new Vector3f[this.positions.size()];
 		int i = 0;
-		for (Vertex vertex: positions) {
+		for (Vertex vertex: this.positions) {
 			ret[i] = vertex.getVector();
 			++i;
 		}
@@ -74,14 +69,14 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		this.meshOrder = col;
 	}
 	
-	protected Collection<Order> getMeshOrder() {
+	public Collection<Order> getMeshOrder() {
 		return this.meshOrder;
 	}
 	
 	public int[] getOrdersAsIntegers() {
-		int[] ret = new int[meshOrder.size()];
+		int[] ret = new int[this.meshOrder.size()];
 		int i = 0;
-		for (Order order: meshOrder)
+		for (Order order: this.meshOrder)
 		{
 			ret[i] = order.getOrder();
 			++i;
@@ -96,7 +91,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	@Override
 	public Iterator<CompositeObject> iterator(){
 		/** this method make the object iterable **/
-		return childs.iterator();
+		return this.childs.iterator();
 	}
 	
 	public void add(CompositeObject object){
@@ -111,7 +106,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		if(childs.contains(object)){
 			childs.remove(object);
 		}else{
-			for(CompositeObject child:childs){
+			for(CompositeObject child:this.childs){
 				if(!isFound)
 					isFound = child.remove(object);
 			}

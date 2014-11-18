@@ -35,6 +35,12 @@ public class EventController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(_project.getName());
+		System.out.println(_project.getStages());
+		Stage stage = (Stage)_project.getStages().toArray()[0];
+		System.out.println(stage.getFloor().getId());
+		System.out.println(stage.getFloor().getPositions());
+		System.out.println(stage.getFloor().getMeshOrder());
 		
 		Vector<Vector3f> position_queue = new Vector<Vector3f>();
 		position_queue.add(_cursor);
@@ -95,20 +101,3 @@ public class EventController implements ActionListener {
 		_window.update();
 	}
 }
-//create tables
-//TableUtils.dropTable(connectionSource, Vertex.class, true);
-//TableUtils.dropTable(connectionSource, Texture.class, true);
-//TableUtils.dropTable(connectionSource, CompositeObject.class, true);
-//TableUtils.dropTable(connectionSource, Stage.class, true);
-//TableUtils.dropTable(connectionSource, Project.class, true);
-//TableUtils.dropTable(connectionSource, Order.class, true);
-//TableUtils.createTableIfNotExists(connectionSource, Project.class);
-//TableUtils.createTableIfNotExists(connectionSource, Texture.class);
-//TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
-//TableUtils.createTableIfNotExists(connectionSource, Stage.class);
-//TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
-//TableUtils.createTableIfNotExists(connectionSource, Order.class);
-//Project project = new Project("test project");
-//project.create();
-//Stage stage = new Stage(project, 0);
-//stage.create();
