@@ -32,6 +32,7 @@ public class JmeCompositeObject implements Iterable<JmeCompositeObject> {
 		Mesh mesh = new Mesh();
 		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(object.getVectors()));
 		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(object.getOrdersAsIntegers()));
+		mesh.setDynamic();
 		
 		Geometry geo = new Geometry(object.getId().toString(), mesh);
 		if(object.getTexture() == null){
