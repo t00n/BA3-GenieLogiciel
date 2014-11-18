@@ -33,12 +33,8 @@ public class EventController implements ActionListener {
 		/** constructor **/
 		_window = window;
 		//FIXME use _window.popUpLoad()
-		try {
-			_project = (Project) Project.getDao(Project.class).queryForId(1);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		this.openProject();
 		
 		Vector<Vector3f> position_queue = new Vector<Vector3f>();
 		position_queue.add(_cursor);
@@ -69,15 +65,17 @@ public class EventController implements ActionListener {
 		return _toolController.getStage();
 	}
 	
-	public void loadProject() {
+	public void openProject() {
 		try {
-			List<String> choices = new ArrayList<String>();
 			Dao<Project, Integer> dao = Project.getDao(Project.class);
 			List<Project> projects = dao.queryForAll();
+			String[] choices = new String[projects.size()];
+			int i = 0;
 			for (Project project: projects) {
-				choices.add(project.getName());
+				choices[i] = project.getName();
+				++i;
 			}
-			String input = _window.popUpLoad((String[]) choices.toArray());
+			String input = _window.popUpChoice((String[]) choices, "Choose a project...", "Choose Project");
 			for (Project project: projects) {
 				if (input == project.getName()) {
 					_project = project;
@@ -104,8 +102,9 @@ public class EventController implements ActionListener {
 			_flag2D = true;
 			_flag3D = true;
 		}else if(command == "Open project.."){
+			System.out.println("caca");
 			//FIXME ask window to display pop-up menu, load it in database, load a stage in toolController
-			this.loadProject();
+			this.openProject();
 		}else if(command == "Save"){
 			//FIXME ask database to save the project 
 		}else if(command == "New"){

@@ -50,11 +50,17 @@ public class MainWindow extends JFrame {
 		this.setVisible(true);
 	}
 	
-	public String popUpLoad(String[] choices){
+	public String popUpChoice(String[] choices, String title, String question){
 		/** this method display a pop-up window to ask user which project to load **/
 		//FIXME Franklin
 		
-		String input = (String) JOptionPane.showInputDialog(null, "Choose a project...", "Choose a project", JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
+		String input = (String) JOptionPane.showInputDialog(null, 
+				question, 
+				title, 
+				JOptionPane.QUESTION_MESSAGE, 
+				null, 
+				choices, 
+				choices[0]);
 		return input;
 	}
 	
