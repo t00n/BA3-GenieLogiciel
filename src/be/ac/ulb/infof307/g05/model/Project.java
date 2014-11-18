@@ -29,7 +29,7 @@ public class Project extends Database<Project> {
 		Stage newStage = new Stage(newProject, 0);
 		Collection<Vertex> vertices = new Vector<Vertex>(); //FIXME should get it from Cube
 		Collection<Order> meshOrder = new Vector<Order>(); // FIXME should get it from Cube
-		CompositeObject newFloor = new CompositeObject(null, vertices, meshOrder);
+//		CompositeObject newFloor = new CompositeObject(null, vertices, meshOrder);
 		return newProject;
 	}
 

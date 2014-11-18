@@ -21,7 +21,8 @@ public class Vertex extends Database<Vertex> {
 		this.vector.z = z;
 	}
 	
-	public Vertex(Vector3f vec) {
+	public Vertex(CompositeObject referent, Vector3f vec) {
+		this.referent = referent;
 		this.x = vec.x;
 		this.y = vec.y;
 		this.z = vec.z;

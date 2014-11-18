@@ -2,11 +2,13 @@ package be.ac.ulb.infof307.g05;
 
 import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Vector;
+
 import com.jme3.math.Vector3f;
 
 public class Cube {
-	private Collection<Vector3f> _vertexes;
-	private Collection<Integer> _orders;
+	private Collection<Vector3f> _vertexes = new Vector<Vector3f>();
+	private Collection<Integer> _orders = new Vector<Integer>();
 	
 	public Collection<Vector3f> getVertices() { return _vertexes; }
 	public Collection<Integer> getOrder() { return _orders; }

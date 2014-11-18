@@ -8,6 +8,7 @@ import com.jme3.math.Vector3f;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Vector;
 
 
 @DatabaseTable (tableName = "composite_objects")
@@ -48,11 +49,27 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
             for (Order order : this.meshOrder)  
                 order.save();
     }
-	public CompositeObject(CompositeObject parent, Collection<Vertex> vertices, Collection<Order> meshOrder) {
+	public CompositeObject(CompositeObject parent, Collection<Vector3f> vertices, Collection<Integer> meshOrder) {
 		this.parent = parent;
-		this.vertices = vertices;
-		this.meshOrder = meshOrder;
+		this.vertices = toVertex(vertices);
+		this.meshOrder = toOrder(meshOrder);
 		this.texture = null;
+	}
+	
+	private Collection<Vertex> toVertex(Collection<Vector3f> vertices) {
+		Collection<Vertex> ret = new Vector<Vertex>();
+		for (Vector3f vec: vertices) {
+			ret.add(new Vertex(this, vec));
+		}
+		return ret;
+	}
+	
+	private Collection<Order> toOrder(Collection<Integer> meshOrder) {
+		Collection<Order> ret = new Vector<Order>();
+		for (Integer order: meshOrder) {
+			ret.add(new Order(this, order));
+		}
+		return ret;
 	}
 
 	public Integer getId() {
