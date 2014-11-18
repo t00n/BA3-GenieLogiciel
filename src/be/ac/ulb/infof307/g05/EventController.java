@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Vector;
 
 import be.ac.ulb.infof307.g05.MainWindow;
+import be.ac.ulb.infof307.g05.SaveThread;
 import be.ac.ulb.infof307.g05.ToolController;
 import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.Project;
@@ -29,6 +30,8 @@ public class EventController implements ActionListener {
 	private Project		 _currentProject;
 	private Dao<Project, Integer> _daoProject = Project.getDao(Project.class);
 	private List<Project> _projects;
+	
+	private SaveThread _saveThread;
 	
 	
 	public EventController(MainWindow window){
@@ -66,6 +69,14 @@ public class EventController implements ActionListener {
 		return _toolController.getStage();
 	}
 	
+	public void launchSaveThread() {
+		if (this._saveThread != null) {
+			this._saveThread.interrupt();
+		}
+		this._saveThread = new SaveThread(_currentProject);
+		this._saveThread.start();
+	}
+	
 	public void loadProject() {
 		try {
 			_projects = _daoProject.queryForAll();
@@ -73,6 +84,7 @@ public class EventController implements ActionListener {
 			if (currentProjects.size() != 0)
 			{
 				_currentProject = currentProjects.get(0);
+				this.launchSaveThread();
 			}
 			else {
 				this.askProject();
@@ -116,6 +128,7 @@ public class EventController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.launchSaveThread();
 	}
 	
 	public void newProject() {
@@ -128,6 +141,7 @@ public class EventController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.launchSaveThread();
 	}
 	
 	@Override
