@@ -7,12 +7,9 @@ import java.util.Vector;
 import javax.swing.JComboBox;
 
 import be.ac.ulb.infof307.g05.model.CompositeObject;
-import be.ac.ulb.infof307.g05.model.Project;
 import be.ac.ulb.infof307.g05.model.Stage;
 
-import com.jme3.asset.AssetManager;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Node;
 
 
 public class ToolController {

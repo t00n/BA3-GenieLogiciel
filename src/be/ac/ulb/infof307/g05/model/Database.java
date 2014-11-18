@@ -1,13 +1,11 @@
 package be.ac.ulb.infof307.g05.model;
 
 import java.sql.SQLException;
-import java.util.Vector;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.misc.BaseDaoEnabled;
-import com.j256.ormlite.table.TableUtils;
 
 public class Database<T> extends BaseDaoEnabled<T, Integer> {
 	

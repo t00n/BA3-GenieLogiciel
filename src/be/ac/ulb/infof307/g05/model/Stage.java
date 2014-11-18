@@ -1,8 +1,5 @@
 package be.ac.ulb.infof307.g05.model;
 
-import java.sql.SQLException;
-import java.util.Vector;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
