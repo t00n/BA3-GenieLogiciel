@@ -63,13 +63,13 @@ public class TestMain {
         Vertex vertex4 = new Vertex(2,0,2);
         vertexes.add(vertex4);
         
-		Vertex vertex5 = new Vertex(0,0,0);
+		Vertex vertex5 = new Vertex(0,2,0);
 		vertexes.add(vertex5);
-		Vertex vertex6 = new Vertex(2,0,0);
+		Vertex vertex6 = new Vertex(2,2,0);
 		vertexes.add(vertex6);
-		Vertex vertex7 = new Vertex(0,0,2);
+		Vertex vertex7 = new Vertex(0,2,2);
 		vertexes.add(vertex7);
-		Vertex vertex8 = new Vertex(2,0,2);
+		Vertex vertex8 = new Vertex(2,2,2);
 		vertexes.add(vertex8);
         
 		Vector<Order> orders = new Vector<Order>();
