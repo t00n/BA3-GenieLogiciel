@@ -1,28 +1,39 @@
 package be.ac.ulb.infof307.g05.model;
 
-import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "stages")
-public class Stage {
-	public Stage() {
+public class Stage extends Database<Stage> {
+	protected Stage() {
 		
 	}
 	
+	public Stage(Project project, int level, CompositeObject floor) {
+		this.project = project;
+		this.level = level;
+		this.floor = floor;
+	}
+	
+	public Stage(Project project, int level) {
+		this.project = project;
+		this.level = level;
+	}
+	
 	@DatabaseField (generatedId = true)
-	private int id_stage;
+	protected int id_stage;
 	
 	@DatabaseField (canBeNull = false)
-	private int level;
-	
-	@DatabaseField (canBeNull = false)
-	private double height;
+	protected int level;
 	
 	@DatabaseField (canBeNull = false, foreign = true)
-	public Project project;
+	protected Project project;
 	
-	@ForeignCollectionField (eager = false)
-	public ForeignCollection<SceneObject> sceneObjects;
+	@DatabaseField (canBeNull = false, foreign = true, foreignAutoRefresh = true)
+	protected CompositeObject floor;
+	public CompositeObject getFloor() { return floor; }
+
+	public void setFloor(CompositeObject floor) {
+		this.floor = floor;
+	}
 }

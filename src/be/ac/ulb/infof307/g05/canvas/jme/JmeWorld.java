@@ -10,6 +10,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 
 
@@ -19,17 +20,19 @@ public class JmeWorld extends SimpleApplication {
 	private ViewPort[] _view = new ViewPort[2];
 	private Reference  _reference;
 	private FlyCamera  _flyCam;
-	private EventController _eventControler;
+	private EventController _eventController;
+	private Node _currentStage = new Node();
+	private JmeCompositeObject _jmeCompositeObject;
 	
 	public JmeWorld(EventController eventController){
-		_eventControler = eventController;
+		_eventController = eventController;
 	}
 	
-	private void initMultiViews(){
+	private void initViews(){
 		_camera[0] = cam;
         _view[0] = renderManager.createMainView("3D view", _camera[0]);
         _camera[0].setViewPort(0.0f, 1.0f, 0.0f, 1.0f);
-        _camera[0].setLocation(new Vector3f(-5f, 5f, -5f));
+        _camera[0].setLocation(new Vector3f(5f, 5f, 5f));
         _camera[0].lookAt(new Vector3f(0f, 0f, 0f), new Vector3f(0f, 1f, 0f));
         _camera[0].setFrustumFar(50);
         _view[0].setBackgroundColor(ColorRGBA.White);
@@ -37,7 +40,7 @@ public class JmeWorld extends SimpleApplication {
 
         
         _camera[1] = _camera[0].clone();
-        _camera[1].setViewPort(0.0f, 1.0f, 0.0f, 1.0f);
+        _camera[1].setViewPort(0.66f, 1.0f, 0.0f, 0.33f);
         _camera[1].setLocation(new Vector3f(0.0f, 5.0f, 0.0f));
         _camera[1].lookAt(new Vector3f(0f, 0f, 0f), new Vector3f(0f, 1f, 0f));
         _view[1] = renderManager.createMainView("2D view", _camera[1]);
@@ -69,17 +72,30 @@ public class JmeWorld extends SimpleApplication {
 	public void simpleInitApp(){
 	   guiViewPort.setEnabled(false);
 	   flyCam.setEnabled(false);
+	   initViews();
 	   
-	   initMultiViews();
-	   _flyCam = new FlyCamera(_camera[1], _camera[0], rootNode, inputManager, stateManager, _eventControler);
-	   setViews(true, true);
+	   _flyCam = new FlyCamera(_camera[1], _camera[0], rootNode, inputManager, stateManager, _eventController);
+
 	   _reference = new Reference(assetManager, 1000);
 	   _reference.setNode(rootNode, true);
 	   
-	   test();
+       _view[0].attachScene(rootNode);
+       _view[1].attachScene(rootNode);
+       
+	   draw();
 	}
 	
-	void test(){
+	public void draw(){
+		_jmeCompositeObject = new JmeCompositeObject(_eventController.getStage(), assetManager);
+		Node stage = _jmeCompositeObject.getNode(assetManager);
+		if(_currentStage != stage){
+			rootNode.detachChild(_currentStage);
+			rootNode.attachChild(stage);
+			_currentStage = stage;
+		}
+	}
+	
+	public void test(){
 		Box b = new Box(1, 1, 1);
         Geometry geom = new Geometry("Box", b);
         Material mat = new Material(assetManager,"Common/MatDefs/Misc/Unshaded.j3md");
@@ -87,7 +103,5 @@ public class JmeWorld extends SimpleApplication {
         geom.setMaterial(mat);
         rootNode.attachChild(geom);
 
-        _view[0].attachScene(rootNode);
-        _view[1].attachScene(rootNode);
 	}
 }

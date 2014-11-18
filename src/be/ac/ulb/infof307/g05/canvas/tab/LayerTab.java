@@ -4,13 +4,13 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 
-public class Tab1 extends AbstractTab {
-	
-	public Tab1(){
-		/** constructor **/
-		_name = new String("Tab1");
+public class LayerTab extends AbstractTab {
 		
-		JButton button = new JButton("button1");
+	public LayerTab(){
+		/** constructor **/
+		_name = new String("Layers");
+		
+		JButton button = new JButton("button2");
 		this.add(button);
 		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.addItem("element 1");
@@ -19,4 +19,7 @@ public class Tab1 extends AbstractTab {
 		this.add(comboBox);
 	}
 	
+	public String getName(){
+		return _name;
+	}
 }
