@@ -32,7 +32,7 @@ public class JmeWorld extends SimpleApplication {
 		_camera[0] = cam;
         _view[0] = renderManager.createMainView("3D view", _camera[0]);
         _camera[0].setViewPort(0.0f, 1.0f, 0.0f, 1.0f);
-        _camera[0].setLocation(new Vector3f(-5f, 5f, -5f));
+        _camera[0].setLocation(new Vector3f(5f, 5f, 5f));
         _camera[0].lookAt(new Vector3f(0f, 0f, 0f), new Vector3f(0f, 1f, 0f));
         _camera[0].setFrustumFar(50);
         _view[0].setBackgroundColor(ColorRGBA.White);

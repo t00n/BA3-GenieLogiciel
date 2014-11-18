@@ -40,17 +40,17 @@ public class Database<T> extends BaseDaoEnabled<T, Integer> {
 				Vector<Vertex> vertexes = new Vector<Vertex>();
 				Vertex vertex1 = new Vertex(0,0,0);
 				vertexes.add(vertex1);
-				Vertex vertex3 = new Vertex(0,2,0);
+				Vertex vertex3 = new Vertex(2,0,0);
 				vertexes.add(vertex3);
-				Vertex vertex2 = new Vertex(0,2,2);
+				Vertex vertex2 = new Vertex(0,0,2);
 				vertexes.add(vertex2);
-				Vertex vertex4 = new Vertex(0,0,2);
+				Vertex vertex4 = new Vertex(2,0,2);
 				vertexes.add(vertex4);
 				
 				Vector<Order> orders = new Vector<Order>();
 				Order order1 = new Order(0);
 				Order order2 = new Order(1);
-				Order order3 = new Order(2);
+				Order order3 = new Order(3);
 				Order order4 = new Order(3);
 				Order order5 = new Order(2);
 				Order order6 = new Order(0);
