@@ -26,7 +26,9 @@ public class EventController implements ActionListener {
 	private Vector3f _cursor = new Vector3f();
 	
 	private ToolController   _toolController;
-	private Project		 _project;
+	private Project		 _currentProject;
+	private Dao<Project, Integer> _daoProject = Project.getDao(Project.class);
+	private List<Project> _projects;
 	
 	
 	public EventController(MainWindow window){
@@ -34,13 +36,13 @@ public class EventController implements ActionListener {
 		_window = window;
 		//FIXME use _window.popUpLoad()
 		
-		this.openProject();
+		this.loadProject();
 		
 		Vector<Vector3f> position_queue = new Vector<Vector3f>();
 		position_queue.add(_cursor);
 		
 //		_project.loadProject(_window.popUpLoad());
-		_toolController = new ToolController((Stage)_project.getStages().toArray()[0], position_queue);
+		_toolController = new ToolController((Stage)_currentProject.getStages().toArray()[0], position_queue);
 	}
 	
 	public boolean getFlag2D(){
@@ -65,22 +67,64 @@ public class EventController implements ActionListener {
 		return _toolController.getStage();
 	}
 	
+	public void loadProject() {
+		try {
+			_projects = _daoProject.queryForAll();
+			ArrayList<Project> currentProjects = (ArrayList<Project>) _daoProject.queryForEq("current", true);
+			if (currentProjects.size() != 0)
+			{
+				_currentProject = currentProjects.get(0);
+			}
+			else {
+				this.askProject();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void askProject() {
+		int input = _window.popUpYesOrNo(new String[] {"Open project", "New Project"}, "Choose an option...", "Open Project");
+		if (input == 0) {
+			this.openProject();
+		}
+		else {
+			this.newProject();
+		}
+	}
+	
 	public void openProject() {
 		try {
-			Dao<Project, Integer> dao = Project.getDao(Project.class);
-			List<Project> projects = dao.queryForAll();
-			String[] choices = new String[projects.size()];
+			String[] choices = new String[_projects.size()];
 			int i = 0;
-			for (Project project: projects) {
+			for (Project project: _projects) {
 				choices[i] = project.getName();
 				++i;
 			}
 			String input = _window.popUpChoice((String[]) choices, "Choose a project...", "Choose Project");
-			for (Project project: projects) {
+			for (Project project: _projects) {
 				if (input == project.getName()) {
-					_project = project;
+					_currentProject = project;
+					project.setCurrent(true);
 				}
+				else {
+					project.setCurrent(false);
+				}
+				project.update();
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void newProject() {
+		String projectName = _window.popUpInput("Enter a project name", "New Project");
+		Project newProject = new Project(projectName);
+		_projects.add(newProject);
+		try {
+			newProject.create();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,9 +146,10 @@ public class EventController implements ActionListener {
 			_flag2D = true;
 			_flag3D = true;
 		}else if(command == "Open project.."){
-			System.out.println("caca");
 			//FIXME ask window to display pop-up menu, load it in database, load a stage in toolController
 			this.openProject();
+		}else if(command == "New Project"){
+			this.newProject();
 		}else if(command == "Save"){
 			//FIXME ask database to save the project 
 		}else if(command == "New"){

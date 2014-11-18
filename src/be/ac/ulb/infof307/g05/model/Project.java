@@ -17,7 +17,7 @@ public class Project extends Database<Project> {
 		this.setName(name);
 		this.creationDate = new Date();
 		this.modificationDate = new Date();
-		this.current = true;
+		this.setCurrent(true);
 	}
 	
 	@DatabaseField (generatedId = true)
@@ -33,7 +33,7 @@ public class Project extends Database<Project> {
 	protected Date modificationDate;
 	
 	@DatabaseField (canBeNull = false)
-	protected Boolean current;
+	private Boolean current;
 	
 	@ForeignCollectionField (eager = true)
 	protected Collection<Stage> stages;
@@ -47,5 +47,13 @@ public class Project extends Database<Project> {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Boolean getCurrent() {
+		return current;
+	}
+
+	public void setCurrent(Boolean current) {
+		this.current = current;
 	}
 }
