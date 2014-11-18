@@ -37,7 +37,58 @@ public class Database<T> extends BaseDaoEnabled<T, Integer> {
 //				Project project = new Project("test project");
 //				project.create();
 //				Stage stage = new Stage(project, 0);
-//				stage.create();
+//				Vector<Vertex> vertexes = new Vector<Vertex>();
+//				Vertex vertex1 = new Vertex(0,0,0);
+//				vertexes.add(vertex1);
+//				Vertex vertex3 = new Vertex(0,2,0);
+//				vertexes.add(vertex3);
+//				Vertex vertex2 = new Vertex(0,2,2);
+//				vertexes.add(vertex2);
+//				Vertex vertex4 = new Vertex(0,0,2);
+//				vertexes.add(vertex4);
+//				
+//				Vector<Order> orders = new Vector<Order>();
+//				Order order1 = new Order(0);
+//				Order order2 = new Order(1);
+//				Order order3 = new Order(2);
+//				Order order4 = new Order(0);
+//				Order order5 = new Order(2);
+//				Order order6 = new Order(3);
+//				orders.add(order1);
+//				orders.add(order2);
+//				orders.add(order3);
+//				orders.add(order4);
+//				orders.add(order5);
+//				orders.add(order6);
+//				stage.floor = new CompositeObject(null, vertexes);
+//				stage.floor.setMeshOrder(orders);
+//				vertex1.setReferent(stage.floor);
+//				vertex2.setReferent(stage.floor);
+//				vertex3.setReferent(stage.floor);
+//				vertex4.setReferent(stage.floor);
+//				order1.referent = stage.floor;
+//				order2.referent = stage.floor;
+//				order3.referent = stage.floor;
+//				order4.referent = stage.floor;
+//				order5.referent = stage.floor;
+//				order6.referent = stage.floor;
+//				try {
+//					stage.floor.create();
+//					stage.create();
+//					order1.create();
+//					order2.create();
+//					order3.create();
+//					order4.create();
+//					order5.create();
+//					order6.create();
+//					vertex1.create();
+//					vertex2.create();
+//					vertex3.create();
+//					vertex4.create();
+//				} catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 			}
 			catch (SQLException e) {
 				e.printStackTrace();

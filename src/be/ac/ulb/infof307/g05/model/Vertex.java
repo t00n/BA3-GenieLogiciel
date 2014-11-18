@@ -33,6 +33,10 @@ public class Vertex extends Database<Vertex> {
 	@DatabaseField (generatedId = true)
 	protected int id_vertex;
 
+	public int getId() {
+		return this.id_vertex;
+	}
+
 	@DatabaseField (canBeNull = false)
 	protected float x;
 	public void setX(Float x) {
@@ -55,10 +59,18 @@ public class Vertex extends Database<Vertex> {
 	}
 	
 	@DatabaseField (canBeNull = false, foreign = true)
-	protected CompositeObject referent;
+	private CompositeObject referent;
 
 	public Vector3f toVector3f() {
 		return new Vector3f(this.x, this.y, this.z);
+	}
+
+	public CompositeObject getReferent() {
+		return referent;
+	}
+
+	public void setReferent(CompositeObject referent) {
+		this.referent = referent;
 	}
 	
 }

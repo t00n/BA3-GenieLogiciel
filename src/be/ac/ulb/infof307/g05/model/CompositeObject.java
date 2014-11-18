@@ -21,11 +21,11 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	private CompositeObject parent;
 	@DatabaseField (canBeNull = true, foreign = true)
 	private Texture texture;
-	@ForeignCollectionField (eager = false)
+	@ForeignCollectionField (eager = true)
 	protected Collection<Vertex> positions;
-	@ForeignCollectionField (eager = false)
+	@ForeignCollectionField (eager = true)
 	protected Collection<Order> meshOrder;
-	@ForeignCollectionField (eager = false)
+	@ForeignCollectionField (eager = true)
 	protected Collection<CompositeObject> childs;
 	
 	
@@ -33,7 +33,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		
 	}
 
-	public CompositeObject(CompositeObject parent, Vector<Vertex> positions) {
+	public CompositeObject(CompositeObject parent, Collection<Vertex> positions) {
 		this.parent = parent;
 		this.positions = positions;
 		this.texture = null;
@@ -57,7 +57,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	}
 	
 	public Vector3f[] getVectors() {
-		Vector3f[] ret = new Vector3f[this.positions.size()];
+		Vector3f[] ret = new Vector3f[this.getPositions().size()];
 		int i = 0;
 		for (Vertex vertex: this.positions) {
 			ret[i] = vertex.getVector();

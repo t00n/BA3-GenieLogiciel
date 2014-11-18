@@ -9,9 +9,7 @@ import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.Project;
 import be.ac.ulb.infof307.g05.model.Stage;
 
-import com.jme3.asset.AssetManager;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Node;
 
 
 public class EventController implements ActionListener {
@@ -29,18 +27,13 @@ public class EventController implements ActionListener {
 	public EventController(MainWindow window){
 		/** constructor **/
 		_window = window;
+		//FIXME use _window.popUpLoad()
 		try {
 			_project = (Project) Project.getDao(Project.class).queryForId(1);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(_project.getName());
-		System.out.println(_project.getStages());
-		Stage stage = (Stage)_project.getStages().toArray()[0];
-		System.out.println(stage.getFloor().getId());
-		System.out.println(stage.getFloor().getPositions());
-		System.out.println(stage.getFloor().getMeshOrder());
 		
 		Vector<Vector3f> position_queue = new Vector<Vector3f>();
 		position_queue.add(_cursor);
