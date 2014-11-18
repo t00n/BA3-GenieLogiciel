@@ -19,6 +19,13 @@ public class Stage extends Database<Stage> {
 		this.project = project;
 		this.level = level;
 	}
+
+    @Override
+    public void save() {
+        if (this.floor)
+            this.floor.save();
+        this.createOrUpdate();
+    }
 	
 	@DatabaseField (generatedId = true)
 	protected int id_stage;

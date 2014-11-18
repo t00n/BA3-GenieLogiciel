@@ -13,6 +13,11 @@ public class Order extends Database<Order> {
 		this.order = order;
 	}
 
+    @Override
+    public void save() {
+        this.createOrUpdate();
+    }
+
 	@DatabaseField (generatedId = true)
 	protected int id_order;
 	

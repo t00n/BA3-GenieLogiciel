@@ -33,6 +33,10 @@ public class Vertex extends Database<Vertex> {
 	@DatabaseField (generatedId = true)
 	protected int id_vertex;
 
+    public void save() {
+        this.createOrUpdate();
+    }
+
 	public int getId() {
 		return this.id_vertex;
 	}
