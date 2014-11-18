@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g05.model;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
 
@@ -22,8 +23,13 @@ public class Project extends Database<Project> {
 
     @Override
     public void save() {
-        this.createOrUpdate();
-        if (this.stages && !this.stages.isEmpty())
+        try {
+			this.update();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        if (this.stages != null && !this.stages.isEmpty())
             for (Stage stage : this.stages)
                 stage.save();
     }

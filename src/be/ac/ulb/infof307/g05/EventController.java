@@ -145,14 +145,12 @@ public class EventController implements ActionListener {
 			_flag2D = true;
 			_flag3D = true;
 		}else if(command == "Open project.."){
-			//FIXME ask window to display pop-up menu, load it in database, load a stage in toolController
 			this.openProject();
 		}else if(command == "New Project"){
+			//FIXME ask to save the current project or not
 			this.newProject();
 		}else if(command == "Save"){
-			//FIXME ask database to save the project 
-		}else if(command == "New"){
-			//FIXME ask database to load new project (and save the current if not empty)
+			_currentProject.save();
 		}else if(command == "cursor_move"){
 			_cursor.set((Vector3f) event.getSource());
 			_toolController.drawInConstruction();

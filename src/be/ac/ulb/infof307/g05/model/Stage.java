@@ -1,5 +1,7 @@
 package be.ac.ulb.infof307.g05.model;
 
+import java.sql.SQLException;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -22,9 +24,14 @@ public class Stage extends Database<Stage> {
 
     @Override
     public void save() {
-        if (this.floor)
+        if (this.floor != null)
             this.floor.save();
-        this.createOrUpdate();
+        try {
+			this.update();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 	
 	@DatabaseField (generatedId = true)

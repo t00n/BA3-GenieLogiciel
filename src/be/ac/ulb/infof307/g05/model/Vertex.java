@@ -1,5 +1,7 @@
 package be.ac.ulb.infof307.g05.model;
 
+import java.sql.SQLException;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jme3.math.Vector3f;
@@ -34,7 +36,15 @@ public class Vertex extends Database<Vertex> {
 	protected int id_vertex;
 
     public void save() {
-        this.createOrUpdate();
+        try {
+        	this.setX(0.f);
+        	this.setY(0.f);
+        	this.setZ(0.f);
+			this.update();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 	public int getId() {

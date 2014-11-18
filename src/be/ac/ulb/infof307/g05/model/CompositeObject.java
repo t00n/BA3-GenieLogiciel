@@ -5,6 +5,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jme3.math.Vector3f;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -32,13 +33,18 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 
     @Override
     public void save() {
-        if (this.texture)
+        if (this.texture != null)
             this.texture.save();
-        this.createOrUpdate();
-        if (this.positions && !this.positions.isEmpty())
+        try {
+			this.update();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        if (this.positions != null && !this.positions.isEmpty())
             for (Vertex position : this.positions)
                 position.save();
-        if (this.meshOrder && !this.meshOrder.isEmpty())
+        if (this.meshOrder != null && !this.meshOrder.isEmpty())
             for (Order order : this.meshOrder)  
                 order.save();
     }
