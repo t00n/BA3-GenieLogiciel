@@ -8,6 +8,9 @@ public class Cube {
 	private Collection<Vector3f> _vertexes;
 	private Collection<Integer> _orders;
 	
+	public Collection<Vector3f> getVertices() { return _vertexes; }
+	public Collection<Integer> getOrder() { return _orders; }
+	
 	public Cube(Vector3f firstPoint, Vector3f secondPoint) {
 		float fromX = firstPoint.x;
 		float fromY = firstPoint.y;
@@ -33,14 +36,14 @@ public class Cube {
 		for(int i=0; i<(cubeOrders.size()); i++){_orders.add(cubeOrders.get(i));}
 	}
 	
-	public int[] squareOrder(int point0, int point1, int point2, int point3){
+	private int[] squareOrder(int point0, int point1, int point2, int point3){
 		//Renvoie l'ordre des points de façon à pouvoir dessiner le mesh d'un carré visible des deux côtés
 		int[] squareOrders = { point1,point0,point2, point2,point3,point1, 
 						  	   point2,point0,point1, point1,point3,point2 };
 		return squareOrders;
 	}
 	
-	public ArrayList<Integer> cubeOrder(int point0, int point1, int point2, int point3, int point4, int point5, int point6, int point7){
+	private ArrayList<Integer> cubeOrder(int point0, int point1, int point2, int point3, int point4, int point5, int point6, int point7){
 		ArrayList<Integer> cubeOrders = new ArrayList<Integer>();
 		
 		int[] cubeOrders1 = squareOrder(point0,point1,point2,point3);
