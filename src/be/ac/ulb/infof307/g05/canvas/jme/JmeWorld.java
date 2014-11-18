@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g05.canvas.jme;
 
 
+import java.awt.Canvas;
+
 import be.ac.ulb.infof307.g05.EventController;
 
 import com.jme3.app.SimpleApplication;
@@ -12,6 +14,7 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
+import com.jme3.system.JmeCanvasContext;
 
 
 public class JmeWorld extends SimpleApplication {
@@ -68,6 +71,7 @@ public class JmeWorld extends SimpleApplication {
 			_view[1].setEnabled(false);
 		}
 		_flyCam.setCamEnable(set2d, set3d);
+		((JmeCanvasContext) this.getContext()).getCanvas().requestFocusInWindow();
 	}
 
 	public void simpleInitApp(){
