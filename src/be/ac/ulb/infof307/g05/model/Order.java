@@ -18,7 +18,6 @@ public class Order extends Database<Order> {
     @Override
     public void save() {
         try {
-        	this.order = 0;
 			this.update();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

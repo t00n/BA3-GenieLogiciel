@@ -37,9 +37,6 @@ public class Vertex extends Database<Vertex> {
 
     public void save() {
         try {
-        	this.setX(0.f);
-        	this.setY(0.f);
-        	this.setZ(0.f);
 			this.update();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

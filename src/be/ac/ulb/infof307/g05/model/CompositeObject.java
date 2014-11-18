@@ -20,7 +20,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	@DatabaseField (canBeNull = true, foreign = true)
 	private Texture texture;
 	@ForeignCollectionField (eager = true)
-	protected Collection<Vertex> positions;
+	protected Collection<Vertex> vertices;
 	@ForeignCollectionField (eager = true)
 	protected Collection<Order> meshOrder;
 	@ForeignCollectionField (eager = true)
@@ -41,16 +41,17 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        if (this.positions != null && !this.positions.isEmpty())
-            for (Vertex position : this.positions)
+        if (this.vertices != null && !this.vertices.isEmpty())
+            for (Vertex position : this.vertices)
                 position.save();
         if (this.meshOrder != null && !this.meshOrder.isEmpty())
             for (Order order : this.meshOrder)  
                 order.save();
     }
-	public CompositeObject(CompositeObject parent, Collection<Vertex> positions) {
+	public CompositeObject(CompositeObject parent, Collection<Vertex> vertices, Collection<Order> meshOrder) {
 		this.parent = parent;
-		this.positions = positions;
+		this.vertices = vertices;
+		this.meshOrder = meshOrder;
 		this.texture = null;
 	}
 
@@ -64,17 +65,17 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	}
 	
 	public void setPositions(Collection<Vertex> col) {
-		this.positions = col;
+		this.vertices = col;
 	}
 	
 	public Collection<Vertex> getPositions() {
-		return this.positions;
+		return this.vertices;
 	}
 	
 	public Vector3f[] getVectors() {
 		Vector3f[] ret = new Vector3f[this.getPositions().size()];
 		int i = 0;
-		for (Vertex vertex: this.positions) {
+		for (Vertex vertex: this.vertices) {
 			ret[i] = vertex.getVector();
 			++i;
 		}

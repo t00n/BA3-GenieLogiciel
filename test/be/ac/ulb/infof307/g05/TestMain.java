@@ -51,8 +51,7 @@ public class TestMain {
 		orders.add(order4);
 		orders.add(order5);
 		orders.add(order6);
-		stage.setFloor(new CompositeObject(null, vertexes));
-		stage.getFloor().setMeshOrder(orders);
+		stage.setFloor(new CompositeObject(null, vertexes, orders));
 		vertex1.setReferent(stage.getFloor());
 		vertex2.setReferent(stage.getFloor());
 		vertex3.setReferent(stage.getFloor());
