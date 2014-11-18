@@ -65,7 +65,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		}
 		return ret;
 	}
-	protected void setMeshOrder(Collection<Order> col) {
+	public void setMeshOrder(Collection<Order> col) {
 		this.meshOrder = col;
 	}
 	

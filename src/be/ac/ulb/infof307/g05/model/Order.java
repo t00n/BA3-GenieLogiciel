@@ -23,4 +23,8 @@ public class Order extends Database<Order> {
 	
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected CompositeObject referent;
+
+	public void setReferent(CompositeObject referent) {
+		this.referent = referent;
+	}
 }
