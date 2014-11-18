@@ -28,7 +28,7 @@ public class Vertex extends Database<Vertex> {
 	
 	private Vector3f vector = new Vector3f();
 	
-	public Vector3f getVector() { return this.vector; }
+	public Vector3f getVector() { return this.toVector3f(); }
 	
 	@DatabaseField (generatedId = true)
 	protected int id_vertex;
@@ -62,7 +62,8 @@ public class Vertex extends Database<Vertex> {
 	private CompositeObject referent;
 
 	public Vector3f toVector3f() {
-		return new Vector3f(this.x, this.y, this.z);
+		this.vector = new Vector3f(this.x, this.y, this.z);
+		return this.vector;
 	}
 
 	public CompositeObject getReferent() {
