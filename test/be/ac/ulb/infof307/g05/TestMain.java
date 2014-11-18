@@ -25,28 +25,8 @@ public class TestMain {
 		fail("Not yet implemented");
 	}
 	
-	@Test
-	public void testORM() throws SQLException {
-	}
-	
-	@Test
-	public void createTestDB() throws SQLException {
-		JdbcConnectionSource connectionSource = Database.getConnectionSource();
-		// create tables
-		TableUtils.dropTable(connectionSource, Vertex.class, true);
-		TableUtils.dropTable(connectionSource, Texture.class, true);
-		TableUtils.dropTable(connectionSource, CompositeObject.class, true);
-		TableUtils.dropTable(connectionSource, Stage.class, true);
-		TableUtils.dropTable(connectionSource, Project.class, true);
-		TableUtils.dropTable(connectionSource, Order.class, true);
-		TableUtils.createTableIfNotExists(connectionSource, Project.class);
-		TableUtils.createTableIfNotExists(connectionSource, Texture.class);
-		TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
-		TableUtils.createTableIfNotExists(connectionSource, Stage.class);
-		TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
-		TableUtils.createTableIfNotExists(connectionSource, Order.class);
-		Project project = new Project("test project");
-		project.create();
+	public void createTestProject(String name) {
+		Project project = new Project(name);
 		Stage stage = new Stage(project, 0);
 		Vector<Vertex> vertexes = new Vector<Vertex>();
 		Vertex vertex1 = new Vertex(0,0,0);
@@ -84,6 +64,7 @@ public class TestMain {
 		order5.setReferent(stage.getFloor());
 		order6.setReferent(stage.getFloor());
 		try {
+			project.create();
 			stage.getFloor().create();
 			stage.create();
 			order1.create();
@@ -99,6 +80,26 @@ public class TestMain {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	
+	}
+	
+	@Test
+	public void createTestDB() throws SQLException {
+		JdbcConnectionSource connectionSource = Database.getConnectionSource();
+		// create tables
+		TableUtils.dropTable(connectionSource, Vertex.class, true);
+		TableUtils.dropTable(connectionSource, Texture.class, true);
+		TableUtils.dropTable(connectionSource, CompositeObject.class, true);
+		TableUtils.dropTable(connectionSource, Stage.class, true);
+		TableUtils.dropTable(connectionSource, Project.class, true);
+		TableUtils.dropTable(connectionSource, Order.class, true);
+		TableUtils.createTableIfNotExists(connectionSource, Project.class);
+		TableUtils.createTableIfNotExists(connectionSource, Texture.class);
+		TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
+		TableUtils.createTableIfNotExists(connectionSource, Stage.class);
+		TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
+		TableUtils.createTableIfNotExists(connectionSource, Order.class);
+		this.createTestProject("test project 1");
+		this.createTestProject("test project 2");
 	}
 }
