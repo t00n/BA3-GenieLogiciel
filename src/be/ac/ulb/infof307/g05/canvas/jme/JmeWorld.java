@@ -85,9 +85,10 @@ public class JmeWorld extends SimpleApplication {
 	}
 	
 	public void draw(){
-		rootNode.detachAllChildren();
-		rootNode.attachChild((new JmeCompositeObject(_eventController.getStage(), assetManager)).getNode(assetManager));
-	}
+		Node stage = (new JmeCompositeObject(_eventController.getStage(), assetManager)).getNode(assetManager);
+		rootNode.detachChild(_currentStage);
+		rootNode.attachChild(_currentStage);
+		this._currentStage = stage;}
 	
 	public void test(){
 		Box b = new Box(1, 1, 1);
