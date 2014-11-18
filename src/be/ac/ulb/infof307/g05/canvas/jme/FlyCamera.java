@@ -29,7 +29,7 @@ public class FlyCamera extends FlyByCamera {
 	private Camera _cam2d;
 	private Camera _cam3d;
 	private Node _node;
-	private EventController _eventControler;
+	private EventController _eventController;
 	private boolean  _cam2dEnabled = false;
 	private boolean  _cam3dEnabled = false;
 	private CollisionResults _collisions = new CollisionResults();
@@ -43,7 +43,7 @@ public class FlyCamera extends FlyByCamera {
 		_cam2d = cam2d;
 		_cam3d = cam3d;
 		_node = node;
-		_eventControler = eventController;
+		_eventController = eventController;
 		
 		this.inputManager = inputManager;
 		this.setDragToRotate(true);
@@ -162,13 +162,14 @@ public class FlyCamera extends FlyByCamera {
     }
 	
     public void onAnalog(String name, float value, float tpf){
-        _eventControler.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "cursor_move"));
+        _eventController.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "cursor_move"));
         
         Geometry geometryToMove = getGeometryCollision();
 
 		if(enabled){
-			if(_isPressed)
+			if(_isPressed) {
 				_lastMouseClick = getPositionVec();
+			}
 	    	if(_cam2dEnabled && _cam3dEnabled){
 	    		if(isIn2dViewport())
 	    			this.cam = _cam2d;
@@ -280,11 +281,11 @@ public class FlyCamera extends FlyByCamera {
         
         if(!value){
         	if(name.equals("FLYCAM_Enter")){
-            	_eventControler.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ENTER"));	
+            	_eventController.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ENTER"));	
         	}else if(name.equals("FLYCAM_Escape")){
-            	_eventControler.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ESCAPE"));	
+            	_eventController.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ESCAPE"));	
         	}else if(name.equals("FLYCAM_RotateDrag")){
-            	_eventControler.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "cursor_click_up"));
+            	_eventController.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "cursor_click_up"));
         	}
         }
     }

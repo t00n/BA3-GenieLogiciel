@@ -22,7 +22,6 @@ public class JmeWorld extends SimpleApplication {
 	private FlyCamera  _flyCam;
 	private EventController _eventController;
 	private Node _currentStage = new Node();
-	private JmeCompositeObject _jmeCompositeObject;
 	
 	public JmeWorld(EventController eventController){
 		_eventController = eventController;
@@ -80,23 +79,22 @@ public class JmeWorld extends SimpleApplication {
 	   _reference.setNode(rootNode, true);
 	   
        _view[0].attachScene(rootNode);
-       _view[1].attachScene(rootNode);
-       
+       _view[1].attachScene(rootNode);       
 	}
 	
-	public void draw(){
+	public void draw() {
 		Node stage = (new JmeCompositeObject(_eventController.getStage(), assetManager)).getNode(assetManager);
 		rootNode.detachChild(_currentStage);
 		rootNode.attachChild(_currentStage);
-		this._currentStage = stage;}
+		this._currentStage = stage;
+	}
 	
-	public void test(){
+	public void test() {
 		Box b = new Box(1, 1, 1);
         Geometry geom = new Geometry("Box", b);
         Material mat = new Material(assetManager,"Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", ColorRGBA.Red);
         geom.setMaterial(mat);
         rootNode.attachChild(geom);
-
 	}
 }
