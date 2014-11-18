@@ -82,17 +82,11 @@ public class JmeWorld extends SimpleApplication {
        _view[0].attachScene(rootNode);
        _view[1].attachScene(rootNode);
        
-	   draw();
 	}
 	
 	public void draw(){
-		_jmeCompositeObject = new JmeCompositeObject(_eventController.getStage(), assetManager);
-		Node stage = _jmeCompositeObject.getNode(assetManager);
-		if(_currentStage != stage){
-			rootNode.detachChild(_currentStage);
-			rootNode.attachChild(stage);
-			_currentStage = stage;
-		}
+		rootNode.detachAllChildren();
+		rootNode.attachChild((new JmeCompositeObject(_eventController.getStage(), assetManager)).getNode(assetManager));
 	}
 	
 	public void test(){
