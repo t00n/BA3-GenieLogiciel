@@ -25,5 +25,6 @@ public class CanvasJme extends AbstractCanvas<Canvas> {
 	
 	public void update(){
 		_jmeWorld.setViews(_eventController.getFlag2D(), _eventController.getFlag3D());
+		System.out.println("coucou");
 	}
 }

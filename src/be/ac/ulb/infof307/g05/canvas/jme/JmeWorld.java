@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g05.canvas.jme;
 
 
+import java.awt.Canvas;
+
 import be.ac.ulb.infof307.g05.EventController;
 
 import com.jme3.app.SimpleApplication;
@@ -12,6 +14,7 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
+import com.jme3.system.JmeCanvasContext;
 
 
 public class JmeWorld extends SimpleApplication {
@@ -22,6 +25,8 @@ public class JmeWorld extends SimpleApplication {
 	private FlyCamera  _flyCam;
 	private EventController _eventController;
 	private Node _currentStage = new Node();
+	private JmeConverter _converter = new JmeConverter();
+
 	
 	public JmeWorld(EventController eventController){
 		_eventController = eventController;
@@ -66,6 +71,7 @@ public class JmeWorld extends SimpleApplication {
 			_view[1].setEnabled(false);
 		}
 		_flyCam.setCamEnable(set2d, set3d);
+		((JmeCanvasContext) this.getContext()).getCanvas().requestFocusInWindow();
 	}
 
 	public void simpleInitApp(){
@@ -83,10 +89,10 @@ public class JmeWorld extends SimpleApplication {
 	}
 	
     public void simpleUpdate(float tpf) {
-    	Node stage = (new JmeCompositeObject(_eventController.getStage(), assetManager)).getNode(assetManager);
-		rootNode.detachChild(_currentStage);
-		rootNode.attachChild(_currentStage);
-		this._currentStage = stage;
+    	rootNode.detachChild(_currentStage);
+    	_currentStage.detachAllChildren();
+    	_converter.convert(_eventController.getStage(), _currentStage, assetManager);
+    	rootNode.attachChild(_currentStage);
 	}
 	
 	public void test() {
