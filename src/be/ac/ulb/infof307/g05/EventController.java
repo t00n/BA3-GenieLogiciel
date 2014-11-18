@@ -3,6 +3,8 @@ package be.ac.ulb.infof307.g05;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import be.ac.ulb.infof307.g05.MainWindow;
@@ -11,6 +13,7 @@ import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.Project;
 import be.ac.ulb.infof307.g05.model.Stage;
 
+import com.j256.ormlite.dao.Dao;
 import com.jme3.math.Vector3f;
 
 
@@ -66,6 +69,26 @@ public class EventController implements ActionListener {
 		return _toolController.getStage();
 	}
 	
+	public void loadProject() {
+		try {
+			List<String> choices = new ArrayList<String>();
+			Dao<Project, Integer> dao = Project.getDao(Project.class);
+			List<Project> projects = dao.queryForAll();
+			for (Project project: projects) {
+				choices.add(project.getName());
+			}
+			String input = _window.popUpLoad((String[]) choices.toArray());
+			for (Project project: projects) {
+				if (input == project.getName()) {
+					_project = project;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent event){
 		/** this method manage events **/
@@ -82,6 +105,7 @@ public class EventController implements ActionListener {
 			_flag3D = true;
 		}else if(command == "Open project.."){
 			//FIXME ask window to display pop-up menu, load it in database, load a stage in toolController
+			this.loadProject();
 		}else if(command == "Save"){
 			//FIXME ask database to save the project 
 		}else if(command == "New"){

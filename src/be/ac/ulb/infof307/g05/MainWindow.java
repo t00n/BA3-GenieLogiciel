@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import be.ac.ulb.infof307.g05.canvas.CanvasJme;
 import be.ac.ulb.infof307.g05.canvas.MenuBarCanvas;
@@ -49,10 +50,12 @@ public class MainWindow extends JFrame {
 		this.setVisible(true);
 	}
 	
-	public String popUpLoad(){
+	public String popUpLoad(String[] choices){
 		/** this method display a pop-up window to ask user which project to load **/
 		//FIXME Franklin
-		return "";
+		
+		String input = (String) JOptionPane.showInputDialog(null, "Choose a project...", "Choose a project", JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
+		return input;
 	}
 	
 	public void update(){
