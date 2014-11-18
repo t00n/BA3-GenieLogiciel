@@ -36,12 +36,11 @@ public class EventController implements ActionListener {
 		_window = window;
 		//FIXME use _window.popUpLoad()
 		
-		this.loadProject();
 		
 		Vector<Vector3f> position_queue = new Vector<Vector3f>();
 		position_queue.add(_cursor);
-		
-//		_project.loadProject(_window.popUpLoad());
+
+		this.loadProject();
 		_toolController = new ToolController((Stage)_currentProject.getStages().toArray()[0], position_queue);
 	}
 	
@@ -89,7 +88,7 @@ public class EventController implements ActionListener {
 		if (input == 0) {
 			this.openProject();
 		}
-		else {
+		else if (input == 1){
 			this.newProject();
 		}
 	}
