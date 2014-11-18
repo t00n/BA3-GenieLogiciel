@@ -80,8 +80,6 @@ public class JmeWorld extends SimpleApplication {
 	   
        _view[0].attachScene(rootNode);
        _view[1].attachScene(rootNode);
-       
-       test();
 	}
 	
 	public void draw() {
