@@ -7,7 +7,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 
-public class Database<T> extends BaseDaoEnabled<T, Integer> {
+public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 	
 	/**
 	 *  static link to database connection source
@@ -47,4 +47,6 @@ public class Database<T> extends BaseDaoEnabled<T, Integer> {
 			e.printStackTrace();
 		}
 	}
+
+    public abstract void save();
 }

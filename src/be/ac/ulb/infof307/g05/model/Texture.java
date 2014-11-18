@@ -13,6 +13,11 @@ public class Texture extends Database<Texture> {
 		this.name = name;
 		this.fileLocation = fileLocation;
 	}
+
+    @Override
+    public void save() {
+        this.createOrUpdate();
+    }
 	
 	@DatabaseField (generatedId = true)
 	protected int id_texture;

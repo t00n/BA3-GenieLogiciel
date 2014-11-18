@@ -30,6 +30,18 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		
 	}
 
+    @Override
+    public void save() {
+        if (this.texture)
+            this.texture.save();
+        this.createOrUpdate();
+        if (this.positions && !this.positions.isEmpty())
+            for (Vertex position : this.positions)
+                position.save();
+        if (this.meshOrder && !this.meshOrder.isEmpty())
+            for (Order order : this.meshOrder)  
+                order.save();
+    }
 	public CompositeObject(CompositeObject parent, Collection<Vertex> positions) {
 		this.parent = parent;
 		this.positions = positions;

@@ -19,6 +19,14 @@ public class Project extends Database<Project> {
 		this.modificationDate = new Date();
 		this.current = true;
 	}
+
+    @Override
+    public void save() {
+        this.createOrUpdate();
+        if (this.stages && !this.stages.isEmpty())
+            for (Stage stage : this.stages)
+                stage.save();
+    }
 	
 	@DatabaseField (generatedId = true)
 	protected int id_project;
