@@ -36,56 +36,6 @@ public class EventController implements ActionListener {
 	private Dao<Project, Integer> _daoProject = Project.getDao(Project.class);
 	private List<Project> _projects;
 	
-
-	private HashMap<String, Boolean> _flagTools = new HashMap<String, Boolean>();
-	private Stack<Vector3f> 		 _positionStack = new Stack<Vector3f>();
-	private String					 _lastCollision;
-	private Vector3f				 _cursor = new Vector3f();
-	
-	public void addTool(String tool_name){
-		/** this method add a flag for the new tool **/
-		_flagTools.put(tool_name, false);
-	}
-	
-	public void addPosition(){
-		/** this method push a new vector to position stack if a tool is active **/
-		if(!getEnabledTool().isEmpty()){
-			_positionStack.push(new Vector3f(_cursor));
-			System.out.println("[DEBUG][ToolController::addPosition] : " + _positionStack);
-		}
-	}
-	
-	public void enableTool(String tool_name){
-		/** this method enable a tool and disable others **/
-		if(_flagTools.containsKey(tool_name)){
-			System.out.println("[DEBUG][ToolController::enableTool] : " + tool_name);
-			for(String tool:_flagTools.keySet()){
-				if(tool.equals(tool_name))
-					_flagTools.put(tool_name, !_flagTools.get(tool_name));
-				else
-				_flagTools.put(tool, false);
-			}
-			purge();
-		}
-	}
-	
-	public String getEnabledTool(){
-		/** this method return the active tool name **/
-		String enabled_tool = new String();
-		
-		for(String tool:_flagTools.keySet()){
-			if(_flagTools.get(tool)){
-				enabled_tool += tool;
-			}
-		}
-		return enabled_tool;
-	}
-
-	private void purge(){
-		/** this method pop all position from position stack (except cursor) **/
-		_positionStack.removeAllElements();
-	}
-	
 	private SaveThread _saveThread;
 	
 	public ToolController getToolController() { return _toolController; }
@@ -114,7 +64,11 @@ public class EventController implements ActionListener {
 	
 	public CompositeObject getStage(){
 		/** this method return the root node of the scene built by toolController **/
-		return _currentProject.getStage(0).getFloor();
+		return _toolController.getStage();
+	}
+	
+	public void addTool(String tool_name) {
+		_toolController.addTool(tool_name);
 	}
 	
 	public String getEnableTool(){
