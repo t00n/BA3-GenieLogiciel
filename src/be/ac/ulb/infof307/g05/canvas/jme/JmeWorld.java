@@ -93,8 +93,10 @@ public class JmeWorld extends SimpleApplication {
 		/** this method redraw all the scene **/
     	rootNode.detachChild(_currentStage);
     	_currentStage.detachAllChildren();
-    	_converter.convert(_eventController.getStage(), _currentStage, assetManager);
-    	rootNode.attachChild(_currentStage);
+    	if (_eventController.getStage() != null){
+	    	_converter.convert(_eventController.getStage(), _currentStage, assetManager);
+	    	rootNode.attachChild(_currentStage);
+    	}
 	}
 	
     public void simpleUpdate(float tpf) {

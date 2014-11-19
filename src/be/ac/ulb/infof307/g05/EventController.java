@@ -118,6 +118,7 @@ public class EventController implements ActionListener {
 				if (input == project.getName()) {
 					_currentProject = project;
 					project.setCurrent(true);
+					project.refresh();
 				}
 				else {
 					project.setCurrent(false);
@@ -136,14 +137,6 @@ public class EventController implements ActionListener {
 		ProjectStruct newP = _window.popUpNew();
 		Project newProject = new Project(newP.name, newP.width, newP.length);
 		newProject.addStage(0);
-        
-        Vector3f vertex1 = new Vector3f(0,0,0);
-        Vector3f vertex2 = new Vector3f(newP.width,0.1f,newP.length);
-
-        Cube cube = new Cube(vertex1, vertex2);
-        CompositeObject object = new CompositeObject(null, cube.getVertices(), cube.getOrder());
-        newProject.getStage(0).addObject(null, object);
-
         newProject.save();
         
         int id = newProject.getId();
