@@ -102,8 +102,8 @@ public class EventController implements ActionListener {
 		if (this._saveThread != null) {
 			this._saveThread.interrupt();
 		}
-//		this._saveThread = new SaveThread(_currentProject);
-//		this._saveThread.start();
+		this._saveThread = new SaveThread(_currentProject);
+		this._saveThread.start();
 	}
 	
 	/**
