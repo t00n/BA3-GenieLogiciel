@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g05;
 
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -109,10 +110,20 @@ public class ToolController {
 				//FIXME if(drawing && current_drawing_object.addPosition(_cursor) == true) attach to father, current_drawing_object = new object(type=last drawn)
 				addPosition();
 				if (_positionStack.size() == 2) {
+					System.out.println("[Debug][ToolController::actionPerformed] : Draw");
 					Vector3f one = _positionStack.pop();
 					Vector3f two = _positionStack.pop();
+					one.y += 5.f;
+					two.y += 10.f;
 					Cube newMesh = new Cube(one, two);
 					CompositeObject newObject = new CompositeObject(_currentStage.getFloor(), newMesh.getVertices(), newMesh.getOrder());
+					_currentStage.getFloor().add(newObject);
+					try {
+						newObject.create();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}else if(command == "comboBoxChanged"){
 				String option_choice = ((JComboBox)(event.getSource())).getSelectedItem().toString();
