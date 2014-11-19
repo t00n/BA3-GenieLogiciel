@@ -219,6 +219,8 @@ public class EventController implements ActionListener {
 			this.newProject();
 		}else if(command == "Save"){
 			_currentProject.save();
+		}else if(command == "Quit"){
+			_window.dispose();
 		}else {
 			_toolController.actionPerformed(event);
 		}
