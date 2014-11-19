@@ -1,19 +1,13 @@
 package be.ac.ulb.infof307.g05.canvas.jme;
 
-
-import java.awt.Canvas;
-
 import be.ac.ulb.infof307.g05.EventController;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.shape.Box;
 import com.jme3.system.JmeCanvasContext;
 
 
@@ -33,6 +27,7 @@ public class JmeWorld extends SimpleApplication {
 	}
 	
 	private void initViews(){
+		/** this method create viewports (2D & 3D) **/
 		_camera[0] = cam;
         _view[0] = renderManager.createMainView("3D view", _camera[0]);
         _camera[0].setViewPort(0.0f, 1.0f, 0.0f, 1.0f);
@@ -56,6 +51,7 @@ public class JmeWorld extends SimpleApplication {
 	}
 
 	public void setViews(boolean set2d, boolean set3d){
+		/** this method set viewports (2D and/or 3D) **/
 		if(set2d && set3d){
 			_view[0].setEnabled(true);
 			_view[1].setEnabled(true);
@@ -75,6 +71,7 @@ public class JmeWorld extends SimpleApplication {
 	}
 
 	public void simpleInitApp(){
+		/** this method init the jme world **/
 	   guiViewPort.setEnabled(false);
 	   flyCam.setEnabled(false);
 	   initViews();
@@ -88,19 +85,16 @@ public class JmeWorld extends SimpleApplication {
        _view[1].attachScene(rootNode);
 	}
 	
-    public void simpleUpdate(float tpf) {
+	private void draw() {
+		/** this method redraw all the scene **/
     	rootNode.detachChild(_currentStage);
     	_currentStage.detachAllChildren();
     	_converter.convert(_eventController.getStage(), _currentStage, assetManager);
     	rootNode.attachChild(_currentStage);
 	}
 	
-	public void test() {
-		Box b = new Box(1, 1, 1);
-        Geometry geom = new Geometry("Box", b);
-        Material mat = new Material(assetManager,"Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", ColorRGBA.Red);
-        geom.setMaterial(mat);
-        rootNode.attachChild(geom);
+    public void simpleUpdate(float tpf) {
+    	/** this method is automatically called after each event **/
+    	draw();
 	}
 }
