@@ -16,9 +16,6 @@ public class Vertex extends Database<Vertex> {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.vector.x = x;
-		this.vector.y = y;
-		this.vector.z = z;
 	}
 	
 	public Vertex(CompositeObject referent, Vector3f vec) {
@@ -26,10 +23,7 @@ public class Vertex extends Database<Vertex> {
 		this.x = vec.x;
 		this.y = vec.y;
 		this.z = vec.z;
-		this.vector = vec;
 	}
-	
-	private Vector3f vector = new Vector3f();
 	
 	public Vector3f getVector() { return this.toVector3f(); }
 	
@@ -53,29 +47,25 @@ public class Vertex extends Database<Vertex> {
 	protected float x;
 	public void setX(Float x) {
 		this.x = x;
-		vector.x = x;
 	}
 	
 	@DatabaseField (canBeNull = false)
 	protected float y;
 	public void setY(Float y) {
 		this.y = y;
-		vector.y = y;
 	}
 	
 	@DatabaseField (canBeNull = false)
 	protected float z;
 	public void setZ(Float z) {
 		this.z = z;
-		vector.z = z;
 	}
 	
 	@DatabaseField (canBeNull = false, foreign = true)
 	private CompositeObject referent;
 
 	public Vector3f toVector3f() {
-		this.vector = new Vector3f(this.x, this.y, this.z);
-		return this.vector;
+		return new Vector3f(this.x, this.y, this.z);
 	}
 
 	public CompositeObject getReferent() {
