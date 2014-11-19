@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g05;
 
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -104,13 +105,16 @@ public class ToolController {
 				purge();
 			}else if(command == "collision"){
 				_lastCollision = (String) event.getSource();
+				System.out.println("[DEBUG][ToolController::ActionPerformed] Collision : " + _lastCollision);
 				//FIXME if(drawing && current_drawing_object.getFather() == null) current_drawing_object.setFather(_lastCollision)
 			}else if(command == "cursor_click_up"){
 				//FIXME if(drawing && current_drawing_object.addPosition(_cursor) == true) attach to father, current_drawing_object = new object(type=last drawn)
 				addPosition();
 				if (_positionStack.size() == 2) {
+					System.out.println("[Debug][ToolController::actionPerformed] : Draw");
 					Vector3f one = _positionStack.pop();
 					Vector3f two = _positionStack.pop();
+					two.y += 0.1;
 					Cube newMesh = new Cube(one, two);
 					CompositeObject newObject = new CompositeObject(_currentStage.getFloor(), newMesh.getVertices(), newMesh.getOrder());
 					this.getStage().add(newObject);

@@ -22,7 +22,7 @@ public class JmeConverter {
 
 	public void convert(CompositeObject object, Node root, AssetManager assetManager){
 		root.attachChild(toGeometry(object, assetManager));
-		
+		System.out.println(object.getId());
 		for(CompositeObject child:object){
 			convert(child, root, assetManager);
 		}

@@ -75,7 +75,7 @@ public class MainWindow extends JFrame {
 				JOptionPane.QUESTION_MESSAGE, 
 				null, 
 				choices, 
-				choices[0]);
+				null);
 		return input;
 	}
 	

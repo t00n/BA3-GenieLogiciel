@@ -57,6 +57,15 @@ public class Project extends Database<Project> {
 	
 	// TODO change ForeignCollection<>
 	public Collection<Stage> getStages() { return this.stages; }
+	
+	public Stage getStage(int level) {
+		for (Stage stage: this.stages) {
+			if (stage.getLevel() == level) {
+				return stage;
+			}
+		}
+		return null;
+	}
 
 	public String getName() {
 		return name;
