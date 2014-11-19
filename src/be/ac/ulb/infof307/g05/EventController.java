@@ -15,8 +15,10 @@ import be.ac.ulb.infof307.g05.MainWindow;
 import be.ac.ulb.infof307.g05.SaveThread;
 import be.ac.ulb.infof307.g05.ToolController;
 import be.ac.ulb.infof307.g05.model.CompositeObject;
+import be.ac.ulb.infof307.g05.model.Order;
 import be.ac.ulb.infof307.g05.model.Project;
 import be.ac.ulb.infof307.g05.model.Stage;
+import be.ac.ulb.infof307.g05.model.Vertex;
 
 import com.j256.ormlite.dao.Dao;
 import com.jme3.math.Vector3f;
@@ -48,8 +50,9 @@ public class EventController implements ActionListener {
 		Vector<Vector3f> position_queue = new Vector<Vector3f>();
 		position_queue.add(_cursor);
 
+		_toolController = new ToolController(position_queue);
 		this.loadProject();
-		_toolController = new ToolController((Stage)_currentProject.getStages().toArray()[0], position_queue);
+		this._toolController.setStage((Stage) _currentProject.getStages().toArray()[0]);
 	}
 	
 	public boolean getFlag2D(){
@@ -86,7 +89,7 @@ public class EventController implements ActionListener {
 		try {
 			_projects = _daoProject.queryForAll();
 			ArrayList<Project> currentProjects = (ArrayList<Project>) _daoProject.queryForEq("current", true);
-			if (currentProjects.size() != 0)
+			if (currentProjects.size() == 1)
 			{
 				_currentProject = currentProjects.get(0);
 				this.launchSaveThread();
@@ -133,19 +136,45 @@ public class EventController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		_toolController.setStage((Stage) _currentProject.getStages().toArray()[0]);
 		this.launchSaveThread();
 	}
 	
 	public void newProject() {
 		be.ac.ulb.infof307.g05.newProject newP = _window.popUpNew();
 		Project newProject = new Project(newP.name);
-		_projects.add(newProject);
-		try {
-			newProject.create();
+        Stage stage = new Stage(newProject, 0);
+        
+        Vector3f vertex1 = new Vector3f(0,0,0);
+        Vector3f vertex2 = new Vector3f(newP.width,0.1f,newP.length);
+
+        Cube cube = new Cube(vertex1, vertex2);
+        CompositeObject object = new CompositeObject(null, cube.getVertices(), cube.getOrder());
+        stage.setFloor(object);
+        
+        try {
+        	newProject.create();
+			object.create();
+			for (Order order: object.getMeshOrder()) {
+				order.create();
+			}
+			for (Vertex vertex: object.getPositions()) {
+				vertex.create();
+			}
+			stage.create();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        int id = newProject.getId_project();
+        try {
+			_projects = _daoProject.queryForAll();
+	        _currentProject = _daoProject.queryForId(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		_toolController.setStage((Stage) _currentProject.getStages().toArray()[0]);
 		this.launchSaveThread();
 	}
 	

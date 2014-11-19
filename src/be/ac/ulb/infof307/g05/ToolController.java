@@ -20,10 +20,13 @@ public class ToolController {
 	private Stage _currentStage;
 	
 	
-	public ToolController(Stage currentStage, Vector<Vector3f> position_stack){
+	public ToolController(Vector<Vector3f> position_stack){
 		/** constructor **/
 		_positionStack = position_stack;
-		_currentStage = currentStage;
+	}
+	
+	public void setStage(Stage stage) {
+		this._currentStage = stage;
 	}
 	
 	public void addTool(String tool_name){

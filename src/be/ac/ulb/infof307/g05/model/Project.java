@@ -38,7 +38,7 @@ public class Project extends Database<Project> {
     }
 	
 	@DatabaseField (generatedId = true)
-	protected int id_project;
+	private int id_project;
 	
 	@DatabaseField (canBeNull = false)
 	private String name;
@@ -72,5 +72,13 @@ public class Project extends Database<Project> {
 
 	public void setCurrent(Boolean current) {
 		this.current = current;
+	}
+
+	public int getId_project() {
+		return id_project;
+	}
+
+	public void setId_project(int id_project) {
+		this.id_project = id_project;
 	}
 }
