@@ -111,6 +111,27 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return this.childs;
 	}
 	
+	public CompositeObject getWithId(int id) {
+		CompositeObject ret = null;
+		if (id == this.getId()) {
+			ret = this;
+		}
+		else {
+			for (CompositeObject child: this.getChilds())
+			{
+				ret = child.getWithId(id);
+			}
+		}
+		return ret;
+	}
+	
+	public void extendUp(float range) {
+		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
+		for (int i = 4; i < 8; ++i) {
+			tmp.get(i).y += range;
+		}
+	}
+	
     @Override
     public void save() {
         if (this.texture != null)
