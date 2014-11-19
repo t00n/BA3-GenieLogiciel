@@ -145,6 +145,7 @@ public class ToolController {
 			else if(command=="ZoomIn"){
 				//float value = (float) event.getSource();
 				//_compositeObjectToPullUp.extendUp((float) event.getSource());
+				//..k
 			}
 			else if(command=="ZoomOut"){
 				//float value = (float) event.getSource();

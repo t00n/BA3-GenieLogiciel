@@ -241,7 +241,7 @@ public class FlyCamera extends FlyByCamera {
 		        zoomCamera(value);
 		    }else if (name.equals("FLYCAM_ZoomOut")){
 		    	_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "ZoomOut"));
-		        zoomCamera(-value);
+		        zoomCamera(-value);//...
 		    }
 		}
     }
