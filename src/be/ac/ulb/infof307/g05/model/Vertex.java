@@ -8,6 +8,18 @@ import com.jme3.math.Vector3f;
 
 @DatabaseTable (tableName = "vertexes")
 public class Vertex extends Database<Vertex> {
+	
+	@DatabaseField (generatedId = true)
+	protected int id_vertex;
+	@DatabaseField (canBeNull = false)
+	protected float x;
+	@DatabaseField (canBeNull = false)
+	protected float y;
+	@DatabaseField (canBeNull = false)
+	protected float z;
+	@DatabaseField (canBeNull = false, foreign = true)
+	private CompositeObject referent;
+	
 	protected Vertex() {
 		
 	}
@@ -23,11 +35,16 @@ public class Vertex extends Database<Vertex> {
 		this.y = vec.y;
 		this.z = vec.z;
 	}
+	public Vertex(CompositeObject referent, Vector3f vec) {
+		this.referent = referent;
+		this.x = vec.getX();
+		this.y = vec.getY();
+		this.z = vec.getZ();
+	}
 	
-	public Vector3f getVector() { return this.toVector3f(); }
-	
-	@DatabaseField (generatedId = true)
-	protected int id_vertex;
+	public Vector3f getVector() {
+		return this.toVector3f();
+	}
 
     public void save() {
         try {
@@ -42,26 +59,18 @@ public class Vertex extends Database<Vertex> {
 		return this.id_vertex;
 	}
 
-	@DatabaseField (canBeNull = false)
-	protected float x;
+
 	public void setX(Float x) {
 		this.x = x;
 	}
 	
-	@DatabaseField (canBeNull = false)
-	protected float y;
 	public void setY(Float y) {
 		this.y = y;
 	}
 	
-	@DatabaseField (canBeNull = false)
-	protected float z;
 	public void setZ(Float z) {
 		this.z = z;
 	}
-	
-	@DatabaseField (canBeNull = false, foreign = true)
-	private CompositeObject referent;
 
 	public Vector3f toVector3f() {
 		return new Vector3f(this.x, this.y, this.z);
