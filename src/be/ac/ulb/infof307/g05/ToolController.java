@@ -83,10 +83,7 @@ public class ToolController {
 
 	private void purge(){
 		/** this method pop all position from position stack (except cursor) **/
-		while(_positionStack.size() > 1){
-			_positionStack.removeElementAt(0);
-		}
-		//FIXME remove selected figure
+		_positionStack.removeAllElements();
 	}
 	
 	public void actionPerformed(ActionEvent event){
@@ -94,15 +91,22 @@ public class ToolController {
 		String command = event.getActionCommand();
 		
 		if(command == "cursor_move"){
+			// cursor is moving
 			_cursor.set((Vector3f) event.getSource());
-		}else if(!getEnabledTool().isEmpty()){
+		}else if(getEnabledTool().isEmpty() && command != "comboBoxChanged"){
+			// user tries to enable a tool (!= comboBoxChanged because need to get the default value of comboBoxes from options, event send before)
+			enableTool(command);
+		}else{
+			// when a tool is enabled
 			if(command == "ENTER"){
-				//FIXME when draw a polygon, to confirm end
+				//FIXME if(drawing && current_drawing_object.getType() == polygon) force draw, attach to father, current_drawing_object = new object(type=polygon)
 			}else if(command == "ESCAPE"){
 				purge();
 			}else if(command == "collision"){
 				_lastCollision = (String) event.getSource();
+				//FIXME if(drawing && current_drawing_object.getFather() == null) current_drawing_object.setFather(_lastCollision)
 			}else if(command == "cursor_click_up"){
+				//FIXME if(drawing && current_drawing_object.addPosition(_cursor) == true) attach to father, current_drawing_object = new object(type=last drawn)
 				addPosition();
 				if (_positionStack.size() == 2) {
 					Vector3f one = _positionStack.pop();
@@ -111,15 +115,21 @@ public class ToolController {
 					CompositeObject newObject = new CompositeObject(_currentStage.getFloor(), newMesh.getVertices(), newMesh.getOrder());
 				}
 			}else if(command == "comboBoxChanged"){
-				if(((JComboBox)event.getSource()).getSelectedItem() == "Rectangle"){
+				String option_choice = ((JComboBox)(event.getSource())).getSelectedItem().toString();
+				
+				if(getEnabledTool().equals("Draw")){
 					purge();
-					System.out.println("RECTANGLE");
+					if(option_choice == "Rectangle"){
+						//FIXME current_drawing_object = new rectangle
+					}else if(option_choice == "Polygon"){
+						//FIXME current_drawing_object = new polygon
+					}else if(option_choice == "Oval"){
+						//FIXME current_drawing_object = new oval
+					}
 				}
 			}else{
 				enableTool(command);
 			}
-		}else {
-			enableTool(command);
 		}
 	}
 }

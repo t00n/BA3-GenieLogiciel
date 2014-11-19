@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g05.canvas.tab;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Vector;
@@ -83,5 +84,7 @@ public class ToolTab extends AbstractTab implements ItemListener {
 		shape_choice.addActionListener(_eventController);
 		_optionPanel.add(shape_label);
 		_optionPanel.add(shape_choice);
+		shape_choice.setSelectedIndex(0);
+		_eventController.actionPerformed(new ActionEvent(shape_choice ,ActionEvent.ACTION_PERFORMED, "comboBoxChanged"));
 	}
 }
