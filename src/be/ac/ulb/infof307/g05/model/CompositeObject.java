@@ -1,11 +1,14 @@
 package be.ac.ulb.infof307.g05.model;
 
+import be.ac.ulb.infof307.g05.Cube;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jme3.math.Vector3f;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Vector;
@@ -33,7 +36,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	public CompositeObject(CompositeObject parent, Collection<Vector3f> vertices, Collection<Integer> meshOrder) {
 		this.parent = parent;
 		this.vertices = toVertex(vertices);
-		this.meshOrder = toOrder(meshOrder);
+		this.meshOrder = meshOrder;
 		this.texture = null;
 		this.isNew = true;
 	}
@@ -45,25 +48,10 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	 * @return the collection
 	 */
 	private Collection<Vertex> toVertex(Collection<Vector3f> vertices) {
-		Collection<Vertex> ret = new Vector<Vertex>();
+		Collection<Vertex> ret = new ArrayList<Vertex>();
 		for (Vector3f vec: vertices) {
 			Vertex vertex = new Vertex(this, vec);
 			ret.add(vertex);
-		}
-		return ret;
-	}
-	
-	/**
-	 * Transform a Mesh order into a collection of Orders
-	 *
-	 * @param meshOrder the mesh order
-	 * @return the collection
-	 */
-	private Collection<Order> toOrder(Collection<Integer> meshOrder) {
-		Collection<Order> ret = new Vector<Order>();
-		for (Integer order: meshOrder) {
-			Order ord = new Order(this, order);
-			ret.add(ord);
 		}
 		return ret;
 	}
@@ -105,9 +93,8 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	public int[] getMeshOrderAsInt() {
 		int[] ret = new int[this.getMeshOrder().size()];
 		int i = 0;
-		for (Order order: this.getMeshOrder())
-		{
-			ret[i] = order.getOrder();
+		for (Integer order: this.getMeshOrder()) {
+			ret[i] = order;
 			++i;
 		}
 		return ret;
@@ -127,16 +114,10 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return this.vertices;
 	}
 	
-	public Collection<Order> getMeshOrder() {
-		if (this.meshOrder == null) {
-			Dao<Order, Integer> dao = Order.getDao(Order.class);
-			try {
-				this.meshOrder = dao.queryForEq("referent_id", this.getId());
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	public Collection<Integer> getMeshOrder() {
+		ArrayList<Vertex> vectors = (ArrayList<Vertex>) this.getVertices();
+		Cube cube = new Cube(vectors.get(0), vectors.get(7));
+		this.meshOrder = cube.getOrder();
 		return this.meshOrder;
 	}
 
@@ -156,6 +137,27 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
     /* (non-Javadoc)
      * @see be.ac.ulb.infof307.g05.model.Database#save()
      */
+	public CompositeObject getWithId(int id) {
+		CompositeObject ret = null;
+		if (id == this.getId()) {
+			ret = this;
+		}
+		else {
+			for (CompositeObject child: this.getChilds())
+			{
+				ret = child.getWithId(id);
+			}
+		}
+		return ret;
+	}
+	
+	public void extendUp(float range) {
+		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
+		for (int i = 4; i < 8; ++i) {
+			tmp.get(i).y += range;
+		}
+	}
+	
     @Override
     public void save() {
         if (this.texture != null)
@@ -163,8 +165,6 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
         super.save();
         for (Vertex position : this.getVertices())
             position.save();
-        for (Order order : this.getMeshOrder())  
-            order.save();
         for (CompositeObject object : this.getChilds())
         	object.save();
     }
@@ -254,8 +254,8 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	protected Collection<Vertex> vertices;
 	
 	/** The mesh order. */
-	protected Collection<Order> meshOrder;
-	
+	protected Collection<Integer> meshOrder;
+
 	/** The childs. */
 	protected Collection<CompositeObject> childs;
 }

@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import be.ac.ulb.infof307.g05.model.Vertex;
+
 import com.jme3.math.Vector3f;
 
 /**
@@ -26,7 +28,15 @@ public class Cube {
 	 * @param firstPoint the first point
 	 * @param secondPoint the second point
 	 */
+	public Cube(Vertex firstPoint, Vertex secondPoint) {
+		this.init(firstPoint.toVector3f(), secondPoint.toVector3f());
+	}
+	
 	public Cube(Vector3f firstPoint, Vector3f secondPoint) {
+		this.init(firstPoint, secondPoint);
+	}
+	
+	public void init (Vector3f firstPoint, Vector3f secondPoint) {
 		float fromX = firstPoint.x;
 		float fromY = firstPoint.y;
 		float fromZ = firstPoint.z;
