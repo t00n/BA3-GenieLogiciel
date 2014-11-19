@@ -26,7 +26,6 @@ public class EventController implements ActionListener {
 	
 	private boolean  _flag2D = true;
 	private boolean  _flag3D = true;
-	private Vector3f _cursor = new Vector3f();
 	
 	private ToolController   _toolController;
 	private Project		 _currentProject;
@@ -41,12 +40,8 @@ public class EventController implements ActionListener {
 		/** constructor **/
 		_window = window;
 		//FIXME use _window.popUpLoad()
-		
-		
-		Vector<Vector3f> position_queue = new Vector<Vector3f>();
-		position_queue.add(_cursor);
 
-		_toolController = new ToolController(position_queue);
+		_toolController = new ToolController();
 		this.loadProject();
 		this._toolController.setStage((Stage) _currentProject.getStages().toArray()[0]);
 	}
@@ -60,7 +55,7 @@ public class EventController implements ActionListener {
 	}
 	
 	public Vector3f getCursor(){
-		return _cursor;
+		return _toolController.getCursor();
 	}
 	
 	public void addTool(String tool_name){
@@ -199,9 +194,6 @@ public class EventController implements ActionListener {
 			this.newProject();
 		}else if(command == "Save"){
 			_currentProject.save();
-		}else if(command == "cursor_move"){
-			_cursor.set((Vector3f) event.getSource());
-			_toolController.drawInConstruction();
 		}else {
 			_toolController.actionPerformed(event);
 		}

@@ -52,22 +52,24 @@ public class JmeWorld extends SimpleApplication {
 
 	public void setViews(boolean set2d, boolean set3d){
 		/** this method set viewports (2D and/or 3D) **/
-		if(set2d && set3d){
-			_view[0].setEnabled(true);
-			_view[1].setEnabled(true);
-
-			_camera[1].setViewPort(0.66f, 1.0f, 0.0f, 0.33f);
-		}else if(set2d){
-			_view[0].setEnabled(false);
-			_view[1].setEnabled(true);
-
-			_camera[1].setViewPort(0.0f, 1.0f, 0.0f, 1.0f);
-		}else if(set3d){
-			_view[0].setEnabled(true);
-			_view[1].setEnabled(false);
+		if((set2d != _view[1].isEnabled()) || (set3d != _view[0].isEnabled())){
+			if(set2d && set3d){
+				_view[0].setEnabled(true);
+				_view[1].setEnabled(true);
+	
+				_camera[1].setViewPort(0.66f, 1.0f, 0.0f, 0.33f);
+			}else if(set2d){
+				_view[0].setEnabled(false);
+				_view[1].setEnabled(true);
+	
+				_camera[1].setViewPort(0.0f, 1.0f, 0.0f, 1.0f);
+			}else if(set3d){
+				_view[0].setEnabled(true);
+				_view[1].setEnabled(false);
+			}
+			_flyCam.setCamEnable(set2d, set3d);
+			((JmeCanvasContext) this.getContext()).getCanvas().requestFocusInWindow();
 		}
-		_flyCam.setCamEnable(set2d, set3d);
-		((JmeCanvasContext) this.getContext()).getCanvas().requestFocusInWindow();
 	}
 
 	public void simpleInitApp(){

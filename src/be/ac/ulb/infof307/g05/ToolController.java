@@ -2,7 +2,7 @@ package be.ac.ulb.infof307.g05;
 
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
-import java.util.Vector;
+import java.util.Stack;
 
 import javax.swing.JComboBox;
 
@@ -15,16 +15,19 @@ import com.jme3.math.Vector3f;
 public class ToolController {
 
 	private HashMap<String, Boolean> _flagTools = new HashMap<String, Boolean>();
-	private Vector<Vector3f> 		 _positionStack;
+	private Stack<Vector3f> 		 _positionStack = new Stack<Vector3f>();
 	private String					 _lastCollision;
+	private Vector3f				 _cursor = new Vector3f();
 	
 	private Stage _currentStage;
 	
 	
-	public ToolController(Vector<Vector3f> position_stack){
+	public ToolController(){
 		/** constructor **/
-		_positionStack = position_stack;
 	}
+	
+	public Vector3f getCursor(){
+		return _cursor;	}
 	
 	public void setStage(Stage stage) {
 		this._currentStage = stage;
@@ -35,11 +38,11 @@ public class ToolController {
 		_flagTools.put(tool_name, false);
 	}
 	
-	public void addPosition(Vector3f position){
+	public void addPosition(){
 		/** this method push a new vector to position stack if a tool is active **/
 		if(!getEnabledTool().isEmpty()){
-			_positionStack.add(0,position);
-			System.out.println("[DEBUG][ToolController::addPosition] : " + position);
+			_positionStack.push(new Vector3f(_cursor));
+			System.out.println("[DEBUG][ToolController::addPosition] : " + _positionStack);
 		}
 	}
 	
@@ -77,13 +80,6 @@ public class ToolController {
 		/** this method retrun the root node of the current stage **/
 		return _currentStage.getFloor();
 	}
-	
-	public void drawInConstruction(){
-		/** this method re-draw the scene object in construction **/
-		if(!getEnabledTool().isEmpty()){
-			System.out.println("[DEBUG][ToolController::make] : " + _positionStack);
-		}
-	}
 
 	private void purge(){
 		/** this method pop all position from position stack (except cursor) **/
@@ -97,7 +93,9 @@ public class ToolController {
 		/** this method manage event sends from EventController **/
 		String command = event.getActionCommand();
 		
-		if(!getEnabledTool().isEmpty()){
+		if(command == "cursor_move"){
+			_cursor.set((Vector3f) event.getSource());
+		}else if(!getEnabledTool().isEmpty()){
 			if(command == "ENTER"){
 				//FIXME when draw a polygon, to confirm end
 			}else if(command == "ESCAPE"){
@@ -105,12 +103,10 @@ public class ToolController {
 			}else if(command == "collision"){
 				_lastCollision = (String) event.getSource();
 			}else if(command == "cursor_click_up"){
-				addPosition((Vector3f) event.getSource());
-				if (_positionStack.size() == 3) {
-					Vector3f one = _positionStack.firstElement();
-					_positionStack.removeElementAt(0);
-					Vector3f two = _positionStack.firstElement();
-					_positionStack.removeElementAt(0);
+				addPosition();
+				if (_positionStack.size() == 2) {
+					Vector3f one = _positionStack.pop();
+					Vector3f two = _positionStack.pop();
 					Cube newMesh = new Cube(one, two);
 					CompositeObject newObject = new CompositeObject(_currentStage.getFloor(), newMesh.getVertices(), newMesh.getOrder());
 				}
