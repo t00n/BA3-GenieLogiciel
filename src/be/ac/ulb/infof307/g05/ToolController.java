@@ -16,6 +16,7 @@ public class ToolController {
 
 	private HashMap<String, Boolean> _flagTools = new HashMap<String, Boolean>();
 	private Vector<Vector3f> 		 _positionStack;
+	private String					 _lastCollision;
 	
 	private Stage _currentStage;
 	
@@ -101,6 +102,8 @@ public class ToolController {
 				//FIXME when draw a polygon, to confirm end
 			}else if(command == "ESCAPE"){
 				purge();
+			}else if(command == "collision"){
+				_lastCollision = (String) event.getSource();
 			}else if(command == "cursor_click_up"){
 				addPosition((Vector3f) event.getSource());
 				if (_positionStack.size() == 3) {

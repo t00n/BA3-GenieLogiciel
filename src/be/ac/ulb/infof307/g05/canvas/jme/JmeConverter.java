@@ -2,6 +2,7 @@ package be.ac.ulb.infof307.g05.canvas.jme;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState.FaceCullMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
@@ -32,11 +33,13 @@ public class JmeConverter {
 		Mesh mesh = new Mesh();
 		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(object.getVectors()));
 		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(object.getOrdersAsIntegers()));
-		mesh.setDynamic();
+		mesh.updateBound();
+		mesh.setStatic();
 		
 		Geometry geo = new Geometry(object.getId().toString(), mesh);
 		if(object.getTexture() == null){
 			Material texture = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+			texture.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
 			texture.setColor("Color", ColorRGBA.Gray);
 			geo.setMaterial(texture);
 		}else{

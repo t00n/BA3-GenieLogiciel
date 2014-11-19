@@ -285,6 +285,7 @@ public class FlyCamera extends FlyByCamera {
         	}else if(name.equals("FLYCAM_Escape")){
             	_eventController.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ESCAPE"));	
         	}else if(name.equals("FLYCAM_RotateDrag")){
+        		_eventController.actionPerformed(new ActionEvent(getGeometryCollision().getName(), ActionEvent.ACTION_PERFORMED, "collision"));
             	_eventController.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "cursor_click_up"));
         	}
         }
