@@ -113,6 +113,10 @@ public class ToolController {
 					Vector3f two = _positionStack.pop();
 					Cube newMesh = new Cube(one, two);
 					CompositeObject newObject = new CompositeObject(_currentStage.getFloor(), newMesh.getVertices(), newMesh.getOrder());
+					this.getStage().add(newObject);
+					for (CompositeObject object: this.getStage()) {
+						System.out.println(object.getVectors().length);
+					}
 				}
 			}else if(command == "comboBoxChanged"){
 				String option_choice = ((JComboBox)(event.getSource())).getSelectedItem().toString();
