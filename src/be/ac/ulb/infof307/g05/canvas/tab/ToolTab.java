@@ -36,7 +36,6 @@ public class ToolTab extends AbstractTab implements ItemListener {
 	 * @param eventController the event controller
 	 */
 	public ToolTab(EventController eventController){
-		/** constructor **/
 		_eventController = eventController;
 		_name = new String("Tools");
 

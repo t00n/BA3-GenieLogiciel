@@ -8,8 +8,6 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.logger.LocalLog;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class Database.
  *

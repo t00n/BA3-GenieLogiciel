@@ -3,7 +3,6 @@ package be.ac.ulb.infof307.g05.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Order.
  */
