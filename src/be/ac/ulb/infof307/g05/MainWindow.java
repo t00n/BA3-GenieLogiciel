@@ -4,8 +4,11 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.BorderLayout;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import be.ac.ulb.infof307.g05.canvas.CanvasJme;
 import be.ac.ulb.infof307.g05.canvas.MenuBarCanvas;
@@ -85,6 +88,29 @@ public class MainWindow extends JFrame {
 				null,
 				null);
 		return input;
+	}
+	
+	public newProject popUpNew() {
+		JTextField projectName = new JTextField();
+		JTextField width = new JTextField();
+		JTextField length = new JTextField();
+		JComponent[] choices = new JComponent[] {
+				new JLabel("Project name"),
+				projectName,
+				new JLabel("Width of the first floor"),
+				width,
+				new JLabel("Length of the first floor"),
+				length
+		};
+		JOptionPane.showMessageDialog(null,
+				choices,
+				"New Project",
+				JOptionPane.PLAIN_MESSAGE);
+		newProject ret = new newProject();
+		ret.name = projectName.getText();
+		ret.width = Float.parseFloat(width.getText());
+		ret.length = Float.parseFloat(length.getText());
+		return ret;
 	}
 	
 	public void update(){

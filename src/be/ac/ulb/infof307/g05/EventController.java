@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 import be.ac.ulb.infof307.g05.MainWindow;
 import be.ac.ulb.infof307.g05.SaveThread;
 import be.ac.ulb.infof307.g05.ToolController;
@@ -133,8 +137,8 @@ public class EventController implements ActionListener {
 	}
 	
 	public void newProject() {
-		String projectName = _window.popUpInput("Enter a project name", "New Project");
-		Project newProject = new Project(projectName);
+		be.ac.ulb.infof307.g05.newProject newP = _window.popUpNew();
+		Project newProject = new Project(newP.name);
 		_projects.add(newProject);
 		try {
 			newProject.create();
