@@ -108,8 +108,8 @@ public class MainWindow extends JFrame {
 				JOptionPane.PLAIN_MESSAGE);
 		ProjectStruct ret = new ProjectStruct();
 		ret.name = projectName.getText();
-		ret.width = Float.parseFloat(width.getText());
-		ret.length = Float.parseFloat(length.getText());
+		ret.width = Integer.parseInt(width.getText());
+		ret.length = Integer.parseInt(length.getText());
 		return ret;
 	}
 	

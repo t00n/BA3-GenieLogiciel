@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g05.canvas.jme;
 
 import be.ac.ulb.infof307.g05.EventController;
+import be.ac.ulb.infof307.g05.model.Project;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.math.ColorRGBA;
@@ -80,7 +81,8 @@ public class JmeWorld extends SimpleApplication {
 	   
 	   _flyCam = new FlyCamera(_camera[1], _camera[0], rootNode, inputManager, stateManager, _eventController);
 
-	   _reference = new Reference(assetManager, 1000);
+	   Project project = _eventController.getProject();
+	   _reference = new Reference(assetManager, project.getWidth(), project.getLength());
 	   _reference.setNode(rootNode, true);
 	   
        _view[0].attachScene(rootNode);

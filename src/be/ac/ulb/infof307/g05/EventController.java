@@ -42,6 +42,8 @@ public class EventController implements ActionListener {
 		this._toolController.setStage(_currentProject.getStage(0));
 	}
 	
+	public Project getProject() { return _currentProject; }
+	
 	public boolean getFlag2D(){
 		return _flag2D;
 	}
@@ -132,7 +134,7 @@ public class EventController implements ActionListener {
 	
 	public void newProject() {
 		ProjectStruct newP = _window.popUpNew();
-		Project newProject = new Project(newP.name);
+		Project newProject = new Project(newP.name, newP.width, newP.length);
 		newProject.addStage(0);
         
         Vector3f vertex1 = new Vector3f(0,0,0);

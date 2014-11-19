@@ -14,8 +14,10 @@ public class Project extends Database<Project> {
 		
 	}
 	
-	public Project(String name) {
+	public Project(String name, int width, int length) {
 		this.setName(name);
+		this.width = width;
+		this.length = length;
 		this.creationDate = new Date();
 		this.modificationDate = new Date();
 		this.setCurrent(true);
@@ -32,6 +34,14 @@ public class Project extends Database<Project> {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getWidth() {
+		return this.width;
+	}
+
+	public int getLength() {
+		return this.length;
 	}
 	
 	public Date getCreationDate() {
@@ -88,6 +98,12 @@ public class Project extends Database<Project> {
 	
 	@DatabaseField (canBeNull = false)
 	private String name;
+	
+	@DatabaseField (canBeNull = false)
+	private int width;
+	
+	@DatabaseField (canBeNull = false)
+	private int length;
 	
 	@DatabaseField (canBeNull = false)
 	protected Date creationDate;

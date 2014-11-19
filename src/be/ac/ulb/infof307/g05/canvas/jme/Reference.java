@@ -21,11 +21,11 @@ public class Reference {
 	private Geometry     _floor;
 
 	
-	public Reference(AssetManager assetManager, int size){
+	public Reference(AssetManager assetManager, int width, int length){
 		_assetManager = assetManager;
-		createGrid(new Vector3f(), size, 1f, ColorRGBA.Gray);
-		createAxis(size, 1.5f);
-		createFloor(size);
+		createGrid(new Vector3f(), width, length, 1f, ColorRGBA.Green);
+		createAxis(width, 1.5f);
+		createFloor(width);
 	}
 
 	public void setNode(Node node, boolean attach){
@@ -64,15 +64,15 @@ public class Reference {
 			_node.detachChild(_floor);
 	}
 	
-    private void createGrid(Vector3f pos, int gridSize, float squareSize, ColorRGBA color){
-        _grid = new Geometry("Grid", new Grid(gridSize+1, gridSize+1, squareSize) );
+    private void createGrid(Vector3f pos, int gridWidth, int gridLength, float squareSize, ColorRGBA color){
+        _grid = new Geometry("Grid", new Grid(gridWidth+1, gridLength+1, squareSize) );
         Material mat = new Material(_assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", color);
         _grid.setMaterial(mat);
         _grid.center().move(pos);
       }
     
-    private void createFloor(int floorSize){ //Sol invisible (car pas lumière ajoutée) pour la collision
+    private void createFloor(int floorSize){ //Sol invisible (car pas lumiï¿½re ajoutï¿½e) pour la collision
 		Box b = new Box(floorSize, 0, floorSize);
         _floor = new Geometry("Floor", b);
         Material mat = new Material(_assetManager, "Common/MatDefs/Light/Lighting.j3md");

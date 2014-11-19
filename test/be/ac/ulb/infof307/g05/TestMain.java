@@ -27,7 +27,7 @@ public class TestMain {
 	}
 	
 	public void createTestProject(String name) {
-        Project project = new Project(name);
+        Project project = new Project(name, 50, 50);
         project.addStage(0);
         
         Vector3f vertex1 = new Vector3f(0,0,0);
