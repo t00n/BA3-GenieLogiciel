@@ -227,50 +227,6 @@ public class EventController implements ActionListener {
 		/** this method manage events **/
 		String command = event.getActionCommand();
 		
-		if(command == "cursor_move"){
-			// cursor is moving
-			_cursor.set((Vector3f) event.getSource());
-		}else if(getEnabledTool().isEmpty() && command != "comboBoxChanged"){
-			// user tries to enable a tool (!= comboBoxChanged because need to get the default value of comboBoxes from options, event send before)
-			enableTool(command);
-		}else{
-			// when a tool is enabled
-			if(command == "ENTER"){
-				//FIXME if(drawing && current_drawing_object.getType() == polygon) force draw, attach to father, current_drawing_object = new object(type=polygon)
-			}else if(command == "ESCAPE"){
-				purge();
-			}else if(command == "collision"){
-				_lastCollision = (String) event.getSource();
-				System.out.println("[DEBUG][ToolController::ActionPerformed] Collision : " + _lastCollision);
-				//FIXME if(drawing && current_drawing_object.getFather() == null) current_drawing_object.setFather(_lastCollision)
-			}else if(command == "cursor_click_up"){
-				//FIXME if(drawing && current_drawing_object.addPosition(_cursor) == true) attach to father, current_drawing_object = new object(type=last drawn)
-				addPosition();
-				if (_positionStack.size() == 2) {
-					System.out.println("[Debug][ToolController::actionPerformed] : Draw");
-					Vector3f one = _positionStack.pop();
-					Vector3f two = _positionStack.pop();
-					two.y += 0.1;
-					Cube newMesh = new Cube(one, two);
-					_currentProject.getStage(0).getFloor().add(new CompositeObject(_currentProject.getStage(0).getFloor(), newMesh.getVertices(), newMesh.getOrder()));
-				}
-			}else if(command == "comboBoxChanged"){
-				String option_choice = ((JComboBox)(event.getSource())).getSelectedItem().toString();
-				
-				if(getEnabledTool().equals("Draw")){
-					purge();
-					if(option_choice == "Rectangle"){
-						//FIXME current_drawing_object = new rectangle
-					}else if(option_choice == "Polygon"){
-						//FIXME current_drawing_object = new polygon
-					}else if(option_choice == "Oval"){
-						//FIXME current_drawing_object = new oval
-					}
-				}
-			}else{
-				enableTool(command);
-			}
-		}
 		if(command == "2D view"){
 			_flag2D = true;
 			_flag3D = false;
