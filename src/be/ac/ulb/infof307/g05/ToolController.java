@@ -21,6 +21,8 @@ public class ToolController {
 	
 	private Stage _currentStage;
 	
+	private CompositeObject _compositeObjectToPullUp;
+	
 	
 	public ToolController(){
 		/** constructor **/
@@ -93,10 +95,12 @@ public class ToolController {
 		if(command == "cursor_move"){
 			// cursor is moving
 			_cursor.set((Vector3f) event.getSource());
+		}else if(command=="ZoomIn"){
+			System.out.println(event.getSource());
 		}else if(getEnabledTool().isEmpty() && command != "comboBoxChanged"){
 			// user tries to enable a tool (!= comboBoxChanged because need to get the default value of comboBoxes from options, event send before)
 			enableTool(command);
-		}else{
+		}else if(getEnabledTool().equals("Draw")){
 			// when a tool is enabled
 			if(command == "ENTER"){
 				//FIXME if(drawing && current_drawing_object.getType() == polygon) force draw, attach to father, current_drawing_object = new object(type=polygon)
@@ -133,6 +137,18 @@ public class ToolController {
 				}
 			}else{
 				enableTool(command);
+			}
+		}else if(getEnabledTool().equals("Pull-Push")){
+			if(command=="cursor_click_up"){
+				//FIXME Selectionner l'objet composite et le stock dans la variable _compositeObjectToPullUp
+			}
+			else if(command=="ZoomIn"){
+				//float value = (float) event.getSource();
+				//_compositeObjectToPullUp.extendUp((float) event.getSource());
+			}
+			else if(command=="ZoomOut"){
+				//float value = (float) event.getSource();
+				//_compositeObjectToPullUp.extendUp(-(float) event.getSource());	
 			}
 		}
 	}
