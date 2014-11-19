@@ -164,7 +164,7 @@ public class EventController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        int id = newProject.getId_project();
+        int id = newProject.getId();
         try {
 			_projects = _daoProject.queryForAll();
 	        _currentProject = _daoProject.queryForId(id);

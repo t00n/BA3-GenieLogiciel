@@ -24,17 +24,6 @@ public class Vertex extends Database<Vertex> {
 		
 	}
 	
-	public Vertex(float x, float y, float z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
-	
-	public Vertex(Vector3f vec) {
-		this.x = vec.x;
-		this.y = vec.y;
-		this.z = vec.z;
-	}
 	public Vertex(CompositeObject referent, Vector3f vec) {
 		this.referent = referent;
 		this.x = vec.getX();
@@ -42,46 +31,26 @@ public class Vertex extends Database<Vertex> {
 		this.z = vec.getZ();
 	}
 	
-	public Vector3f getVector() {
-		return this.toVector3f();
-	}
-
-    public void save() {
-        try {
-			this.update();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-
-	public int getId() {
-		return this.id_vertex;
-	}
-
-
-	public void setX(Float x) {
-		this.x = x;
-	}
-	
-	public void setY(Float y) {
-		this.y = y;
-	}
-	
-	public void setZ(Float z) {
-		this.z = z;
-	}
-
 	public Vector3f toVector3f() {
 		return new Vector3f(this.x, this.y, this.z);
 	}
 
-	public CompositeObject getReferent() {
-		return referent;
-	}
-
-	public void setReferent(CompositeObject referent) {
-		this.referent = referent;
-	}
-	
+	@Override
+    public void save() {
+		try {
+			this.update();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    }
+	@Override
+    public void createAll() {
+		try {
+			this.create();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    }
 }

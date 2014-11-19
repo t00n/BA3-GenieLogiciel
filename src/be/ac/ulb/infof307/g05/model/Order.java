@@ -11,17 +11,27 @@ public class Order extends Database<Order> {
 		
 	}
 	
-	public Order(Integer order) {
+	public Order(CompositeObject referent, Integer order) {
+		this.referent = referent;
 		this.order = order;
 	}
 
+	public Integer getOrder() { return this.order; }
+
     @Override
     public void save() {
-        try {
+		try {
 			this.update();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+    }
+    @Override
+    public void createAll() {
+		try {
+			this.create();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
     }
 
@@ -31,16 +41,6 @@ public class Order extends Database<Order> {
 	@DatabaseField (canBeNull = false)
 	protected Integer order;
 	
-	public Integer getOrder() { return this.order; }
-	
 	@DatabaseField (canBeNull = false, foreign = true)
 	private CompositeObject referent;
-
-	public void setReferent(CompositeObject referent) {
-		this.referent = referent;
-	}
-
-	public CompositeObject getReferent() {
-		return referent;
-	}
 }

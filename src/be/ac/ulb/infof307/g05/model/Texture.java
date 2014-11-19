@@ -18,11 +18,21 @@ public class Texture extends Database<Texture> {
 
     @Override
     public void save() {
-        try {
+		try {
 			this.update();
-		} catch (SQLException e) {
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
+		}
+    }
+
+    @Override
+    public void createAll() {
+		try {
+			this.create();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
     }
 	

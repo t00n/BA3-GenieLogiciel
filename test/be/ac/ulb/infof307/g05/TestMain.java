@@ -17,7 +17,6 @@ import com.j256.ormlite.table.TableUtils;
 import com.jme3.math.Vector3f;
 
 import java.sql.SQLException;
-import java.util.Vector;
 
 public class TestMain {
 	
@@ -28,31 +27,16 @@ public class TestMain {
 	
 	public void createTestProject(String name) {
         Project project = new Project("test project");
-        Stage stage = new Stage(project, 0);
+        project.addStage(0);
         
         Vector3f vertex1 = new Vector3f(0,0,0);
         Vector3f vertex2 = new Vector3f(2,2,2);
 
         Cube cube = new Cube(vertex1, vertex2);
         CompositeObject object = new CompositeObject(null, cube.getVertices(), cube.getOrder());
-        stage.setFloor(object);
+        project.getStage(0).setFloor(object);
         
-        try {
-			project.create();
-			object.create();
-			for (Order order: object.getMeshOrder()) {
-				order.setReferent(object);
-				order.create();
-			}
-			for (Vertex vertex: object.getVertices()) {
-				vertex.setReferent(object);
-				vertex.create();
-			}
-			stage.create();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        project.createAll();
 	}
 	
 	@Test

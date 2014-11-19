@@ -3,12 +3,9 @@ package be.ac.ulb.infof307.g05.model;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Vector;
 
-import be.ac.ulb.infof307.g05.model.Order;
-
+import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable (tableName = "projects")
@@ -24,17 +21,81 @@ public class Project extends Database<Project> {
 		this.setCurrent(true);
 	}
 
+	public int getId() {
+		return id_project;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public Date getCreationDate() {
+		return this.creationDate;
+	}
+	
+	public Date getModificationDate() {
+		return this.modificationDate;
+	}
+
+	public Boolean getCurrent() {
+		return current;
+	}
+
+	public void setCurrent(Boolean current) {
+		this.current = current;
+	}
+	
+	public Collection<Stage> getStages() {
+		if (this.stages == null) {
+			Dao<Stage, Integer> dao = Stage.getDao(Stage.class);
+			try {
+				this.stages = dao.queryForEq("project_id", this.getId());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return this.stages;
+	}
+	
+	public Stage getStage(int level) {
+		for (Stage stage: this.getStages()) {
+			if (stage.getLevel() == level) {
+				return stage;
+			}
+		}
+		return null;
+	}
+
+	public void addStage(int level) {
+		this.getStages().add(new Stage(this, level));
+	}
+
     @Override
     public void save() {
-        try {
+		try {
 			this.update();
-		} catch (SQLException e) {
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
-        if (this.stages != null && !this.stages.isEmpty())
-            for (Stage stage : this.stages)
-                stage.save();
+        for (Stage stage : this.getStages())
+            stage.save();
+    }
+    @Override
+    public void createAll() {
+		try {
+			this.create();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        for (Stage stage : this.getStages())
+            stage.createAll();
     }
 	
 	@DatabaseField (generatedId = true)
@@ -52,42 +113,5 @@ public class Project extends Database<Project> {
 	@DatabaseField (canBeNull = false)
 	private Boolean current;
 	
-	@ForeignCollectionField (eager = false)
 	protected Collection<Stage> stages;
-	
-	// TODO change ForeignCollection<>
-	public Collection<Stage> getStages() { return this.stages; }
-	
-	public Stage getStage(int level) {
-		for (Stage stage: this.stages) {
-			if (stage.getLevel() == level) {
-				return stage;
-			}
-		}
-		return null;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Boolean getCurrent() {
-		return current;
-	}
-
-	public void setCurrent(Boolean current) {
-		this.current = current;
-	}
-
-	public int getId_project() {
-		return id_project;
-	}
-
-	public void setId_project(int id_project) {
-		this.id_project = id_project;
-	}
 }

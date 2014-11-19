@@ -53,4 +53,5 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 	}
 
     public abstract void save();
+    public abstract void createAll();
 }

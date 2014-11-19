@@ -13,21 +13,7 @@ import java.util.Vector;
 
 
 @DatabaseTable (tableName = "composite_objects")
-public class CompositeObject extends Database<CompositeObject> implements Iterable<CompositeObject> {
-	
-	@DatabaseField (unique = true, id=true)
-	private Integer id_compositeObject;
-	@DatabaseField (canBeNull = true, foreign = true)
-	private CompositeObject parent;
-	@DatabaseField (canBeNull = true, foreign = true, foreignAutoRefresh = true)
-	private Texture texture;
-
-	protected Collection<Vertex> vertices;
-
-	protected Collection<Order> meshOrder;
-
-	protected Collection<CompositeObject> childs;
-	
+public class CompositeObject extends Database<CompositeObject> implements Iterable<CompositeObject> {	
 	
 	protected CompositeObject() {
 		
@@ -43,7 +29,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	private Collection<Vertex> toVertex(Collection<Vector3f> vertices) {
 		Collection<Vertex> ret = new Vector<Vertex>();
 		for (Vector3f vec: vertices) {
-			Vertex vertex = new Vertex(vec);
+			Vertex vertex = new Vertex(this, vec);
 			ret.add(vertex);
 		}
 		return ret;
@@ -52,7 +38,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	private Collection<Order> toOrder(Collection<Integer> meshOrder) {
 		Collection<Order> ret = new Vector<Order>();
 		for (Integer order: meshOrder) {
-			Order ord = new Order(order);
+			Order ord = new Order(this, order);
 			ret.add(ord);
 		}
 		return ret;
@@ -74,7 +60,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		Vector3f[] ret = new Vector3f[this.getVertices().size()];
 		int i = 0;
 		for (Vertex vertex: this.getVertices()) {
-			ret[i] = vertex.getVector();
+			ret[i] = vertex.toVector3f();
 			++i;
 		}
 		return ret;
@@ -131,45 +117,36 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return this.childs;
 	}
 	
-
-
     @Override
     public void save() {
         if (this.texture != null)
             this.texture.save();
-        try {
+		try {
 			this.update();
-		} catch (SQLException e) {
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
-        if (this.vertices != null && !this.vertices.isEmpty())
-            for (Vertex position : this.vertices)
-                position.save();
-        if (this.meshOrder != null && !this.meshOrder.isEmpty())
-            for (Order order : this.meshOrder)  
-                order.save();
+        for (Vertex position : this.getVertices())
+            position.save();
+        for (Order order : this.getMeshOrder())  
+            order.save();
     }
     
-    public void createAll() throws SQLException {
+    @Override
+    public void createAll() {
         if (this.texture != null)
-            this.texture.save();
-        try {
+            this.texture.createAll();
+		try {
 			this.create();
-		} catch (SQLException e) {
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
-        if (this.vertices != null && !this.vertices.isEmpty())
-            for (Vertex position : this.vertices) {
-            	position.setReferent(this);
-                position.create();
-            }
-        if (this.meshOrder != null && !this.meshOrder.isEmpty())
-            for (Order order : this.meshOrder) {
-            	order.setReferent(this);
-                order.create();
-            }
+        for (Vertex position : this.getVertices())
+            position.createAll();
+        for (Order order : this.getMeshOrder())  
+            order.createAll();
     }
 	
 	// Iterable
@@ -215,4 +192,16 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	public int size(){
 		return childs.size();
 	}
+	
+	// members 
+	@DatabaseField (unique = true, id=true)
+	private Integer id_compositeObject;
+	@DatabaseField (canBeNull = true, foreign = true)
+	private CompositeObject parent;
+	@DatabaseField (canBeNull = true, foreign = true, foreignAutoRefresh = true)
+	private Texture texture;
+
+	protected Collection<Vertex> vertices;
+	protected Collection<Order> meshOrder;
+	protected Collection<CompositeObject> childs;
 }
