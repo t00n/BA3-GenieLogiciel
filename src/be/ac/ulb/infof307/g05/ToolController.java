@@ -77,7 +77,7 @@ public class ToolController {
 		_currentStage = stage;
 	}
 	
-	public CompositeObject getStage(){
+	public CompositeObject getFloor(){
 		/** this method retrun the root node of the current stage **/
 		return _currentStage.getFloor();
 	}
@@ -116,11 +116,15 @@ public class ToolController {
 					Vector3f two = _positionStack.pop();
 					two.y += 0.1;
 					Cube newMesh = new Cube(one, two);
-					CompositeObject newObject = new CompositeObject(_currentStage.getFloor(), newMesh.getVertices(), newMesh.getOrder());
-					this.getStage().add(newObject);
-					for (CompositeObject object: this.getStage()) {
-						System.out.println(object.getVectors().length);
+					CompositeObject newObject = new CompositeObject(this.getFloor(), newMesh.getVertices(), newMesh.getOrder());
+					this.getFloor().add(newObject);
+					try {
+						newObject.createAll();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
+					System.out.println("----------------");
 				}
 			}else if(command == "comboBoxChanged"){
 				String option_choice = ((JComboBox)(event.getSource())).getSelectedItem().toString();

@@ -11,8 +11,7 @@ public class Order extends Database<Order> {
 		
 	}
 	
-	public Order(CompositeObject referent, Integer order) {
-		this.setReferent(referent);
+	public Order(Integer order) {
 		this.order = order;
 	}
 

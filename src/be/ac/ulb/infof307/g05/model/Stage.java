@@ -43,7 +43,7 @@ public class Stage extends Database<Stage> {
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected Project project;
 	
-	@DatabaseField (canBeNull = false, foreign = true, foreignAutoRefresh = true)
+	@DatabaseField (canBeNull = false, foreign = true, foreignAutoRefresh = true, unique = true)
 	protected CompositeObject floor;
 	public CompositeObject getFloor() { return floor; }
 

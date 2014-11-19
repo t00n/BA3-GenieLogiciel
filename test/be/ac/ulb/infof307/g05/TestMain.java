@@ -41,9 +41,11 @@ public class TestMain {
 			project.create();
 			object.create();
 			for (Order order: object.getMeshOrder()) {
+				order.setReferent(object);
 				order.create();
 			}
 			for (Vertex vertex: object.getPositions()) {
+				vertex.setReferent(object);
 				vertex.create();
 			}
 			stage.create();

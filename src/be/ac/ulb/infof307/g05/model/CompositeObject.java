@@ -18,13 +18,13 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	private Integer id_compositeObject;
 	@DatabaseField (canBeNull = true, foreign = true)
 	private CompositeObject parent;
-	@DatabaseField (canBeNull = true, foreign = true)
+	@DatabaseField (canBeNull = true, foreign = true, foreignAutoRefresh = true)
 	private Texture texture;
-	@ForeignCollectionField (eager = true)
+	@ForeignCollectionField (eager = false)
 	protected Collection<Vertex> vertices;
-	@ForeignCollectionField (eager = true)
+	@ForeignCollectionField (eager = false)
 	protected Collection<Order> meshOrder;
-	@ForeignCollectionField (eager = true)
+	@ForeignCollectionField (eager = false)
 	protected Collection<CompositeObject> childs;
 	
 	
@@ -60,14 +60,16 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 			e.printStackTrace();
 		}
         if (this.vertices != null && !this.vertices.isEmpty())
-            for (Vertex position : this.vertices)
+            for (Vertex position : this.vertices) {
+            	position.setReferent(this);
                 position.create();
+            }
         if (this.meshOrder != null && !this.meshOrder.isEmpty())
-            for (Order order : this.meshOrder)  
+            for (Order order : this.meshOrder) {
+            	order.setReferent(this);
                 order.create();
+            }
     }
-    
-    
     
 	public CompositeObject(CompositeObject parent, Collection<Vector3f> vertices, Collection<Integer> meshOrder) {
 		this.parent = parent;
@@ -79,7 +81,8 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	private Collection<Vertex> toVertex(Collection<Vector3f> vertices) {
 		Collection<Vertex> ret = new Vector<Vertex>();
 		for (Vector3f vec: vertices) {
-			ret.add(new Vertex(this, vec));
+			Vertex vertex = new Vertex(vec);
+			ret.add(vertex);
 		}
 		return ret;
 	}
@@ -87,7 +90,8 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	private Collection<Order> toOrder(Collection<Integer> meshOrder) {
 		Collection<Order> ret = new Vector<Order>();
 		for (Integer order: meshOrder) {
-			ret.add(new Order(this, order));
+			Order ord = new Order(order);
+			ret.add(ord);
 		}
 		return ret;
 	}
@@ -105,21 +109,26 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		this.vertices = col;
 	}
 	
+	public void setVertices(Collection<Vector3f> vertices) {
+		System.out.println("id : " + getId());
+		this.vertices = toVertex(vertices);
+	}
+	public void setMeshOrder(Collection<Integer> col) {
+		System.out.println("id : " + getId());
+		this.meshOrder = toOrder(col);
+	}
 	public Collection<Vertex> getPositions() {
 		return this.vertices;
 	}
 	
 	public Vector3f[] getVectors() {
-		Vector3f[] ret = new Vector3f[this.getPositions().size()];
+		Vector3f[] ret = new Vector3f[this.vertices.size()];
 		int i = 0;
 		for (Vertex vertex: this.vertices) {
 			ret[i] = vertex.getVector();
 			++i;
 		}
 		return ret;
-	}
-	public void setMeshOrder(Collection<Order> col) {
-		this.meshOrder = col;
 	}
 	
 	public Collection<Order> getMeshOrder() {

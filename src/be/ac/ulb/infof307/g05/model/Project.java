@@ -52,7 +52,7 @@ public class Project extends Database<Project> {
 	@DatabaseField (canBeNull = false)
 	private Boolean current;
 	
-	@ForeignCollectionField (eager = true)
+	@ForeignCollectionField (eager = false)
 	protected Collection<Stage> stages;
 	
 	// TODO change ForeignCollection<>

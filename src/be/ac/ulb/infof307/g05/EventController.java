@@ -64,7 +64,7 @@ public class EventController implements ActionListener {
 	
 	public CompositeObject getStage(){
 		/** this method return the root node of the scene built by toolController **/
-		return _toolController.getStage();
+		return _toolController.getFloor();
 	}
 	
 	public void addTool(String tool_name) {
