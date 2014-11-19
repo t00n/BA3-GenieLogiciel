@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.logger.LocalLog;
 import com.j256.ormlite.misc.BaseDaoEnabled;
+
 
 public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 	
@@ -15,7 +17,9 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 	private final static String connectionString = "jdbc:sqlite:HomePlans.db";
 	private static JdbcConnectionSource connectionSource = null;
 	
+	//logg.debug("built statement{}", statement);
 	public static JdbcConnectionSource getConnectionSource() {
+		System.setProperty(LocalLog.LOCAL_LOG_LEVEL_PROPERTY , "ERROR");
 		if (connectionSource == null) {
 			try {
 				connectionSource = new JdbcConnectionSource(connectionString);
