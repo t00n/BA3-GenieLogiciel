@@ -23,15 +23,6 @@ public class Project extends Database<Project> {
 		this.modificationDate = new Date();
 		this.setCurrent(true);
 	}
-	
-	public static Project buildNewProject(String name, Float width, Float length) {
-		Project newProject = new Project(name);
-		Stage newStage = new Stage(newProject, 0);
-		Collection<Vertex> vertices = new Vector<Vertex>(); //FIXME should get it from Cube
-		Collection<Order> meshOrder = new Vector<Order>(); // FIXME should get it from Cube
-//		CompositeObject newFloor = new CompositeObject(null, vertices, meshOrder);
-		return newProject;
-	}
 
     @Override
     public void save() {

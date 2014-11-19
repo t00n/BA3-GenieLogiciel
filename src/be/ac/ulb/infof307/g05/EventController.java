@@ -33,6 +33,7 @@ public class EventController implements ActionListener {
 	
 	private SaveThread _saveThread;
 	
+	public ToolController getToolController() { return _toolController; }
 	
 	public EventController(MainWindow window){
 		/** constructor **/

@@ -100,6 +100,14 @@ public class ToolController {
 				purge();
 			}else if(command == "cursor_click_up"){
 				addPosition((Vector3f) event.getSource());
+				if (_positionStack.size() == 3) {
+					Vector3f one = _positionStack.firstElement();
+					_positionStack.removeElementAt(0);
+					Vector3f two = _positionStack.firstElement();
+					_positionStack.removeElementAt(0);
+					Cube newMesh = new Cube(one, two);
+					CompositeObject newObject = new CompositeObject(_currentStage.getFloor(), newMesh.getVertices(), newMesh.getOrder());
+				}
 			}else if(command == "comboBoxChanged"){
 				if(((JComboBox)event.getSource()).getSelectedItem() == "Rectangle"){
 					purge();
