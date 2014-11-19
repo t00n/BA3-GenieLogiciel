@@ -151,5 +151,75 @@
 				\item Franklin et Antoine C.: sauvegardes/investiguer hibernate et ormline et les formats des objets
 				\item Martin : affichage 2D/3D 
 			\end{itemize}
+
+\newpage
+\section{4ème réunion}
+	\subsection{Présences}
+		Tous les membres étaient présents à la réunion.
+	\subsection{Points abordés}
+	
+		\subsubsection{Changement outils conversation/gestion de projet}
+			Passage de Azendoo vers trello.com.
+		\subsubsection{Histoire pour l'itération 2}
+			Histoire 5 : il faudra convertir les objets importés pour qu'ils aient le même format que les objets que nous créerons. (JME gère déjà les formats OBJ, DAE, 3DS et KMZ)
+			
+		\subsubsection{ORM}
+			Choix : ORMlite parce que hibernate utilise des xml $\rightarrow$ hyper chiant :P
+			
+		\subsubsection{Queue dans la flycam}
+			Quand on va créer un mur, on enregistre les points jusqu'à ce que l'utilisateur dise "crée le mur" et on réccupère les points qu'il faut dans la queue. Pour le différencier d'un drag and drop, on va vérifier que les coordonnées de l'event cliquer et celui de l'event relacher soient les mêmes.
+			
+		\subsubsection{Épaisseur des murs}
+			Détection si mur externe -> pour pas dépasser de la dalle.
+			
+			Si mur interne, on dessine le mur de manière à ce que les coordonnées données soient au milieu de l'épaisseur.
+			
+		\subsubsection{Database}
+			Créer une relation many-to-many pour gérer les bases de données $\rightarrow$ encapsulation
+
+	\subsection{Prochaine réunion}
+		\subsubsection{Date}
+			Lundi 17/11 à 15h. 
+			
+		\subsubsection{À faire}
+			\begin{itemize}
+				\item Martin, Daniele et Ségolène : Écrire le contrôleur
+				\item Antoine C. et Franklin : Enregistrer les objets ($+$ sauvegardes automatiques)
+				\item Antoine C. : Diagramme UML de la database (ce qu'on va sauver, quelles classes de travail, etc)
+				\item Antoine D. et Martin : Gestion des collisions (possibilité de cliquer sur un objet) 
+				\item Déplacer les murs (?) \\
+			\end{itemize}
+			
+			 !! Ne pas oublier les tests !!
+
+\newpage
+\section{5ème réunion}
+	\subsection{Présences}
+		Tous les membres étaient présents à la réunion.
+	\subsection{Points abordés}
+		\subsubsection{Controleur}
+			Explication sur le fonctionnement du controleur, et l'interaction avec la vue et le modèle.
+		\subsubsection{Database}
+			Résumé sur le fonctionnement de la database.
+		\subsubsection{Système de sauvegarde automatique}
+			Mettre un timer dans le thread de l'affichage ou faire un nouveau thread ? Dans le thread de l'affichage, pourrait faire laguer $\rightarrow$ nouveau thread.
+		\subsubsection{Histoire 1}
+			Ce qu'il reste à faire pour compléter la première itération :
+			\begin{itemize}
+				\item Merge du controleur et de la database
+				\item Sauvegardes automatiques
+				\item Ouverture/modification d'un ancien projet
+				\item Configurer la maison : permettre à l'utilisateur de choisir la taille de son terrain à la création d'un projet
+				\item Outils draw et pull-up
+				\item Faire la javadoc
+			\end{itemize}
+			
+	\subsection{Prochaine réunion}
+		\subsubsection{Date}
+			Mardi 18/11 12h pour terminer l'itération 1 tous ensemble.
+			
+		\subsubsection{À faire}
+			Commencer à coder ce qu'il reste.
+
 \end{document}
 
