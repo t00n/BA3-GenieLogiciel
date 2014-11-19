@@ -48,8 +48,15 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return this.id_compositeObject;
 	}
 	
-	public void setId(Integer id) {
-		this.id_compositeObject = id;
+	public void setId() {
+		CompositeObject_ID id = new CompositeObject_ID();
+		try {
+			id.create();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.id_compositeObject = id.getId();
 	}
 
 	public Texture getTexture() {
@@ -145,7 +152,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	public void addChild(CompositeObject parent, CompositeObject child, Integer id) {
 		if (parent == this) {
 			this.add(child);
-			child.setId(id);
+			child.setId();
 		}
 		else
 		{
@@ -175,7 +182,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	}
 	
 	// members 
-	@DatabaseField (unique = true, id=true)
+	@DatabaseField (id=true)
 	private Integer id_compositeObject;
 	@DatabaseField (canBeNull = true, foreign = true)
 	private CompositeObject parent;

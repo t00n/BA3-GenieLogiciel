@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g05.model.CompositeObject;
+import be.ac.ulb.infof307.g05.model.CompositeObject_ID;
 import be.ac.ulb.infof307.g05.model.Database;
 import be.ac.ulb.infof307.g05.model.Order;
 import be.ac.ulb.infof307.g05.model.Project;
@@ -26,7 +27,7 @@ public class TestMain {
 	}
 	
 	public void createTestProject(String name) {
-        Project project = new Project("test project");
+        Project project = new Project(name);
         project.addStage(0);
         
         Vector3f vertex1 = new Vector3f(0,0,0);
@@ -49,12 +50,15 @@ public class TestMain {
 		TableUtils.dropTable(connectionSource, Stage.class, true);
 		TableUtils.dropTable(connectionSource, Project.class, true);
 		TableUtils.dropTable(connectionSource, Order.class, true);
+		TableUtils.dropTable(connectionSource, CompositeObject_ID.class, true);
 		TableUtils.createTableIfNotExists(connectionSource, Project.class);
 		TableUtils.createTableIfNotExists(connectionSource, Texture.class);
 		TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
+		TableUtils.createTableIfNotExists(connectionSource, CompositeObject_ID.class);
 		TableUtils.createTableIfNotExists(connectionSource, Stage.class);
 		TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
 		TableUtils.createTableIfNotExists(connectionSource, Order.class);
 		this.createTestProject("test project 1");
+		this.createTestProject("test project 2");
 	}
 }

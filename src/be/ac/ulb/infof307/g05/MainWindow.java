@@ -90,7 +90,7 @@ public class MainWindow extends JFrame {
 		return input;
 	}
 	
-	public newProject popUpNew() {
+	public ProjectStruct popUpNew() {
 		JTextField projectName = new JTextField();
 		JTextField width = new JTextField();
 		JTextField length = new JTextField();
@@ -106,7 +106,7 @@ public class MainWindow extends JFrame {
 				choices,
 				"New Project",
 				JOptionPane.PLAIN_MESSAGE);
-		newProject ret = new newProject();
+		ProjectStruct ret = new ProjectStruct();
 		ret.name = projectName.getText();
 		ret.width = Float.parseFloat(width.getText());
 		ret.length = Float.parseFloat(length.getText());

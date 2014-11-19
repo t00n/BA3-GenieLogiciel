@@ -131,7 +131,7 @@ public class EventController implements ActionListener {
 	}
 	
 	public void newProject() {
-		be.ac.ulb.infof307.g05.newProject newP = _window.popUpNew();
+		ProjectStruct newP = _window.popUpNew();
 		Project newProject = new Project(newP.name);
 		newProject.addStage(0);
         
@@ -140,7 +140,7 @@ public class EventController implements ActionListener {
 
         Cube cube = new Cube(vertex1, vertex2);
         CompositeObject object = new CompositeObject(null, cube.getVertices(), cube.getOrder());
-        newProject.getStage(0).setFloor(object);
+        newProject.getStage(0).addObject(null, object);
 
         newProject.save();
         

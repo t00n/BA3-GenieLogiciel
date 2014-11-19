@@ -29,7 +29,7 @@ public class Stage extends Database<Stage> {
 	public void addObject(CompositeObject parent, CompositeObject child) {
 		if (this.floor == null) {
 			this.floor = child;
-			this.floor.setId(this.current_id);
+			this.floor.setId();
 		}
 		else {
 			this.floor.addChild(parent, child, this.current_id);
@@ -57,6 +57,6 @@ public class Stage extends Database<Stage> {
 	@DatabaseField (canBeNull = false)
 	protected int current_id;
 	
-	@DatabaseField (canBeNull = true, foreign = true, foreignAutoRefresh = true, unique = true)
+	@DatabaseField (canBeNull = true, foreign = true, foreignAutoRefresh = true)
 	protected CompositeObject floor;
 }
