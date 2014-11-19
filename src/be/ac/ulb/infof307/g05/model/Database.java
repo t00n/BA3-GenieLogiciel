@@ -9,12 +9,18 @@ import com.j256.ormlite.logger.LocalLog;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Database.
+ *
+ * @param <T> the generic type
+ */
 public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 	
-	/**
-	 *  static link to database connection source
-	 */
+	/**  static link to database connection source. */
 	private final static String connectionString = "jdbc:sqlite:HomePlans.db";
+	
+	/** The connection source. */
 	private static JdbcConnectionSource connectionSource = null;
 	
 	//logg.debug("built statement{}", statement);
@@ -31,6 +37,13 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 		return connectionSource;
 	}
 	
+	/**
+	 * Gets the dao.
+	 *
+	 * @param <T> the generic type
+	 * @param klass the klass
+	 * @return the dao
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Dao<T, Integer> getDao(Class<?> klass) {
 		try {
@@ -42,6 +55,9 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 		return null;
 	}
 	
+	/**
+	 * Instantiates a new database.
+	 */
 	@SuppressWarnings("unchecked")
 	public Database() {
 		try {
@@ -52,6 +68,9 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 		}
 	}
 
+    /**
+     * Save.
+     */
     public void save() {
 		try {
 			if (this.isNew) {
@@ -66,5 +85,6 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 		}
     }
     
+    /** The is new. */
     public Boolean isNew = false;
 }

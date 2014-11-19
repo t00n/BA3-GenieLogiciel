@@ -11,24 +11,46 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
 import com.jme3.system.JmeCanvasContext;
 
-
+/**
+ * The Class JmeWorld which take care of the JME (camera, viewport, reference, flycam, events, etc..)
+ */
 public class JmeWorld extends SimpleApplication {
 
+	/** The _camera. */
 	private Camera[]   _camera = new Camera[2];
+	
+	/** The _view. */
 	private ViewPort[] _view = new ViewPort[2];
+	
+	/** The _reference. */
 	private Reference  _reference;
+	
+	/** The _fly cam. */
 	private FlyCamera  _flyCam;
+	
+	/** The _event controller. */
 	private EventController _eventController;
+	
+	/** The _current stage. */
 	private Node _currentStage = new Node();
+	
+	/** The _converter. */
 	private JmeConverter _converter = new JmeConverter();
 
 	
+	/**
+	 * Instantiates a new jme world.
+	 *
+	 * @param eventController the event controller
+	 */
 	public JmeWorld(EventController eventController){
 		_eventController = eventController;
 	}
 	
+	/**
+	 * Inits the views by creating viewports (2D & 3D)
+	 */
 	private void initViews(){
-		/** this method create viewports (2D & 3D) **/
 		_camera[0] = cam;
         _view[0] = renderManager.createMainView("3D view", _camera[0]);
         _camera[0].setViewPort(0.0f, 1.0f, 0.0f, 1.0f);
@@ -51,8 +73,13 @@ public class JmeWorld extends SimpleApplication {
         _camera[1].setFrustum(1, 1000, -aspect * zoom, aspect * zoom, zoom, -zoom);
 	}
 
+	/**
+	 * Sets the viewports (2D and/or 3D).
+	 *
+	 * @param set2d the set2d
+	 * @param set3d the set3d
+	 */
 	public void setViews(boolean set2d, boolean set3d){
-		/** this method set viewports (2D and/or 3D) **/
 		if((set2d != _view[1].isEnabled()) || (set3d != _view[0].isEnabled())){
 			if(set2d && set3d){
 				_view[0].setEnabled(true);
@@ -73,6 +100,9 @@ public class JmeWorld extends SimpleApplication {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.jme3.app.SimpleApplication#simpleInitApp()
+	 */
 	public void simpleInitApp(){
 		/** this method init the jme world **/
 	   guiViewPort.setEnabled(false);
@@ -89,8 +119,10 @@ public class JmeWorld extends SimpleApplication {
        _view[1].attachScene(rootNode);
 	}
 	
+	/**
+	 * this method redraw all the scene
+	 */
 	private void draw() {
-		/** this method redraw all the scene **/
     	rootNode.detachChild(_currentStage);
     	_currentStage.detachAllChildren();
     	if (_eventController.getStage() != null){
@@ -99,6 +131,9 @@ public class JmeWorld extends SimpleApplication {
     	}
 	}
 	
+    /* (non-Javadoc)
+     * @see com.jme3.app.SimpleApplication#simpleUpdate(float)
+     */
     public void simpleUpdate(float tpf) {
     	/** this method is automatically called after each event **/
     	draw();

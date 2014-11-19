@@ -12,13 +12,26 @@ import com.jme3.util.BufferUtils;
 
 import be.ac.ulb.infof307.g05.model.CompositeObject;
 
-
+/**
+ * The Class JmeConverter converts a CompositeObject into a JME one to take the objects from the database
+ * and show them in the canvasJME.
+ */
 public class JmeConverter {
 	
+	/**
+	 * Instantiates a new jme converter.
+	 */
 	public JmeConverter(){
 		
 	}
 
+	/**
+	 * Convert a compositeobject from the database with a root node to a 2D/3D Object for the view.
+	 *
+	 * @param object the object
+	 * @param root the root
+	 * @param assetManager the asset manager
+	 */
 	public void convert(CompositeObject object, Node root, AssetManager assetManager){
 		root.attachChild(toGeometry(object, assetManager));
 		for(CompositeObject child:object){
@@ -26,6 +39,13 @@ public class JmeConverter {
 		}
 	}
 	
+	/**
+	 * Change the geometry of an object.
+	 *
+	 * @param object the object to change
+	 * @param assetManager the asset manager
+	 * @return the geometry
+	 */
 	private Geometry toGeometry(CompositeObject object, AssetManager assetManager){
 		/** this method convert a CompositeObject to a geometry **/
 		Mesh mesh = new Mesh();

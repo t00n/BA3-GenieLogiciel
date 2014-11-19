@@ -24,20 +24,52 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 
+/**
+ * The Class FlyCamera let the user to use the flycam on the CanvasJme
+ */
 public class FlyCamera extends FlyByCamera {
 
+	/** The _cam2d. */
 	private Camera _cam2d;
+	
+	/** The _cam3d. */
 	private Camera _cam3d;
+	
+	/** The _node. */
 	private Node _node;
+	
+	/** The _event controller. */
 	private EventController _eventController;
+	
+	/** The _cam2d enabled. */
 	private boolean  _cam2dEnabled = false;
+	
+	/** The _cam3d enabled. */
 	private boolean  _cam3dEnabled = false;
+	
+	/** The _collisions. */
 	private CollisionResults _collisions = new CollisionResults();
+	
+	/** The _last screen click. */
 	private Vector2f _lastScreenClick = new Vector2f();
+	
+	/** The _last mouse click. */
 	private Vector3f _lastMouseClick = new Vector3f(0,0,0);
+	
+	/** The _is pressed. */
 	private boolean _isPressed = true;
 	
 	
+	/**
+	 * Instantiates a new fly camera.
+	 *
+	 * @param cam2d the cam2d
+	 * @param cam3d the cam3d
+	 * @param node the node
+	 * @param inputManager the input manager
+	 * @param stateManager the state manager
+	 * @param eventController the event controller
+	 */
 	public FlyCamera(Camera cam2d, Camera cam3d, Node node, InputManager inputManager, AppStateManager stateManager, EventController eventController){
 		super(cam3d);
 		_cam2d = cam2d;
@@ -57,6 +89,9 @@ public class FlyCamera extends FlyByCamera {
 	    });
 	}
 	
+	/**
+	 * Redefine keys to move the FlyCam.
+	 */
 	public void redefineKeys(){
 		inputManager.clearMappings();
         
@@ -83,6 +118,12 @@ public class FlyCamera extends FlyByCamera {
         inputManager.setCursorVisible(dragToRotate);
 	}
 	
+	/**
+	 * Sets the cam enable for the 2D view, the 3D view, or the two views at the same time
+	 *
+	 * @param cam2d the cam2d
+	 * @param cam3d the cam3d
+	 */
 	public void setCamEnable(boolean cam2d, boolean cam3d){
 		_cam2dEnabled = cam2d;
 		_cam3dEnabled = cam3d;
@@ -100,6 +141,9 @@ public class FlyCamera extends FlyByCamera {
 		return isIn2d;
 	}
 
+    /**
+     * Move camera when the user click
+     */
     protected void moveCameraMouseClick(){
     	Vector3f mousePosition = getPositionVec().clone();
     	Vector3f min = _lastMouseClick.subtract(mousePosition);
@@ -108,6 +152,12 @@ public class FlyCamera extends FlyByCamera {
     	_lastMouseClick=getPositionVec();		
     }
     
+    /**
+     * Move camera with keys.
+     *
+     * @param value the value of the move
+     * @param sideways the sideways (true or falses)
+     */
     protected void moveCameraKeys(float value, boolean sideways){
         Vector3f vel = new Vector3f();
         Vector3f pos = cam.getLocation().clone();
@@ -132,6 +182,13 @@ public class FlyCamera extends FlyByCamera {
     }
 
  
+    /**
+     * Move all the geometry.
+     *
+     * @param geom the geom
+     * @param value the value
+     * @param sideways the sideways
+     */
     protected void moveGeometry(Geometry geom, float value, boolean sideways){
     	Vector3f mousePosition = getPositionVec();
     	float coordY = geom.getWorldTranslation().getY(); //Retiens la position Y de la Geometry
@@ -139,6 +196,9 @@ public class FlyCamera extends FlyByCamera {
         geom.setLocalTranslation(mousePosition);      	
     }
 
+    /* (non-Javadoc)
+     * @see com.jme3.input.FlyByCamera#rotateCamera(float, com.jme3.math.Vector3f)
+     */
     protected void rotateCamera(float value, Vector3f axis){
         if(canRotate){
 	        Matrix3f mat = new Matrix3f();
@@ -161,6 +221,9 @@ public class FlyCamera extends FlyByCamera {
 	    }
     }
 	
+    /* (non-Javadoc)
+     * @see com.jme3.input.FlyByCamera#onAnalog(java.lang.String, float, float)
+     */
     public void onAnalog(String name, float value, float tpf){
         _eventController.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "cursor_move"));
         
@@ -267,6 +330,9 @@ public class FlyCamera extends FlyByCamera {
     	return geometry;
     }
     
+    /* (non-Javadoc)
+     * @see com.jme3.input.FlyByCamera#onAction(java.lang.String, boolean, float)
+     */
     public void onAction(String name, boolean value, float tpf) {
         if(enabled){
 	        if (name.equals("FLYCAM_RotateDrag") && dragToRotate){

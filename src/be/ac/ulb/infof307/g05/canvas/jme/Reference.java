@@ -12,15 +12,34 @@ import com.jme3.scene.debug.Grid;
 import com.jme3.scene.shape.Box;
 import com.jme3.util.BufferUtils;
 
-
+/**
+ * The Class Reference which take care of showing all the funny stuff in the view (grids, mesh, axis, etc..).
+ */
 public class Reference {
+	
+	/** The _asset manager. */
 	private AssetManager _assetManager;
+	
+	/** The _node. */
 	private Node		 _node;
+	
+	/** The _grid. */
 	private Geometry 	 _grid;
+	
+	/** The _coordinate. */
 	private Node    	 _coordinate = new Node("test");
+	
+	/** The _floor. */
 	private Geometry     _floor;
 
 	
+	/**
+	 * Instantiates a new reference.
+	 *
+	 * @param assetManager the asset manager
+	 * @param width the width
+	 * @param length the length
+	 */
 	public Reference(AssetManager assetManager, int width, int length){
 		_assetManager = assetManager;
 		createGrid(new Vector3f(), width, length, 1f, ColorRGBA.Green);
@@ -28,6 +47,12 @@ public class Reference {
 		createFloor(width);
 	}
 
+	/**
+	 * Sets the node.
+	 *
+	 * @param node the node
+	 * @param attach the attach
+	 */
 	public void setNode(Node node, boolean attach){
 		if(_node != null){
 			setGridEnable(false);
@@ -64,6 +89,15 @@ public class Reference {
 			_node.detachChild(_floor);
 	}
 	
+    /**
+     * Creates the grid.
+     *
+     * @param pos the pos
+     * @param gridWidth the grid width
+     * @param gridLength the grid length
+     * @param squareSize the square size
+     * @param color the color
+     */
     private void createGrid(Vector3f pos, int gridWidth, int gridLength, float squareSize, ColorRGBA color){
         _grid = new Geometry("Grid", new Grid(gridWidth+1, gridLength+1, squareSize) );
         Material mat = new Material(_assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -72,6 +106,11 @@ public class Reference {
         _grid.center().move(pos);
       }
     
+    /**
+     * Creates the floor.
+     *
+     * @param floorSize the floor size
+     */
     private void createFloor(int floorSize){ //Sol invisible (car pas lumi�re ajout�e) pour la collision
 		Box b = new Box(floorSize, 0, floorSize);
         _floor = new Geometry("Floor", b);
@@ -80,6 +119,12 @@ public class Reference {
     }
 	
 
+	/**
+	 * Creates the axis.
+	 *
+	 * @param lenght the lenght
+	 * @param lineWidth the line width
+	 */
 	private void createAxis(int lenght, float lineWidth){
 		//Axe X
 		Geometry x_axis = new Geometry("x axis", getMeshAxis((lenght/2), 0, 0, lineWidth));
@@ -95,12 +140,27 @@ public class Reference {
 		_coordinate.attachChild(z_axis);
 	}
 	
+	/**
+	 * Sets the axis color.
+	 *
+	 * @param axis the axis
+	 * @param color the color
+	 */
 	private void setAxisColor(Geometry axis, ColorRGBA color){
         Material mat = new Material(_assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		mat.setColor("Color", color);
         axis.setMaterial(mat);
 	}
 	
+	/**
+	 * Gets the mesh axis.
+	 *
+	 * @param coordX the coord x
+	 * @param coordY the coord y
+	 * @param coordZ the coord z
+	 * @param lineWidth the line width
+	 * @return the mesh axis
+	 */
 	private Mesh getMeshAxis(int coordX, int coordY, int coordZ, float lineWidth){
 		Mesh mesh = new Mesh();
 		Vector3f[] lineVerticies = new Vector3f[2];
