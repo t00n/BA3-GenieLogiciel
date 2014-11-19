@@ -15,18 +15,32 @@ import be.ac.ulb.infof307.g05.canvas.MenuBarCanvas;
 import be.ac.ulb.infof307.g05.canvas.StatusBarCanvas;
 import be.ac.ulb.infof307.g05.canvas.TabCanvas;
 
-
-
+/**
+ * The Class MainWindow create a window for the end user with tabs, canevas, jme canvas, tools.
+ */
 public class MainWindow extends JFrame {
 
+	/** The _event controller. */
 	private EventController _eventController;
 
+	/** The _canvas ui. */
 	private TabCanvas    _canvasUI;
+	
+	/** The _canvas jme. */
 	private CanvasJme     _canvasJme;
+	
+	/** The _canvas menu bar. */
 	private MenuBarCanvas _canvasMenuBar;
+	
+	/** The _canvas status bar. */
 	private StatusBarCanvas _canvasStatusBar;
 	
 	
+	/**
+	 * Instantiates a new main window.
+	 *
+	 * @param title the title
+	 */
 	public MainWindow(String title){
 		/** constructor **/
 		
@@ -53,6 +67,14 @@ public class MainWindow extends JFrame {
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Pop up yes or no to make the choices.
+	 *
+	 * @param choices the choices
+	 * @param question the question
+	 * @param title the title
+	 * @return the int
+	 */
 	public int popUpYesOrNo(String[] choices, String question, String title) {
 		int input = JOptionPane.showOptionDialog(null,
 				question,
@@ -65,8 +87,16 @@ public class MainWindow extends JFrame {
 		return input;
 	}
 	
+	/**
+	 * Pop up choice in a question message.
+	 * this method display a pop-up window to ask user which project to load
+	 *
+	 * @param choices the choices
+	 * @param question the question
+	 * @param title the title
+	 * @return the string
+	 */
 	public String popUpChoice(String[] choices, String question, String title){
-		/** this method display a pop-up window to ask user which project to load **/
 		//FIXME Franklin
 		
 		String input = (String) JOptionPane.showInputDialog(null, 
@@ -79,6 +109,13 @@ public class MainWindow extends JFrame {
 		return input;
 	}
 	
+	/**
+	 * Pop up input. To take into account the will of the user
+	 *
+	 * @param question the question
+	 * @param title the title
+	 * @return the string
+	 */
 	public String popUpInput(String question, String title) {
 		String input = (String) JOptionPane.showInputDialog(null,
 				question,
@@ -90,6 +127,12 @@ public class MainWindow extends JFrame {
 		return input;
 	}
 	
+	/**
+	 * Pop up new. To make a new project, this method ask the user for the width,
+	 * the length of the floor and the project name
+	 *
+	 * @return the project struct
+	 */
 	public ProjectStruct popUpNew() {
 		JTextField projectName = new JTextField();
 		JTextField width = new JTextField();
@@ -113,6 +156,9 @@ public class MainWindow extends JFrame {
 		return ret;
 	}
 	
+	/**
+	 * Update all the components of the view.
+	 */
 	public void update(){
 		_canvasUI.update();
 		_canvasJme.update();

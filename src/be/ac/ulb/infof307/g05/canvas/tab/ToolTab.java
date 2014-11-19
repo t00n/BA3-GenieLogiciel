@@ -15,14 +15,26 @@ import javax.swing.SwingConstants;
 
 import be.ac.ulb.infof307.g05.EventController;
 
-
+/**
+ * The Class ToolTab which take care of showing the tools for the user (draw, push pull (pull up), etc..).
+ */
 public class ToolTab extends AbstractTab implements ItemListener {
 	
+	/** The _buttons. */
 	private Vector<JToggleButton> _buttons = new Vector<JToggleButton>();
+	
+	/** The _button panel. */
 	private JPanel _buttonPanel = new JPanel();
+	
+	/** The _option panel. */
 	private JPanel _optionPanel = new JPanel();
 	
 	
+	/**
+	 * Instantiates a new tool tab.
+	 *
+	 * @param eventController the event controller
+	 */
 	public ToolTab(EventController eventController){
 		/** constructor **/
 		_eventController = eventController;
@@ -47,8 +59,13 @@ public class ToolTab extends AbstractTab implements ItemListener {
 		_optionPanel.setLayout(new GridLayout(5,2));
 	}
 	
+	/**
+	 * Creates a button by giving him a name.
+	 * this method create all tools buttons
+	 *
+	 * @param tool_name the tool_name
+	 */
 	private void createButton(String tool_name){
-		/** this method create all tools buttons **/
 		JToggleButton button = new JToggleButton(tool_name);
 		_buttons.add(button);
 		button.setFocusable(false);
@@ -58,6 +75,9 @@ public class ToolTab extends AbstractTab implements ItemListener {
 		_eventController.addTool(tool_name);
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
+	 */
 	public void itemStateChanged(ItemEvent event){
 		/** this method is used to set _optionPanel when a tool is selected **/
 		String command = ((JToggleButton)event.getSource()).getText();
@@ -76,8 +96,11 @@ public class ToolTab extends AbstractTab implements ItemListener {
 		_optionPanel.updateUI();
 	}
 	
+	/**
+	 * Sets the draw option.
+	 * this method create options for "Draw" tool in option panel
+	 */
 	public void setDrawOption(){
-		/** this method create options for "Draw" tool in option panel **/
 		JLabel shape_label = new JLabel("Shape :", SwingConstants.LEFT);
 		JComboBox<String> shape_choice = new JComboBox<String>(new String[] {"Rectangle","Polygon","Oval"});
 		shape_choice.setFocusable(false);

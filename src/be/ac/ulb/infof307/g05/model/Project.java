@@ -8,12 +8,27 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Project.
+ */
 @DatabaseTable (tableName = "projects")
 public class Project extends Database<Project> {
+	
+	/**
+	 * Instantiates a new project.
+	 */
 	protected Project() {
 		
 	}
 	
+	/**
+	 * Instantiates a new project.
+	 *
+	 * @param name the name
+	 * @param width the width
+	 * @param length the length
+	 */
 	public Project(String name, int width, int length) {
 		this.setName(name);
 		this.width = width;
@@ -73,6 +88,12 @@ public class Project extends Database<Project> {
 		return this.stages;
 	}
 	
+	/**
+	 * Gets the stage.
+	 *
+	 * @param level the level
+	 * @return the stage
+	 */
 	public Stage getStage(int level) {
 		for (Stage stage: this.getStages()) {
 			if (stage.getLevel() == level) {
@@ -82,10 +103,18 @@ public class Project extends Database<Project> {
 		return null;
 	}
 
+	/**
+	 * Adds the stage.
+	 *
+	 * @param level the level
+	 */
 	public void addStage(int level) {
 		this.getStages().add(new Stage(this, level));
 	}
 
+    /* (non-Javadoc)
+     * @see be.ac.ulb.infof307.g05.model.Database#save()
+     */
     @Override
     public void save() {
     	super.save();
@@ -93,26 +122,34 @@ public class Project extends Database<Project> {
             stage.save();
     }
 	
+	/** The id_project. */
 	@DatabaseField (generatedId = true)
 	private int id_project;
 	
+	/** The name. */
 	@DatabaseField (canBeNull = false)
 	private String name;
 	
+	/** The width. */
 	@DatabaseField (canBeNull = false)
 	private int width;
 	
+	/** The length. */
 	@DatabaseField (canBeNull = false)
 	private int length;
 	
+	/** The creation date. */
 	@DatabaseField (canBeNull = false)
 	protected Date creationDate;
 	
+	/** The modification date. */
 	@DatabaseField (canBeNull = false, version = true)
 	protected Date modificationDate;
 	
+	/** The current. */
 	@DatabaseField (canBeNull = false)
 	private Boolean current;
 	
+	/** The stages. */
 	protected Collection<Stage> stages;
 }

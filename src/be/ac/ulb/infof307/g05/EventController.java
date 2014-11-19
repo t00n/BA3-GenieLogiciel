@@ -16,22 +16,43 @@ import com.j256.ormlite.dao.Dao;
 import com.jme3.math.Vector3f;
 
 
+/**
+ * The Class EventController.
+ */
 public class EventController implements ActionListener {
 
+	/** The _window. */
 	private MainWindow _window;
 	
+	/** The _flag2 d. */
 	private boolean  _flag2D = true;
+	
+	/** The _flag3 d. */
 	private boolean  _flag3D = true;
 	
+	/** The _tool controller. */
 	private ToolController   _toolController;
+	
+	/** The _current project. */
 	private Project		 _currentProject;
+	
+	/** The _dao project. */
 	private Dao<Project, Integer> _daoProject = Project.getDao(Project.class);
+	
+	/** The _projects. */
 	private List<Project> _projects;
 	
+	/** The _save thread. */
 	private SaveThread _saveThread;
 	
 	public ToolController getToolController() { return _toolController; }
 	
+	/**
+	 * Instantiates a new event controller that take care of all the events,
+	 * if no event corresponds to this controller, it forward the event to the ToolController.
+	 *
+	 * @param window the window
+	 */
 	public EventController(MainWindow window){
 		/** constructor **/
 		_window = window;
@@ -61,6 +82,11 @@ public class EventController implements ActionListener {
 		return _toolController.getFloor();
 	}
 	
+	/**
+	 * Adds the tool to the ToolController.
+	 *
+	 * @param tool_name the tool_name
+	 */
 	public void addTool(String tool_name) {
 		_toolController.addTool(tool_name);
 	}
@@ -69,6 +95,9 @@ public class EventController implements ActionListener {
 		return _toolController.getEnabledTool();
 	}
 	
+	/**
+	 * Launch save thread.
+	 */
 	public void launchSaveThread() {
 		if (this._saveThread != null) {
 			this._saveThread.interrupt();
@@ -77,6 +106,9 @@ public class EventController implements ActionListener {
 //		this._saveThread.start();
 	}
 	
+	/**
+	 * Load project (context menu).
+	 */
 	public void loadProject() {
 		try {
 			_projects = _daoProject.queryForAll();
@@ -98,6 +130,9 @@ public class EventController implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Ask project (at the beginning of the software).
+	 */
 	public void askProject() {
 		int input = _window.popUpYesOrNo(new String[] {"Open project", "New Project"}, "Choose an option...", "Open Project");
 		if (input == 0) {
@@ -108,6 +143,9 @@ public class EventController implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Open project.
+	 */
 	public void openProject() {
 		try {
 			String[] choices = new String[_projects.size()];
@@ -136,6 +174,9 @@ public class EventController implements ActionListener {
 		this.launchSaveThread();
 	}
 	
+	/**
+	 * Make a new project.
+	 */
 	public void newProject() {
 		ProjectStruct newP = _window.popUpNew();
 		Project newProject = new Project(newP.name, newP.width, newP.length);
@@ -154,6 +195,9 @@ public class EventController implements ActionListener {
 		this.launchSaveThread();
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent event){
 		/** this method manage events **/

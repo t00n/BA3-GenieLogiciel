@@ -7,10 +7,19 @@ import be.ac.ulb.infof307.g05.EventController;
 
 import com.jme3.math.Vector3f;
 
+/**
+ * The Class StatusBarCanvas. which take care of the positions of the cursor
+ */
 public class StatusBarCanvas extends AbstractCanvas<JPanel> {
 
+	/** The _label. */
 	private JLabel _label = new JLabel(" ");
 	
+	/**
+	 * Instantiates a new status bar canvas.
+	 *
+	 * @param eventController the event controller
+	 */
 	public StatusBarCanvas(EventController eventController){
 		_panel = new JPanel();
 		_panel.add(_label);
@@ -18,6 +27,9 @@ public class StatusBarCanvas extends AbstractCanvas<JPanel> {
 		_eventController = eventController;
 	}
 	
+	/* (non-Javadoc)
+	 * @see be.ac.ulb.infof307.g05.canvas.AbstractCanvas#update()
+	 */
 	public void update(){
 		Vector3f position = _eventController.getCursor();
 		if(position.getY() >= 0)

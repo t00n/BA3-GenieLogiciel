@@ -14,8 +14,16 @@ import be.ac.ulb.infof307.g05.model.Stage;
 import be.ac.ulb.infof307.g05.model.Texture;
 import be.ac.ulb.infof307.g05.model.Vertex;
 
+/**
+ * The Class Main which instantiate the MainWindow.
+ */
 public class Main {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		JdbcConnectionSource connectionSource = Database.getConnectionSource();
 		try {
