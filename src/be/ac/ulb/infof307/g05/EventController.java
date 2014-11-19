@@ -43,7 +43,7 @@ public class EventController implements ActionListener {
 
 		_toolController = new ToolController();
 		this.loadProject();
-		this._toolController.setStage((Stage) _currentProject.getStages().toArray()[0]);
+		this._toolController.setStage(_currentProject.getStage(0));
 	}
 	
 	public boolean getFlag2D(){
@@ -131,7 +131,7 @@ public class EventController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		_toolController.setStage((Stage) _currentProject.getStages().toArray()[0]);
+		this._toolController.setStage(_currentProject.getStage(0));
 		this.launchSaveThread();
 	}
 	
@@ -169,7 +169,7 @@ public class EventController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		_toolController.setStage((Stage) _currentProject.getStages().toArray()[0]);
+		this._toolController.setStage(_currentProject.getStage(0));
 		this.launchSaveThread();
 	}
 	

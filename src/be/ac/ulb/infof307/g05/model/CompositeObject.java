@@ -49,6 +49,26 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
             for (Order order : this.meshOrder)  
                 order.save();
     }
+    
+    public void createAll() throws SQLException {
+        if (this.texture != null)
+            this.texture.save();
+        try {
+			this.create();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        if (this.vertices != null && !this.vertices.isEmpty())
+            for (Vertex position : this.vertices)
+                position.create();
+        if (this.meshOrder != null && !this.meshOrder.isEmpty())
+            for (Order order : this.meshOrder)  
+                order.create();
+    }
+    
+    
+    
 	public CompositeObject(CompositeObject parent, Collection<Vector3f> vertices, Collection<Integer> meshOrder) {
 		this.parent = parent;
 		this.vertices = toVertex(vertices);

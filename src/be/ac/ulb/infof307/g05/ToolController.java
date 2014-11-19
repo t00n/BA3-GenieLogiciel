@@ -105,6 +105,7 @@ public class ToolController {
 				purge();
 			}else if(command == "collision"){
 				_lastCollision = (String) event.getSource();
+				System.out.println("[DEBUG][ToolController::ActionPerformed] Collision : " + _lastCollision);
 				//FIXME if(drawing && current_drawing_object.getFather() == null) current_drawing_object.setFather(_lastCollision)
 			}else if(command == "cursor_click_up"){
 				//FIXME if(drawing && current_drawing_object.addPosition(_cursor) == true) attach to father, current_drawing_object = new object(type=last drawn)
@@ -113,17 +114,9 @@ public class ToolController {
 					System.out.println("[Debug][ToolController::actionPerformed] : Draw");
 					Vector3f one = _positionStack.pop();
 					Vector3f two = _positionStack.pop();
-					one.y += 5.f;
-					two.y += 10.f;
+					two.y += 0.1;
 					Cube newMesh = new Cube(one, two);
-					CompositeObject newObject = new CompositeObject(_currentStage.getFloor(), newMesh.getVertices(), newMesh.getOrder());
-					_currentStage.getFloor().add(newObject);
-					try {
-						newObject.create();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					_currentStage.getFloor().add(new CompositeObject(_currentStage.getFloor(), newMesh.getVertices(), newMesh.getOrder()));
 				}
 			}else if(command == "comboBoxChanged"){
 				String option_choice = ((JComboBox)(event.getSource())).getSelectedItem().toString();

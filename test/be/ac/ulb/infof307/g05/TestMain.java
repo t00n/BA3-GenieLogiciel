@@ -39,17 +39,11 @@ public class TestMain {
         
         try {
 			project.create();
-			System.out.println(project);
-			System.out.println(project.getStages());
-			System.out.print(stage.getFloor());
-			System.out.println(object);
 			object.create();
 			for (Order order: object.getMeshOrder()) {
-				System.out.println(order.getReferent());
 				order.create();
 			}
 			for (Vertex vertex: object.getPositions()) {
-				System.out.println(vertex.getReferent());
 				vertex.create();
 			}
 			stage.create();

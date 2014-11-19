@@ -50,4 +50,8 @@ public class Stage extends Database<Stage> {
 	public void setFloor(CompositeObject floor) {
 		this.floor = floor;
 	}
+
+	public int getLevel() {
+		return this.level;
+	}
 }
