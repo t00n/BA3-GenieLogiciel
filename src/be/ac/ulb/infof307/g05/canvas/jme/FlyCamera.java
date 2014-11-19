@@ -33,7 +33,7 @@ public class FlyCamera extends FlyByCamera {
 	private boolean  _cam2dEnabled = false;
 	private boolean  _cam3dEnabled = false;
 	private CollisionResults _collisions = new CollisionResults();
-	private Vector2f _lastScreenClick;
+	private Vector2f _lastScreenClick = new Vector2f();
 	private Vector3f _lastMouseClick = new Vector3f(0,0,0);
 	private boolean _isPressed = true;
 	

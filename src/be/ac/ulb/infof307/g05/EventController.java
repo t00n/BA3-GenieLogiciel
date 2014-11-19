@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
 import be.ac.ulb.infof307.g05.MainWindow;
 import be.ac.ulb.infof307.g05.SaveThread;
 import be.ac.ulb.infof307.g05.ToolController;
@@ -75,6 +71,10 @@ public class EventController implements ActionListener {
 	public CompositeObject getStage(){
 		/** this method return the root node of the scene built by toolController **/
 		return _toolController.getStage();
+	}
+	
+	public String getEnableTool(){
+		return _toolController.getEnabledTool();
 	}
 	
 	public void launchSaveThread() {
