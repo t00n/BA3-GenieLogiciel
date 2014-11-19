@@ -19,7 +19,7 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 	
 	//logg.debug("built statement{}", statement);
 	public static JdbcConnectionSource getConnectionSource() {
-		System.setProperty(LocalLog.LOCAL_LOG_LEVEL_PROPERTY , "ERROR");
+//		System.setProperty(LocalLog.LOCAL_LOG_LEVEL_PROPERTY , "ERROR");
 		if (connectionSource == null) {
 			try {
 				connectionSource = new JdbcConnectionSource(connectionString);

@@ -114,16 +114,9 @@ public class ToolController {
 					System.out.println("[Debug][ToolController::actionPerformed] : Draw");
 					Vector3f one = _positionStack.pop();
 					Vector3f two = _positionStack.pop();
-					two.y += 0.1;
 					Cube newMesh = new Cube(one, two);
 					CompositeObject newObject = new CompositeObject(this.getFloor(), newMesh.getVertices(), newMesh.getOrder());
-					this.getFloor().add(newObject);
-					try {
-						newObject.createAll();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					this._currentStage.addObject(this.getFloor(), newObject);
 					System.out.println("----------------");
 				}
 			}else if(command == "comboBoxChanged"){

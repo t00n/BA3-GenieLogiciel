@@ -156,7 +156,7 @@ public class EventController implements ActionListener {
 			for (Order order: object.getMeshOrder()) {
 				order.create();
 			}
-			for (Vertex vertex: object.getPositions()) {
+			for (Vertex vertex: object.getVertices()) {
 				vertex.create();
 			}
 			stage.create();

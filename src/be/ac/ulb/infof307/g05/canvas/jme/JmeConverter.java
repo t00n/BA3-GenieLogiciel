@@ -30,8 +30,8 @@ public class JmeConverter {
 	private Geometry toGeometry(CompositeObject object, AssetManager assetManager){
 		/** this method convert a CompositeObject to a geometry **/
 		Mesh mesh = new Mesh();
-		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(object.getVectors()));
-		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(object.getOrdersAsIntegers()));
+		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(object.getVerticesAsVector3f()));
+		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(object.getMeshOrderAsInt()));
 		mesh.updateBound();
 		mesh.setStatic();
 		
