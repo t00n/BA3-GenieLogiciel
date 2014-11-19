@@ -86,6 +86,9 @@ public class EventController implements ActionListener {
 				_currentProject = currentProjects.get(0);
 				this.launchSaveThread();
 			}
+			else if (_projects.size() == 0) {
+				this.newProject();
+			}
 			else {
 				this.askProject();
 			}
