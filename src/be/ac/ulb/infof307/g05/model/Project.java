@@ -19,6 +19,7 @@ public class Project extends Database<Project> {
 		this.creationDate = new Date();
 		this.modificationDate = new Date();
 		this.setCurrent(true);
+		this.isNew = true;
 	}
 
 	public int getId() {
@@ -77,25 +78,9 @@ public class Project extends Database<Project> {
 
     @Override
     public void save() {
-		try {
-			this.update();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+    	super.save();
         for (Stage stage : this.getStages())
             stage.save();
-    }
-    @Override
-    public void createAll() {
-		try {
-			this.create();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-        for (Stage stage : this.getStages())
-            stage.createAll();
     }
 	
 	@DatabaseField (generatedId = true)

@@ -52,6 +52,19 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 		}
 	}
 
-    public abstract void save();
-    public abstract void createAll();
+    public void save() {
+		try {
+			if (this.isNew) {
+				this.create();
+				this.isNew = false;
+			}
+			else {
+				this.update();
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+    }
+    
+    public Boolean isNew = false;
 }

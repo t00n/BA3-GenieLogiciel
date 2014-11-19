@@ -2,7 +2,6 @@ package be.ac.ulb.infof307.g05.model;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jme3.math.Vector3f;
 
@@ -24,6 +23,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		this.vertices = toVertex(vertices);
 		this.meshOrder = toOrder(meshOrder);
 		this.texture = null;
+		this.isNew = true;
 	}
 	
 	private Collection<Vertex> toVertex(Collection<Vector3f> vertices) {
@@ -121,32 +121,13 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
     public void save() {
         if (this.texture != null)
             this.texture.save();
-		try {
-			this.update();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+        super.save();
         for (Vertex position : this.getVertices())
             position.save();
         for (Order order : this.getMeshOrder())  
             order.save();
-    }
-    
-    @Override
-    public void createAll() {
-        if (this.texture != null)
-            this.texture.createAll();
-		try {
-			this.create();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-        for (Vertex position : this.getVertices())
-            position.createAll();
-        for (Order order : this.getMeshOrder())  
-            order.createAll();
+        for (CompositeObject object : this.getChilds())
+        	object.save();
     }
 	
 	// Iterable

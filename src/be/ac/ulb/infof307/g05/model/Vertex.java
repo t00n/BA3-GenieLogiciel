@@ -1,7 +1,5 @@
 package be.ac.ulb.infof307.g05.model;
 
-import java.sql.SQLException;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jme3.math.Vector3f;
@@ -29,28 +27,10 @@ public class Vertex extends Database<Vertex> {
 		this.x = vec.getX();
 		this.y = vec.getY();
 		this.z = vec.getZ();
+		this.isNew = true;
 	}
 	
 	public Vector3f toVector3f() {
 		return new Vector3f(this.x, this.y, this.z);
 	}
-
-	@Override
-    public void save() {
-		try {
-			this.update();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-    }
-	@Override
-    public void createAll() {
-		try {
-			this.create();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-    }
 }

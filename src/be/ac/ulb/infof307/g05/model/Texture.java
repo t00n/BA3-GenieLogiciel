@@ -1,7 +1,5 @@
 package be.ac.ulb.infof307.g05.model;
 
-import java.sql.SQLException;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -14,27 +12,8 @@ public class Texture extends Database<Texture> {
 	public Texture(String name, String fileLocation) {
 		this.name = name;
 		this.fileLocation = fileLocation;
+		this.isNew = true;
 	}
-
-    @Override
-    public void save() {
-		try {
-			this.update();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-    }
-
-    @Override
-    public void createAll() {
-		try {
-			this.create();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-    }
 	
 	@DatabaseField (generatedId = true)
 	protected int id_texture;

@@ -34,9 +34,9 @@ public class TestMain {
 
         Cube cube = new Cube(vertex1, vertex2);
         CompositeObject object = new CompositeObject(null, cube.getVertices(), cube.getOrder());
-        project.getStage(0).setFloor(object);
+        project.getStage(0).addObject(null, object);
         
-        project.createAll();
+        project.save();
 	}
 	
 	@Test

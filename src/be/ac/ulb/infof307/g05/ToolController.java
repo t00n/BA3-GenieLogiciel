@@ -1,7 +1,6 @@
 package be.ac.ulb.infof307.g05;
 
 import java.awt.event.ActionEvent;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Stack;
 

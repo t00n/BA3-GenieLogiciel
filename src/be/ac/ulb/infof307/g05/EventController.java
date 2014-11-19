@@ -4,21 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Stack;
-import java.util.Vector;
-
-import javax.swing.JComboBox;
 
 import be.ac.ulb.infof307.g05.MainWindow;
 import be.ac.ulb.infof307.g05.SaveThread;
 import be.ac.ulb.infof307.g05.ToolController;
 import be.ac.ulb.infof307.g05.model.CompositeObject;
-import be.ac.ulb.infof307.g05.model.Order;
 import be.ac.ulb.infof307.g05.model.Project;
-import be.ac.ulb.infof307.g05.model.Stage;
-import be.ac.ulb.infof307.g05.model.Vertex;
 
 import com.j256.ormlite.dao.Dao;
 import com.jme3.math.Vector3f;
@@ -79,8 +71,8 @@ public class EventController implements ActionListener {
 		if (this._saveThread != null) {
 			this._saveThread.interrupt();
 		}
-		this._saveThread = new SaveThread(_currentProject);
-		this._saveThread.start();
+//		this._saveThread = new SaveThread(_currentProject);
+//		this._saveThread.start();
 	}
 	
 	public void loadProject() {
@@ -141,29 +133,17 @@ public class EventController implements ActionListener {
 	public void newProject() {
 		be.ac.ulb.infof307.g05.newProject newP = _window.popUpNew();
 		Project newProject = new Project(newP.name);
-        Stage stage = new Stage(newProject, 0);
+		newProject.addStage(0);
         
         Vector3f vertex1 = new Vector3f(0,0,0);
         Vector3f vertex2 = new Vector3f(newP.width,0.1f,newP.length);
 
         Cube cube = new Cube(vertex1, vertex2);
         CompositeObject object = new CompositeObject(null, cube.getVertices(), cube.getOrder());
-        stage.setFloor(object);
+        newProject.getStage(0).setFloor(object);
+
+        newProject.save();
         
-        try {
-        	newProject.create();
-			object.create();
-			for (Order order: object.getMeshOrder()) {
-				order.create();
-			}
-			for (Vertex vertex: object.getVertices()) {
-				vertex.create();
-			}
-			stage.create();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
         int id = newProject.getId();
         try {
 			_projects = _daoProject.queryForAll();
