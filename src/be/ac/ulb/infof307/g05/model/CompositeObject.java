@@ -18,21 +18,21 @@ import java.util.Vector;
  */
 @DatabaseTable (tableName = "composite_objects")
 public class CompositeObject extends Database<CompositeObject> implements Iterable<CompositeObject> {	
+	@DatabaseField (id=true)
+	private Integer id_compositeObject;
+	@DatabaseField (canBeNull = true, foreign = true)
+	private CompositeObject parent;
+	@DatabaseField (canBeNull = true, foreign = true, foreignAutoRefresh = true)
+	private Texture texture;
+
+	protected Collection<Vertex> vertices;
+	protected Collection<Integer> meshOrder;
+	protected Collection<CompositeObject> childs;
 	
-	/**
-	 * Instantiates a new composite object.
-	 */
 	protected CompositeObject() {
 		
 	}
     
-	/**
-	 * Instantiates a new composite object.
-	 *
-	 * @param parent the parent
-	 * @param vertices the vertices
-	 * @param meshOrder the mesh order
-	 */
 	public CompositeObject(CompositeObject parent, Collection<Vector3f> vertices, Collection<Integer> meshOrder) {
 		this.parent = parent;
 		this.vertices = toVertex(vertices);
@@ -41,12 +41,6 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		this.isNew = true;
 	}
 	
-	/**
-	 * Transform a collection of vertices into vertexes
-	 *
-	 * @param vertices the vertices
-	 * @return the collection
-	 */
 	private Collection<Vertex> toVertex(Collection<Vector3f> vertices) {
 		Collection<Vertex> ret = new ArrayList<Vertex>();
 		for (Vector3f vec: vertices) {
@@ -60,11 +54,6 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return this.id_compositeObject;
 	}
 	
-	/**
-	 * Sets the id of the composite object.
-	 * 
-	 * @see CompositeObject_ID
-	 */
 	public void setId() {
 		CompositeObject_ID id = new CompositeObject_ID();
 		try {
@@ -134,9 +123,6 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return this.childs;
 	}
 	
-    /* (non-Javadoc)
-     * @see be.ac.ulb.infof307.g05.model.Database#save()
-     */
 	public CompositeObject getWithId(int id) {
 		CompositeObject ret = null;
 		if (id == this.getId()) {
@@ -169,32 +155,16 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
         	object.save();
     }
 	
-	// Iterable
-	/* (non-Javadoc)
-	 * @see java.lang.Iterable#iterator()
-	 */
 	@Override
 	public Iterator<CompositeObject> iterator(){
 		/** this method make the object iterable **/
 		return this.getChilds().iterator();
 	}
 	
-	/**
-	 * Adds a child.
-	 *
-	 * @param object the object
-	 */
 	public void add(CompositeObject object){
 		childs.add(object);
 	}
-	
-	/**
-	 * Adds a child.
-	 *
-	 * @param parent the parent
-	 * @param child the child
-	 * @param id the id
-	 */
+
 	public void addChild(CompositeObject parent, CompositeObject child, Integer id) {
 		if (parent == this) {
 			this.add(child);
@@ -208,12 +178,6 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		}
 	}
 
-	/**
-	 * Removes an object by searching recursively an child and remove it if found.
-	 *
-	 * @param object the object
-	 * @return true, if successful
-	 */
 	public boolean remove(CompositeObject object){
 		boolean isFound = false;
 
@@ -228,34 +192,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return isFound;
 	}
 	
-	/**
-	 * Size.
-	 *
-	 * @return the int
-	 */
 	public int size(){
 		return childs.size();
 	}
-	
-	// members 
-	/** The id_composite object. */
-	@DatabaseField (id=true)
-	private Integer id_compositeObject;
-	
-	/** The parent. */
-	@DatabaseField (canBeNull = true, foreign = true)
-	private CompositeObject parent;
-	
-	/** The texture. */
-	@DatabaseField (canBeNull = true, foreign = true, foreignAutoRefresh = true)
-	private Texture texture;
-
-	/** The vertices. */
-	protected Collection<Vertex> vertices;
-	
-	/** The mesh order. */
-	protected Collection<Integer> meshOrder;
-
-	/** The childs. */
-	protected Collection<CompositeObject> childs;
 }

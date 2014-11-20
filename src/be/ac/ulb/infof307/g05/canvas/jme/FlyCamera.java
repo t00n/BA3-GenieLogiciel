@@ -304,7 +304,7 @@ public class FlyCamera extends FlyByCamera {
 		        zoomCamera(value);
 		    }else if (name.equals("FLYCAM_ZoomOut")){
 		    	_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "ZoomOut"));
-		        zoomCamera(-value);//...
+		        zoomCamera(-value);
 		    }
 		}
     }
@@ -326,7 +326,7 @@ public class FlyCamera extends FlyByCamera {
     
     
     public Geometry getGeometryCollision(){
-    	Geometry geometry = new Geometry();
+    	Geometry geometry = new Geometry("NULL");
     	if(_collisions.size() != 0)
     		geometry = _collisions.getClosestCollision().getGeometry();
     	return geometry;
@@ -345,7 +345,6 @@ public class FlyCamera extends FlyByCamera {
 	            	_lastScreenClick = inputManager.getCursorPosition().clone();
 	        }
         }
-	        
         
         if(!value){
         	if(name.equals("FLYCAM_Enter")){
