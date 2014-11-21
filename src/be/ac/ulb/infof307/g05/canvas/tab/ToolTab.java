@@ -49,7 +49,7 @@ public class ToolTab extends AbstractTab implements ItemListener {
 		button_layout.setVgap(5);
 		_buttonPanel.setLayout(button_layout);
 		createButton("Draw");
-		createButton("Pull-Push");
+		createButton("Pull-Up");
 		createButton("Move");
 		createButton("Rotate");
 		createButton("Modify");

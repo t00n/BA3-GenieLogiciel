@@ -20,29 +20,17 @@ import com.jme3.math.Vector3f;
  * The Class EventController.
  */
 public class EventController implements ActionListener {
-
-	/** The _window. */
 	private MainWindow _window;
 	
-	/** The _flag2 d. */
 	private boolean  _flag2D = true;
-	
-	/** The _flag3 d. */
 	private boolean  _flag3D = true;
+	private boolean  _toolIsActivated = false;
 	
-	/** The _tool controller. */
 	private ToolController   _toolController;
-	
-	/** The _current project. */
 	private Project		 _currentProject;
-	
-	/** The _dao project. */
 	private Dao<Project, Integer> _daoProject = Project.getDao(Project.class);
-	
-	/** The _projects. */
 	private List<Project> _projects;
 	
-	/** The _save thread. */
 	private SaveThread _saveThread;
 	
 	public ToolController getToolController() { return _toolController; }
@@ -58,7 +46,7 @@ public class EventController implements ActionListener {
 		_window = window;
 		//FIXME use _window.popUpLoad()
 
-		_toolController = new ToolController();
+		_toolController = new ToolController(this);
 		this.loadProject();
 		this._toolController.setStage(_currentProject.getStage(0));
 	}
@@ -71,6 +59,14 @@ public class EventController implements ActionListener {
 	
 	public boolean getFlag3D(){
 		return _flag3D;
+	}
+	
+	public boolean getToolIsActivated(){
+		return _toolIsActivated;
+	}
+	
+	public void setToolIsActivated(boolean toolIsActivated){
+		_toolIsActivated = toolIsActivated;
 	}
 	
 	public Vector3f getCursor(){

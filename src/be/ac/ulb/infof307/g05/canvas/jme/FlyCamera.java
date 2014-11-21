@@ -229,7 +229,7 @@ public class FlyCamera extends FlyByCamera {
         
         Geometry geometryToMove = getGeometryCollision();
 
-		if(enabled){
+        if(enabled && (!_eventController.getToolIsActivated())){
 			if(_isPressed) {
 				_lastMouseClick = getPositionVec();
 			}
@@ -300,10 +300,8 @@ public class FlyCamera extends FlyByCamera {
 		    }else if (name.equals("FLYCAM_Lower")){
 		        riseCamera(-value);
 		    }else if (name.equals("FLYCAM_ZoomIn")){
-		    	_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "ZoomIn"));
 		        zoomCamera(value);
 		    }else if (name.equals("FLYCAM_ZoomOut")){
-		    	_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "ZoomOut"));
 		        zoomCamera(-value);
 		    }
 		}
@@ -345,16 +343,18 @@ public class FlyCamera extends FlyByCamera {
 	            	_lastScreenClick = inputManager.getCursorPosition().clone();
 	        }
         }
-        
-        if(!value){
-        	if(name.equals("FLYCAM_Enter")){
-            	_eventController.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ENTER"));	
-        	}else if(name.equals("FLYCAM_Escape")){
-            	_eventController.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ESCAPE"));	
-        	}else if(name.equals("FLYCAM_RotateDrag")){
-        		_eventController.actionPerformed(new ActionEvent(getGeometryCollision().getName(), ActionEvent.ACTION_PERFORMED, "collision"));
-            	_eventController.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "cursor_click_up"));
-        	}
-        }
+
+    	if(name.equals("FLYCAM_Enter")){
+        	_eventController.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ENTER"));	
+    	}else if(name.equals("FLYCAM_Escape")){
+        	_eventController.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ESCAPE"));	
+    	}else if(name.equals("FLYCAM_RotateDrag")){
+    		_eventController.actionPerformed(new ActionEvent(getGeometryCollision().getName(), ActionEvent.ACTION_PERFORMED, "COLLISION"));
+        	_eventController.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "CURSOR_CLICK_DOWN"));
+    	}else if(name.equals("FLYCAM_ZoomIn")){
+    		_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "ZOOMIN"));
+    	}else if(name.equals("FLYCAM_ZoomOut")){
+	    	_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "ZOOMOUT"));      		
+    	}
     }
 }

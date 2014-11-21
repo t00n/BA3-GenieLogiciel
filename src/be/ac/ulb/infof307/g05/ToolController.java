@@ -23,7 +23,10 @@ public class ToolController {
 	private String 					 _currentDrawingType = "Rectangle";	
 	private CompositeObject 		 _compositeObjectSelected = null;
 	
-	public ToolController(){
+	private EventController _eventController;
+	
+	public ToolController(EventController eventController){
+		_eventController = eventController;
 	}
 	
 	public Vector3f getCursor(){
@@ -48,10 +51,14 @@ public class ToolController {
 		if(_flagTools.containsKey(tool_name)){
 			System.out.println("[DEBUG][ToolController::enableTool] : " + tool_name);
 			for(String tool:_flagTools.keySet()){
-				if(tool.equals(tool_name))
+				if(tool.equals(tool_name)){
+					if(_flagTools.get(tool_name))
+						_eventController.setToolIsActivated(false);
+					else
+						_eventController.setToolIsActivated(true);
 					_flagTools.put(tool_name, !_flagTools.get(tool_name));
-				else
-				_flagTools.put(tool, false);
+				}else
+					_flagTools.put(tool, false);
 			}
 			purge();
 		}
@@ -137,7 +144,7 @@ public class ToolController {
 					purge();
 			}else if(command == "ESCAPE"){
 				purge();
-			}else if(command == "cursor_click_up"){
+			}else if(command == "CURSOR_CLICK_DOWN"){
 				addPosition();
 			}else if(command == "comboBoxChanged"){
 				String option_choice = ((JComboBox)(event.getSource())).getSelectedItem().toString();			
@@ -152,20 +159,22 @@ public class ToolController {
 			}else{
 				enableTool(command);
 			}
-		}else if(getEnabledTool().equals("Pull-Push")){
-			if(command=="collision"){
+		}else if(getEnabledTool().equals("Pull-Up")){
+			if(command=="COLLISION"){
 				_lastCollision = getFloor();
 				if(isInteger((String) event.getSource())){
 					_compositeObjectSelected = _lastCollision.getWithId(Integer.parseInt((String) event.getSource()));
 				}
-			}else if(command=="ZoomIn"){
+			}else if(command=="ZOOMIN"){
 				if(_compositeObjectSelected != null)
 					_compositeObjectSelected.extendUp((float)0.1);
-			}else if(command=="ZoomOut"){
+			}else if(command=="ZOOMOUT"){
 				if(_compositeObjectSelected != null)
 					_compositeObjectSelected.extendUp((float)-0.1);	
 			}else
 				enableTool(command);
+		}else if(getEnabledTool().equals("Move")){
+			
 		}
 	}
 }
