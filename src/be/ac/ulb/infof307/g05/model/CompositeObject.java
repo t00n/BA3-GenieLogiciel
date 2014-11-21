@@ -166,7 +166,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		}
 	}
 	
-	public void rotateXY(float range) {
+	public void rotateAroundZ(float range) {
 		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
 		float posX;
 		float posY;
@@ -178,10 +178,27 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		}
 	}
 
-	public void rotateXZ(float range) {
+	public void rotateAroundY(float range) {
 		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
+		float posX;
+		float posZ;
 		for (int i = 0; i < (tmp.size()); ++i) {
-			tmp.get(i).y += range;
+			posX = tmp.get(i).x;
+			posZ = tmp.get(i).z;
+			tmp.get(i).x = (float) ((posX*Math.cos(range)) - (posZ*Math.sin(range)));
+			tmp.get(i).z = (float) ((posZ*Math.cos(range)) + (posX*Math.sin(range)));
+		}
+	}
+	
+	public void rotateAroundX(float range) {
+		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
+		float posY;
+		float posZ;
+		for (int i = 0; i < (tmp.size()); ++i) {
+			posY = tmp.get(i).y;
+			posZ = tmp.get(i).z;
+			tmp.get(i).y = (float) ((posY*Math.cos(range)) - (posZ*Math.sin(range)));
+			tmp.get(i).z = (float) ((posZ*Math.cos(range)) + (posY*Math.sin(range)));
 		}
 	}
 	

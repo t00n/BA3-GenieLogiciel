@@ -205,8 +205,24 @@ public class ToolController {
 			}
 		}else if(command=="KEY_LEFT"){
 			if(_compositeObjectSelected != null)
-				_compositeObjectSelected.rotateXY((float)0.1);
-		}		
+				_compositeObjectSelected.rotateAroundX((float)0.1);
+		}else if(command=="KEY_RIGHT"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.rotateAroundX((float)-0.1);
+		}else if(command=="KEY_UP"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.rotateAroundZ((float)0.1);
+		}else if(command=="KEY_DOWN"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.rotateAroundZ((float)-0.1);
+		}else if(command=="ZOOM_IN"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.rotateAroundY((float)0.1);
+		}else if(command=="ZOOM_OUT"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.rotateAroundY((float)-0.1);	
+		}else
+			enableTool(command);
 	}
 	
 	public void actionPerformed(ActionEvent event){
