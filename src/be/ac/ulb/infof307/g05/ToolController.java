@@ -124,6 +124,91 @@ public class ToolController {
 	    return true;
 	}
 	
+	private void toolDraw(String command, ActionEvent event){
+		if(command == "ENTER"){
+			if(_currentDrawingType.equals("Rectangle") && acceptDrawing("Rectangle"))
+				drawRectangle();
+			else if(_currentDrawingType.equals("Polygon") && acceptDrawing("Polygon"))
+				drawPolygon();
+			else if(_currentDrawingType.equals("Oval") && acceptDrawing("Oval"))
+				drawOval();
+			else
+				purge();
+		}else if(command == "ESCAPE"){
+			purge();
+		}else if(command == "CURSOR_CLICK_DOWN"){
+			addPosition();
+		}else if(command == "comboBoxChanged"){
+			String option_choice = ((JComboBox)(event.getSource())).getSelectedItem().toString();			
+			purge();
+			if(option_choice == "Rectangle"){
+				_currentDrawingType = "Rectangle";
+			}else if(option_choice == "Polygon"){
+				_currentDrawingType = "Polygon";
+			}else if(option_choice == "Oval"){
+				_currentDrawingType = "Oval";
+			}
+		}else{
+			enableTool(command);
+		}
+	}
+	
+	public void toolPullUp(String command, ActionEvent event){
+		if(command=="COLLISION"){
+			_lastCollision = getFloor();
+			if(isInteger((String) event.getSource())){
+				_compositeObjectSelected = _lastCollision.getWithId(Integer.parseInt((String) event.getSource()));
+			}
+		}else if(command=="ZOOM_IN"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.extendAxeY((float)0.1);
+		}else if(command=="ZOOM_OUT"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.extendAxeY((float)-0.1);	
+		}else
+			enableTool(command);
+	}
+	
+	public void toolMove(String command, ActionEvent event){
+		if(command=="COLLISION"){
+			_lastCollision = getFloor();
+			if(isInteger((String) event.getSource())){
+				_compositeObjectSelected = _lastCollision.getWithId(Integer.parseInt((String) event.getSource()));
+			}
+		}else if(command=="KEY_LEFT"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.moveAxeX((float)0.1);
+		}else if(command=="KEY_RIGHT"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.moveAxeX((float)-0.1);
+		}else if(command=="KEY_UP"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.moveAxeZ((float)0.1);
+		}else if(command=="KEY_DOWN"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.moveAxeZ((float)-0.1);
+		}else if(command=="ZOOM_IN"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.moveAxeY((float)0.1);
+		}else if(command=="ZOOM_OUT"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.moveAxeY((float)-0.1);	
+		}else
+			enableTool(command);
+	}
+	
+	private void toolRotate(String command, ActionEvent event){
+		if(command=="COLLISION"){
+			_lastCollision = getFloor();
+			if(isInteger((String) event.getSource())){
+				_compositeObjectSelected = _lastCollision.getWithId(Integer.parseInt((String) event.getSource()));
+			}
+		}else if(command=="KEY_LEFT"){
+			if(_compositeObjectSelected != null)
+				_compositeObjectSelected.rotateXY((float)0.1);
+		}		
+	}
+	
 	public void actionPerformed(ActionEvent event){
 		String command = event.getActionCommand();
 		
@@ -133,72 +218,13 @@ public class ToolController {
 			System.out.println("COMMAND: "+command);
 			enableTool(command);
 		}else if(getEnabledTool().equals("Draw")){
-			if(command == "ENTER"){
-				if(_currentDrawingType.equals("Rectangle") && acceptDrawing("Rectangle"))
-					drawRectangle();
-				else if(_currentDrawingType.equals("Polygon") && acceptDrawing("Polygon"))
-					drawPolygon();
-				else if(_currentDrawingType.equals("Oval") && acceptDrawing("Oval"))
-					drawOval();
-				else
-					purge();
-			}else if(command == "ESCAPE"){
-				purge();
-			}else if(command == "CURSOR_CLICK_DOWN"){
-				addPosition();
-			}else if(command == "comboBoxChanged"){
-				String option_choice = ((JComboBox)(event.getSource())).getSelectedItem().toString();			
-				purge();
-				if(option_choice == "Rectangle"){
-					_currentDrawingType = "Rectangle";
-				}else if(option_choice == "Polygon"){
-					_currentDrawingType = "Polygon";
-				}else if(option_choice == "Oval"){
-					_currentDrawingType = "Oval";
-				}
-			}else{
-				enableTool(command);
-			}
+			toolDraw(command, event);
 		}else if(getEnabledTool().equals("Pull-Up")){
-			if(command=="COLLISION"){
-				_lastCollision = getFloor();
-				if(isInteger((String) event.getSource())){
-					_compositeObjectSelected = _lastCollision.getWithId(Integer.parseInt((String) event.getSource()));
-				}
-			}else if(command=="ZOOM_IN"){
-				if(_compositeObjectSelected != null)
-					_compositeObjectSelected.extendAxeY((float)0.1);
-			}else if(command=="ZOOM_OUT"){
-				if(_compositeObjectSelected != null)
-					_compositeObjectSelected.extendAxeY((float)-0.1);	
-			}else
-				enableTool(command);
+			toolPullUp(command, event);
 		}else if(getEnabledTool().equals("Move")){
-			if(command=="COLLISION"){
-				_lastCollision = getFloor();
-				if(isInteger((String) event.getSource())){
-					_compositeObjectSelected = _lastCollision.getWithId(Integer.parseInt((String) event.getSource()));
-				}
-			}else if(command=="KEY_LEFT"){
-				if(_compositeObjectSelected != null)
-					_compositeObjectSelected.moveAxeX((float)0.1);
-			}else if(command=="KEY_RIGHT"){
-				if(_compositeObjectSelected != null)
-					_compositeObjectSelected.moveAxeX((float)-0.1);
-			}else if(command=="KEY_UP"){
-				if(_compositeObjectSelected != null)
-					_compositeObjectSelected.moveAxeZ((float)0.1);
-			}else if(command=="KEY_DOWN"){
-				if(_compositeObjectSelected != null)
-					_compositeObjectSelected.moveAxeZ((float)-0.1);
-			}else if(command=="ZOOM_IN"){
-				if(_compositeObjectSelected != null)
-					_compositeObjectSelected.moveAxeY((float)0.1);
-			}else if(command=="ZOOM_OUT"){
-				if(_compositeObjectSelected != null)
-					_compositeObjectSelected.moveAxeY((float)-0.1);	
-			}else
-				enableTool(command);
+			toolMove(command, event);
+		}else if(getEnabledTool().equals("Rotate")){
+			toolRotate(command, event);
 		}
 	}
 }

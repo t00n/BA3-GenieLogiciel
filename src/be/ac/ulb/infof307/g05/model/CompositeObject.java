@@ -11,7 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Vector;
+
+import java.lang.Math;
 
 /**
  * The Class CompositeObject takes care of the composites objects in the database.
@@ -159,6 +160,25 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	}
 	
 	public void moveAxeY(float range) {
+		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
+		for (int i = 0; i < (tmp.size()); ++i) {
+			tmp.get(i).y += range;
+		}
+	}
+	
+	public void rotateXY(float range) {
+		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
+		float posX;
+		float posY;
+		for (int i = 0; i < (tmp.size()); ++i) {
+			posX = tmp.get(i).x;
+			posY = tmp.get(i).y;
+			tmp.get(i).x = (float) ((posX*Math.cos(range)) - (posY*Math.sin(range)));
+			tmp.get(i).y = (float) ((posY*Math.cos(range)) + (posX*Math.sin(range)));
+		}
+	}
+
+	public void rotateXZ(float range) {
 		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
 		for (int i = 0; i < (tmp.size()); ++i) {
 			tmp.get(i).y += range;
