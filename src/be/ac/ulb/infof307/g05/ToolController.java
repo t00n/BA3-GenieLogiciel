@@ -165,16 +165,40 @@ public class ToolController {
 				if(isInteger((String) event.getSource())){
 					_compositeObjectSelected = _lastCollision.getWithId(Integer.parseInt((String) event.getSource()));
 				}
-			}else if(command=="ZOOMIN"){
+			}else if(command=="ZOOM_IN"){
 				if(_compositeObjectSelected != null)
-					_compositeObjectSelected.extendUp((float)0.1);
-			}else if(command=="ZOOMOUT"){
+					_compositeObjectSelected.extendAxeY((float)0.1);
+			}else if(command=="ZOOM_OUT"){
 				if(_compositeObjectSelected != null)
-					_compositeObjectSelected.extendUp((float)-0.1);	
+					_compositeObjectSelected.extendAxeY((float)-0.1);	
 			}else
 				enableTool(command);
 		}else if(getEnabledTool().equals("Move")){
-			
+			if(command=="COLLISION"){
+				_lastCollision = getFloor();
+				if(isInteger((String) event.getSource())){
+					_compositeObjectSelected = _lastCollision.getWithId(Integer.parseInt((String) event.getSource()));
+				}
+			}else if(command=="KEY_LEFT"){
+				if(_compositeObjectSelected != null)
+					_compositeObjectSelected.moveAxeX((float)0.1);
+			}else if(command=="KEY_RIGHT"){
+				if(_compositeObjectSelected != null)
+					_compositeObjectSelected.moveAxeX((float)-0.1);
+			}else if(command=="KEY_UP"){
+				if(_compositeObjectSelected != null)
+					_compositeObjectSelected.moveAxeZ((float)0.1);
+			}else if(command=="KEY_DOWN"){
+				if(_compositeObjectSelected != null)
+					_compositeObjectSelected.moveAxeZ((float)-0.1);
+			}else if(command=="ZOOM_IN"){
+				if(_compositeObjectSelected != null)
+					_compositeObjectSelected.moveAxeY((float)0.1);
+			}else if(command=="ZOOM_OUT"){
+				if(_compositeObjectSelected != null)
+					_compositeObjectSelected.moveAxeY((float)-0.1);	
+			}else
+				enableTool(command);
 		}
 	}
 }

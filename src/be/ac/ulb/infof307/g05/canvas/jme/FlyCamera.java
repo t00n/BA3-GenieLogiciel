@@ -343,18 +343,33 @@ public class FlyCamera extends FlyByCamera {
 	            	_lastScreenClick = inputManager.getCursorPosition().clone();
 	        }
         }
-
-    	if(name.equals("FLYCAM_Enter")){
-        	_eventController.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ENTER"));	
-    	}else if(name.equals("FLYCAM_Escape")){
-        	_eventController.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ESCAPE"));	
-    	}else if(name.equals("FLYCAM_RotateDrag")){
-    		_eventController.actionPerformed(new ActionEvent(getGeometryCollision().getName(), ActionEvent.ACTION_PERFORMED, "COLLISION"));
-        	_eventController.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "CURSOR_CLICK_DOWN"));
-    	}else if(name.equals("FLYCAM_ZoomIn")){
-    		_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "ZOOMIN"));
-    	}else if(name.equals("FLYCAM_ZoomOut")){
-	    	_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "ZOOMOUT"));      		
+        
+        //Events that can be pressed:
+        if(value){
+	    	if(name.equals("FLYCAM_Enter")){
+	        	_eventController.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ENTER"));	
+	    	}else if(name.equals("FLYCAM_Escape")){
+	        	_eventController.actionPerformed(new ActionEvent(this ,ActionEvent.ACTION_PERFORMED, "ESCAPE"));	
+	    	}else if(name.equals("FLYCAM_RotateDrag")){
+	    		_eventController.actionPerformed(new ActionEvent(getGeometryCollision().getName(), ActionEvent.ACTION_PERFORMED, "COLLISION"));
+	        	_eventController.actionPerformed(new ActionEvent(this.getPositionVec(), ActionEvent.ACTION_PERFORMED, "CURSOR_CLICK_DOWN"));
+	    	}else if(name.equals("FLYCAM_Forward")){
+	    		_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "KEY_UP"));
+	    	}else if(name.equals("FLYCAM_Backward")){
+	    		_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "KEY_DOWN"));
+	    	}else if(name.equals("FLYCAM_StrafeRight")){
+	    		_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "KEY_RIGHT"));
+	    	}else if(name.equals("FLYCAM_StrafeLeft")){
+	    		_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "KEY_LEFT"));
+	    	}
     	}
+        
+        //Events that can't be pressed:
+		if(name.equals("FLYCAM_ZoomIn")){
+			_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "ZOOM_IN"));
+		}else if(name.equals("FLYCAM_ZoomOut")){
+	    	_eventController.actionPerformed(new ActionEvent(value,ActionEvent.ACTION_PERFORMED, "ZOOM_OUT"));   
+	    	
+		}
     }
 }

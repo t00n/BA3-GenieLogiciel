@@ -137,9 +137,30 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return ret;
 	}
 	
-	public void extendUp(float range) {
+	public void extendAxeY(float range) {
 		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
-		for (int i = 4; i < 8; ++i) {
+		for (int i = (tmp.size()/2); i < (tmp.size()); ++i) {
+			tmp.get(i).y += range;
+		}
+	}
+	
+	public void moveAxeX(float range) {
+		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
+		for (int i = 0; i < (tmp.size()); ++i) {
+			tmp.get(i).x += range;
+		}
+	}
+	
+	public void moveAxeZ(float range) {
+		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
+		for (int i = 0; i < (tmp.size()); ++i) {
+			tmp.get(i).z += range;
+		}
+	}
+	
+	public void moveAxeY(float range) {
+		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
+		for (int i = 0; i < (tmp.size()); ++i) {
 			tmp.get(i).y += range;
 		}
 	}
