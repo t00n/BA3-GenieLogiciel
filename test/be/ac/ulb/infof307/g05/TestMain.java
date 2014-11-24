@@ -5,11 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g05.model.CompositeObject;
-import be.ac.ulb.infof307.g05.model.CompositeObject_ID;
+import be.ac.ulb.infof307.g05.model.Resource;
+import be.ac.ulb.infof307.g05.model.Static_ID;
 import be.ac.ulb.infof307.g05.model.Database;
 import be.ac.ulb.infof307.g05.model.Project;
 import be.ac.ulb.infof307.g05.model.Stage;
-import be.ac.ulb.infof307.g05.model.Texture;
 import be.ac.ulb.infof307.g05.model.Vertex;
 import be.ac.ulb.infof307.g05.view.Cube;
 
@@ -45,18 +45,28 @@ public class TestMain {
 		JdbcConnectionSource connectionSource = Database.getConnectionSource();
 		// create tables
 		TableUtils.dropTable(connectionSource, Vertex.class, true);
-		TableUtils.dropTable(connectionSource, Texture.class, true);
+		TableUtils.dropTable(connectionSource, Resource.class, true);
 		TableUtils.dropTable(connectionSource, CompositeObject.class, true);
 		TableUtils.dropTable(connectionSource, Stage.class, true);
 		TableUtils.dropTable(connectionSource, Project.class, true);
-		TableUtils.dropTable(connectionSource, CompositeObject_ID.class, true);
+		TableUtils.dropTable(connectionSource, Static_ID.class, true);
 		TableUtils.createTableIfNotExists(connectionSource, Project.class);
-		TableUtils.createTableIfNotExists(connectionSource, Texture.class);
+		TableUtils.createTableIfNotExists(connectionSource, Resource.class);
 		TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
-		TableUtils.createTableIfNotExists(connectionSource, CompositeObject_ID.class);
+		TableUtils.createTableIfNotExists(connectionSource, Static_ID.class);
 		TableUtils.createTableIfNotExists(connectionSource, Stage.class);
 		TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
 		this.createTestProject("test project 1");
 		this.createTestProject("test project 2");
+	}
+	
+	@Test
+	public void testStaticID() {
+		TableUtils.dropTable(Database.getConnectionSource(), Static_ID.class, true);
+		TableUtils.createTableIfNotExists(Database.getConnectionSource(), Static_ID.class);
+		assert(Static_ID.getCompositeObjectID() == 1);
+		assert(Static_ID.getCompositeObjectID() == 2);
+		assert(Static_ID.getRoomID() == 1);
+		assert(Static_ID.getRoomID() == 2);
 	}
 }
