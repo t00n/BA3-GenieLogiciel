@@ -26,9 +26,14 @@ public class Vertex extends Database<Vertex> {
 	@DatabaseField (canBeNull = false)
 	protected float z;
 	
-	/** The referent. */
-	@DatabaseField (canBeNull = false, foreign = true)
-	private CompositeObject referent;
+	@DatabaseField (canBeNull = true, foreign = true)
+	private Room room;
+	
+	@DatabaseField (canBeNull = true, foreign = true)
+	private Floor floor;
+	
+	@DatabaseField (canBeNull = true, foreign = true)
+	private Wall wall;
 	
 	/**
 	 * Instantiates a new vertex.
@@ -43,8 +48,22 @@ public class Vertex extends Database<Vertex> {
 	 * @param referent the referent
 	 * @param vec the vec
 	 */
-	public Vertex(CompositeObject referent, Vector3f vec) {
-		this.referent = referent;
+	public Vertex(Room room, Vector3f vec) {
+		this.init(room, null, null, vec);
+	}
+	
+	public Vertex(Floor floor, Vector3f vec) {
+		this.init(null, floor, null, vec);
+	}
+	
+	public Vertex(Wall wall, Vector3f vec) {
+		this.init(null, null, wall, vec);
+	}
+	
+	private void init(Room room, Floor floor, Wall wall, Vector3f vec) {
+		this.room = room;
+		this.floor = floor;
+		this.wall = wall;
 		this.x = vec.getX();
 		this.y = vec.getY();
 		this.z = vec.getZ();
