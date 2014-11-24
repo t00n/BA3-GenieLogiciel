@@ -141,9 +141,9 @@ public class MainWindow extends JFrame {
 		JComponent[] choices = new JComponent[] {
 				new JLabel("Project name"),
 				projectName,
-				new JLabel("Width of the first floor"),
+				new JLabel("Width of the terrain"),
 				width,
-				new JLabel("Length of the first floor"),
+				new JLabel("Length of the terrain"),
 				length
 		};
 		JOptionPane.showMessageDialog(null,
