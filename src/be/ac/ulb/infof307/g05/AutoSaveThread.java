@@ -5,9 +5,9 @@ import java.util.Date;
 import be.ac.ulb.infof307.g05.model.Project;
 
 /**
- * The Class SaveThread to make saves all the minutes.
+ * The Class AutoSaveThread to make saves every minute.
  */
-public class SaveThread extends Thread {
+public class AutoSaveThread extends Thread {
 	
 	/** The _project. */
 	private Project _project;
@@ -20,7 +20,7 @@ public class SaveThread extends Thread {
 	 *
 	 * @param project the project
 	 */
-	public SaveThread(Project project) {
+	public AutoSaveThread(Project project) {
 		this._project = project;
 	}
 	
