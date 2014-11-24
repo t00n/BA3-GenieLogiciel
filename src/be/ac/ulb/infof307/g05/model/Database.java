@@ -11,7 +11,7 @@ import com.j256.ormlite.misc.BaseDaoEnabled;
 /**
  * The Class Database.
  *
- * @param <T> the generic type
+ * @param <T> the generic type to store in the Database
  */
 public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 	
@@ -84,5 +84,5 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
     }
     
     /** The is new. */
-    public Boolean isNew = false;
+    protected Boolean isNew = false;
 }

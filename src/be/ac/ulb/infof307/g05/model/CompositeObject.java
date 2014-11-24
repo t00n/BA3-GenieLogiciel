@@ -222,7 +222,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		childs.add(object);
 	}
 
-	public void addChild(CompositeObject parent, CompositeObject child, Integer id) {
+	public void addChild(CompositeObject parent, CompositeObject child) {
 		if (parent == this) {
 			this.add(child);
 			child.setId();
@@ -230,7 +230,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		else
 		{
 			for (CompositeObject c: this) {
-				c.addChild(parent, child, id);
+				c.addChild(parent, child);
 			}
 		}
 	}

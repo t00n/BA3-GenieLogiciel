@@ -25,7 +25,6 @@ public class Stage extends Database<Stage> {
 	public Stage(Project project, int level) {
 		this.project = project;
 		this.level = level;
-		this.current_id = 1;
 		this.isNew = true;
 	}
 
@@ -34,10 +33,6 @@ public class Stage extends Database<Stage> {
 	}
 	
 	public CompositeObject getFloor() { return floor; }
-	
-	public void setFloor(CompositeObject object) {
-		this.addObject(null,object);
-	}
 	
 	/**
 	 * Adds the object.
@@ -51,9 +46,8 @@ public class Stage extends Database<Stage> {
 			this.floor.setId();
 		}
 		else {
-			this.floor.addChild(parent, child, this.current_id);
+			this.floor.addChild(parent, child);
 		}
-		this.current_id++;
 	}
 
     /* (non-Javadoc)
@@ -78,10 +72,6 @@ public class Stage extends Database<Stage> {
 	/** The project. */
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected Project project;
-	
-	/** The current_id. */
-	@DatabaseField (canBeNull = false)
-	protected int current_id;
 	
 	/** The floor. */
 	@DatabaseField (canBeNull = true, foreign = true, foreignAutoRefresh = true)

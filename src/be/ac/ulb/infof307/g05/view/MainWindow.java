@@ -130,7 +130,7 @@ public class MainWindow extends JFrame {
 	
 	/**
 	 * Pop up new. To make a new project, this method ask the user for the width,
-	 * the length of the floor and the project name
+	 * the length of the terrain and the project name
 	 *
 	 * @return the project struct
 	 */
