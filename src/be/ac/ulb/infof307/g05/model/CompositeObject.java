@@ -18,6 +18,7 @@ import java.lang.Math;
  */
 @DatabaseTable (tableName = "composite_objects")
 public class CompositeObject extends Database<CompositeObject> implements Iterable<CompositeObject> {	
+	
 	@DatabaseField (id=true)
 	private Integer id_compositeObject;
 	@DatabaseField (canBeNull = true, foreign = true)
