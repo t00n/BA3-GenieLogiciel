@@ -6,11 +6,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.ac.ulb.infof307.g05.MainWindow;
 import be.ac.ulb.infof307.g05.SaveThread;
 import be.ac.ulb.infof307.g05.ToolController;
 import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.Project;
+import be.ac.ulb.infof307.g05.view.MainWindow;
+import be.ac.ulb.infof307.g05.view.ProjectStruct;
 
 import com.j256.ormlite.dao.Dao;
 import com.jme3.math.Vector3f;

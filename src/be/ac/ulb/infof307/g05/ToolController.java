@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 
 import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.Stage;
+import be.ac.ulb.infof307.g05.view.Cube;
 
 import com.jme3.math.Vector3f;
 

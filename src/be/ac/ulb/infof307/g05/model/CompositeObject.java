@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g05.model;
 
-import be.ac.ulb.infof307.g05.Cube;
+import be.ac.ulb.infof307.g05.view.Cube;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
 import java.lang.Math;
 
 /**

@@ -11,6 +11,7 @@ import be.ac.ulb.infof307.g05.model.Project;
 import be.ac.ulb.infof307.g05.model.Stage;
 import be.ac.ulb.infof307.g05.model.Texture;
 import be.ac.ulb.infof307.g05.model.Vertex;
+import be.ac.ulb.infof307.g05.view.Cube;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;

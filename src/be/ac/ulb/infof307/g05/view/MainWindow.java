@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g05;
+package be.ac.ulb.infof307.g05.view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import be.ac.ulb.infof307.g05.EventController;
 import be.ac.ulb.infof307.g05.canvas.CanvasJme;
 import be.ac.ulb.infof307.g05.canvas.MenuBarCanvas;
 import be.ac.ulb.infof307.g05.canvas.StatusBarCanvas;

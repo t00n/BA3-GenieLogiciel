@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
-import be.ac.ulb.infof307.g05.MainWindow;
 import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.CompositeObject_ID;
 import be.ac.ulb.infof307.g05.model.Database;
@@ -13,6 +12,7 @@ import be.ac.ulb.infof307.g05.model.Project;
 import be.ac.ulb.infof307.g05.model.Stage;
 import be.ac.ulb.infof307.g05.model.Texture;
 import be.ac.ulb.infof307.g05.model.Vertex;
+import be.ac.ulb.infof307.g05.view.MainWindow;
 
 /**
  * The Class Main which instantiate the MainWindow.

@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g05;
+package be.ac.ulb.infof307.g05.view;
 
 /**
  * The Class ProjectStruct take care of all the important configurations of the project.
