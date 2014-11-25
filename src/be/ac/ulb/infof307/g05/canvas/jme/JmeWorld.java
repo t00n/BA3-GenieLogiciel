@@ -37,7 +37,7 @@ public class JmeWorld extends SimpleApplication {
 	private Node _currentStage = new Node();
 	
 	/** The _converter. */
-	private JmeConverter _converter = new JmeConverter();
+	private JmeConverter _jmeConverter = new JmeConverter();
 
 	
 	/**
@@ -125,11 +125,17 @@ public class JmeWorld extends SimpleApplication {
 	/**
 	 * this method redraw all the scene
 	 */
-	private void draw() {
+	public void draw() {
     	rootNode.detachChild(_currentStage);
     	_currentStage.detachAllChildren();
-//FIXME    	if (_eventController.getStage() != null){
-//	    	_converter.convert(_eventController.getStage(), _currentStage, assetManager);
+    	
+    	Project project = _eventController.getProject();
+    	_reference = new Reference(assetManager, project.getWidth(), project.getLength());
+    	_reference.setNode(rootNode, true);
+    	
+    	
+//    	if (_eventController.getStage() != null){
+//    		_jmeConverter.convert(_eventController.getStage(), _currentStage, assetManager);
 //	    	rootNode.attachChild(_currentStage);
 //    	}
 	}
