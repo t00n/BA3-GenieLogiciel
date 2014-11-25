@@ -22,7 +22,6 @@ public class Floor extends Database<Floor> {
 		for (Vector3f vec : vector3fs) {
 			vertices.add(new Vertex(this, vec));
 		}
-		this.height = 0.1f; //FIXME magic number
 		this.isNew = true;
 	}
 	
@@ -30,8 +29,8 @@ public class Floor extends Database<Floor> {
 		return this.id_floor;
 	}
 	
-	public float getHeight() {
-		return this.height;
+	public void setHeight(float height) {
+		// FIXME
 	}
 	
 	public Collection<Vertex> getVertices() {
@@ -57,9 +56,6 @@ public class Floor extends Database<Floor> {
 	
 	@DatabaseField (generatedId = true)
 	protected int id_floor;
-	
-	@DatabaseField (canBeNull = false)
-	protected float height;
 	
 	protected Collection<Vertex> vertices;
 }

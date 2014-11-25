@@ -38,6 +38,8 @@ public class TestMain {
         
         Collection<Vector3f> vectors = new ArrayList<Vector3f>();
         vectors.add(new Vector3f(0,0,0));
+        vectors.add(new Vector3f(1,0,0));
+        vectors.add(new Vector3f(1,0,1));
         vectors.add(new Vector3f(2,0,2));
         
         stage.addRoom(name, vectors);
