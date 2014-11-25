@@ -35,6 +35,24 @@ public class Stage extends Database<Stage> {
 	public int getLevel() {
 		return this.level;
 	}
+	
+	public int getId() { return this.id_stage; }
+	
+	public Collection<Room> getRooms() {
+		if (this.rooms == null) {
+			Dao<Room, Integer> dao = Room.getDao(Room.class);
+			try {
+				this.rooms = dao.queryForEq("stage_id", this.getId());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return this.rooms;
+	}
+	
+	public void addRoom(String name, Collection<Vertex> vertices){
+		this.getRooms().add(new Room(this, name, vertices));
+	}
 
     /* (non-Javadoc)
      * @see be.ac.ulb.infof307.g05.model.Database#save()
@@ -60,19 +78,4 @@ public class Stage extends Database<Stage> {
 	protected Project project;
 	
 	protected Collection<Room> rooms;
-	
-	public int getId() { return this.id_stage; }
-	
-	public Collection<Room> getRooms() {
-		if (this.rooms == null) {
-			Dao<Room, Integer> dao = Room.getDao(Room.class);
-			try {
-				this.rooms = dao.queryForEq("stage_id", this.getId());
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return this.rooms;
-	}
-	
 }

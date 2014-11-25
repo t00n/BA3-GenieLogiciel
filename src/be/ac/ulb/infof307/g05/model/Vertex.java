@@ -27,9 +27,6 @@ public class Vertex extends Database<Vertex> {
 	protected float z;
 	
 	@DatabaseField (canBeNull = true, foreign = true)
-	protected Room room;
-	
-	@DatabaseField (canBeNull = true, foreign = true)
 	protected Floor floor;
 	
 	@DatabaseField (canBeNull = true, foreign = true)
@@ -48,20 +45,16 @@ public class Vertex extends Database<Vertex> {
 	 * @param referent the referent
 	 * @param vec the vec
 	 */
-	public Vertex(Room room, Vector3f vec) {
-		this.init(room, null, null, vec);
-	}
 	
 	public Vertex(Floor floor, Vector3f vec) {
-		this.init(null, floor, null, vec);
+		this.init(floor, null, vec);
 	}
 	
 	public Vertex(Wall wall, Vector3f vec) {
-		this.init(null, null, wall, vec);
+		this.init(null, wall, vec);
 	}
 	
-	private void init(Room room, Floor floor, Wall wall, Vector3f vec) {
-		this.room = room;
+	private void init(Floor floor, Wall wall, Vector3f vec) {
 		this.floor = floor;
 		this.wall = wall;
 		this.x = vec.getX();

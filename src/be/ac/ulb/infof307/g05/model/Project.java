@@ -92,7 +92,6 @@ public class Project extends Database<Project> {
 			try {
 				this.stages = dao.queryForEq("project_id", this.getId());
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

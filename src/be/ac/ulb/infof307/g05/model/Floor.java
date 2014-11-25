@@ -16,13 +16,11 @@ public class Floor extends Database<Floor> {
 		
 	}
 	
-	@DatabaseField (generatedId = true)
-	protected int id_floor;
-	
-	@DatabaseField (canBeNull = false)
-	protected int height;
-	
-	protected Collection<Vertex> vertices;
+	public Floor(Collection<Vertex> vertices) {
+		this.vertices = vertices;
+		this.height = 0.1f; //FIXME magic number
+		this.isNew = true;
+	}
 	
 	protected Collection<Vertex> getVertices() {
 		if (this.vertices == null) {
@@ -44,4 +42,12 @@ public class Floor extends Database<Floor> {
 			v.save();
 		}
 	}
+	
+	@DatabaseField (generatedId = true)
+	protected int id_floor;
+	
+	@DatabaseField (canBeNull = false)
+	protected float height;
+	
+	protected Collection<Vertex> vertices;
 }

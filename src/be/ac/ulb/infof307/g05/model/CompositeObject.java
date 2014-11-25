@@ -29,6 +29,9 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected Resource mesh;
+	
+	@DatabaseField (canBeNull = false, foreign = true)
+	protected Vertex position;
 
 	protected Collection<CompositeObject> childs;
 	

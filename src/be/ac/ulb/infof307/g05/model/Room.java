@@ -13,17 +13,12 @@ public class Room extends Database<Room> {
 		
 	}
 	
-	@DatabaseField (generatedId = true)
-	protected int id_room;
-	
-	@DatabaseField (canBeNull = false, foreign = true)
-	protected Stage stage;
-	
-	@DatabaseField (canBeNull = false, foreign = true)
-	protected Floor floor;
-	
-	protected Collection<CompositeObject> compositeObjects;
-	protected Collection<Wall> walls;
+	public Room(Stage stage, String name, Collection<Vertex> vertices) {
+		this.stage = stage;
+		this.name = name;
+		this.floor = new Floor(vertices);
+		this.isNew = true;
+	}
 	
 	public int getId() {
 		return this.id_room;
@@ -51,7 +46,6 @@ public class Room extends Database<Room> {
 			try {
 				this.walls = dao.queryForEq("room_id", this.getId());
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -69,4 +63,19 @@ public class Room extends Database<Room> {
 			obj.save();
 		}
 	}
+	
+	@DatabaseField (generatedId = true)
+	protected int id_room;
+	
+	@DatabaseField (canBeNull = false)
+	protected String name;
+	
+	@DatabaseField (canBeNull = false, foreign = true)
+	protected Stage stage;
+	
+	@DatabaseField (canBeNull = false, foreign = true)
+	protected Floor floor;
+	
+	protected Collection<CompositeObject> compositeObjects;
+	protected Collection<Wall> walls;
 }

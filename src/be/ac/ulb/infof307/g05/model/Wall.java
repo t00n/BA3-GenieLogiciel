@@ -13,6 +13,14 @@ public class Wall extends Database<Wall> {
 		
 	}
 	
+	public Wall(Room room, int width, int height, Collection<Vertex> vertices) {
+		this.room = room;
+		this.width = width;
+		this.height = height;
+		this.vertices = vertices;
+		this.isNew = true;
+	}
+	
 	@DatabaseField (generatedId = true)
 	protected int id_wall;
 	
