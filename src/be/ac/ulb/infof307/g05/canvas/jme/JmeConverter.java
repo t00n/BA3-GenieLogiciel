@@ -11,6 +11,10 @@ import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.util.BufferUtils;
 
 import be.ac.ulb.infof307.g05.model.CompositeObject;
+import be.ac.ulb.infof307.g05.model.Floor;
+import be.ac.ulb.infof307.g05.model.Room;
+import be.ac.ulb.infof307.g05.model.Stage;
+import be.ac.ulb.infof307.g05.model.Wall;
 
 /**
  * The Class JmeConverter converts a CompositeObject into a JME one to take the objects from the database
@@ -25,27 +29,39 @@ public class JmeConverter {
 		
 	}
 
-	/**
-	 * Convert a compositeobject from the database with a root node to a 2D/3D Object for the view.
-	 *
-	 * @param object the object
-	 * @param root the root
-	 * @param assetManager the asset manager
-	 */
-	public void convert(CompositeObject object, Node root, AssetManager assetManager){
-		root.attachChild(toGeometry(object, assetManager));
-		for(CompositeObject child:object){
-			convert(child, root, assetManager);
-		}
+	public Node convert(Stage stage, AssetManager assetManager) {
+		return new Node();
 	}
 	
-	/**
-	 * Change the geometry of an object.
-	 *
-	 * @param object the object to change
-	 * @param assetManager the asset manager
-	 * @return the geometry
-	 */
+	public Node convert(Room room, AssetManager assetManager) {
+		return new Node();
+		
+	}
+	
+	public Node convert(Floor floor, AssetManager assetManager) {
+		return new Node();
+		
+	}
+	
+	public Node convert(Wall wall, AssetManager assetManager) {
+		return new Node();
+		
+	}
+	
+	public Node convert(CompositeObject object, AssetManager assetManager) {
+		return new Node();
+		
+	}
+
+	private Geometry toGeometry(Floor floor, AssetManager assetManager) {
+		return new Geometry();
+	}
+	
+	private Geometry toGeometry(Wall wall, AssetManager assetManager) {
+		return new Geometry();
+	}
+
+	
 	private Geometry toGeometry(CompositeObject object, AssetManager assetManager){
 		/** this method convert a CompositeObject to a geometry **/
 		Mesh mesh = new Mesh();
