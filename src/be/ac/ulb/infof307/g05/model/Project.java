@@ -9,13 +9,13 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
- * The Class Project.
+ * The Class Project stores a project in the database
  */
 @DatabaseTable (tableName = "projects")
 public class Project extends Database<Project> {
 	
 	/**
-	 * Instantiates a new project.
+	 * This constructor is only used by ORMlite to load a project from the database
 	 */
 	protected Project() {
 		
@@ -25,8 +25,8 @@ public class Project extends Database<Project> {
 	 * Instantiates a new project.
 	 *
 	 * @param name the name
-	 * @param width the width
-	 * @param length the length
+	 * @param width the width of the terrain
+	 * @param length the length of the terrain
 	 */
 	public Project(String name, int width, int length) {
 		this.setName(name);
@@ -66,14 +66,26 @@ public class Project extends Database<Project> {
 		return this.modificationDate;
 	}
 
+	/**
+	 * 
+	 * @return true if the project is the current project. false otherwise
+	 */
 	public Boolean getCurrent() {
 		return current;
 	}
 
+	/** 
+	 * Set the project as current project in the database
+	 * 
+	 */
 	public void setCurrent(Boolean current) {
 		this.current = current;
 	}
 	
+	/**
+	 * 
+	 * @return a collection of stages in this project (minimum 1)
+	 */
 	public Collection<Stage> getStages() {
 		if (this.stages == null) {
 			Dao<Stage, Integer> dao = Stage.getDao(Stage.class);
@@ -88,7 +100,7 @@ public class Project extends Database<Project> {
 	}
 	
 	/**
-	 * Gets the stage.
+	 * Gets a specific stage
 	 *
 	 * @param level the level
 	 * @return the stage
@@ -103,11 +115,12 @@ public class Project extends Database<Project> {
 	}
 
 	/**
-	 * Adds the stage.
+	 * Adds a stage to this project.
 	 *
 	 * @param level the level
 	 */
 	public void addStage(int level) {
+		//FIXME check if level does not exist yet
 		this.getStages().add(new Stage(this, level));
 	}
 
@@ -129,23 +142,23 @@ public class Project extends Database<Project> {
 	@DatabaseField (canBeNull = false)
 	private String name;
 	
-	/** The width. */
+	/** The width of the terrain. */
 	@DatabaseField (canBeNull = false)
 	private int width;
 	
-	/** The length. */
+	/** The length of the terrain. */
 	@DatabaseField (canBeNull = false)
 	private int length;
 	
-	/** The creation date. */
+	/** The date of creation. */
 	@DatabaseField (canBeNull = false)
 	protected Date creationDate;
 	
-	/** The modification date. */
+	/** The date of last modification. */
 	@DatabaseField (canBeNull = false, version = true)
 	protected Date modificationDate;
 	
-	/** The current. */
+	/** Is the project the current project */
 	@DatabaseField (canBeNull = false)
 	private Boolean current;
 	

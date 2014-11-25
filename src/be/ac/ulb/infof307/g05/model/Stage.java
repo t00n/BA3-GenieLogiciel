@@ -1,5 +1,9 @@
 package be.ac.ulb.infof307.g05.model;
 
+import java.sql.SQLException;
+import java.util.Collection;
+
+import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -31,34 +35,16 @@ public class Stage extends Database<Stage> {
 	public int getLevel() {
 		return this.level;
 	}
-	
-	public CompositeObject getFloor() { return floor; }
-	
-	/**
-	 * Adds the object.
-	 *
-	 * @param parent the parent
-	 * @param child the child
-	 */
-	public void addObject(CompositeObject parent, CompositeObject child) {
-		if (this.floor == null) {
-			this.floor = child;
-			this.floor.setId();
-		}
-		else {
-			this.floor.addChild(parent, child);
-		}
-	}
 
     /* (non-Javadoc)
      * @see be.ac.ulb.infof307.g05.model.Database#save()
      */
     @Override
     public void save() {
-        if (this.floor != null) {
-        	this.floor.save();
-        }
         super.save();
+        for (Room room : this.getRooms()) {
+        	room.save();
+        }
     }
 	
 	/** The id_stage. */
@@ -73,7 +59,20 @@ public class Stage extends Database<Stage> {
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected Project project;
 	
-	/** The floor. */
-	@DatabaseField (canBeNull = true, foreign = true, foreignAutoRefresh = true)
-	protected CompositeObject floor;
+	protected Collection<Room> rooms;
+	
+	public int getId() { return this.id_stage; }
+	
+	public Collection<Room> getRooms() {
+		if (this.rooms == null) {
+			Dao<Room, Integer> dao = Room.getDao(Room.class);
+			try {
+				this.rooms = dao.queryForEq("stage_id", this.getId());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return this.rooms;
+	}
+	
 }

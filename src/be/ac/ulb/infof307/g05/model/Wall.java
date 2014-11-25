@@ -1,5 +1,9 @@
 package be.ac.ulb.infof307.g05.model;
 
+import java.sql.SQLException;
+import java.util.Collection;
+
+import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -19,5 +23,31 @@ public class Wall extends Database<Wall> {
 	protected int height;
 	
 	@DatabaseField (canBeNull = false, foreign = true)
-	protected Room parent;
+	protected Room room;
+	
+	protected Collection<Vertex> vertices;
+	
+	public int getId() { return this.id_wall; }
+	
+	public Collection<Vertex> getVertices() {
+		if (this.vertices == null) {
+			Dao<Vertex, Integer> dao = Vertex.getDao(Vertex.class);
+			try {
+				this.vertices = dao.queryForEq("wall_id", this.getId());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return this.vertices;
+	}
+	
+	@Override
+	public void save() {
+		super.save();
+		for (Vertex v : this.getVertices()) {
+			v.save();
+		}
+	}
+	
 }

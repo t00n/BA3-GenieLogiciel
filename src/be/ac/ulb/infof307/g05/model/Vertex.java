@@ -27,13 +27,13 @@ public class Vertex extends Database<Vertex> {
 	protected float z;
 	
 	@DatabaseField (canBeNull = true, foreign = true)
-	private Room room;
+	protected Room room;
 	
 	@DatabaseField (canBeNull = true, foreign = true)
-	private Floor floor;
+	protected Floor floor;
 	
 	@DatabaseField (canBeNull = true, foreign = true)
-	private Wall wall;
+	protected Wall wall;
 	
 	/**
 	 * Instantiates a new vertex.

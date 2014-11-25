@@ -6,7 +6,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import be.ac.ulb.infof307.g05.model.CompositeObject;
-import be.ac.ulb.infof307.g05.model.CompositeObject_ID;
+import be.ac.ulb.infof307.g05.model.Static_ID;
 import be.ac.ulb.infof307.g05.model.Database;
 import be.ac.ulb.infof307.g05.model.Project;
 import be.ac.ulb.infof307.g05.model.Stage;
@@ -30,7 +30,7 @@ public class Main {
 			TableUtils.createTableIfNotExists(connectionSource, Project.class);
 			TableUtils.createTableIfNotExists(connectionSource, Texture.class);
 			TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
-			TableUtils.createTableIfNotExists(connectionSource, CompositeObject_ID.class);
+			TableUtils.createTableIfNotExists(connectionSource, Static_ID.class);
 			TableUtils.createTableIfNotExists(connectionSource, Stage.class);
 			TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
 		} catch (SQLException e) {

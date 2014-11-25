@@ -171,6 +171,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
     public void save() {
         if (this.texture != null)
             this.texture.save();
+        this.mesh.save();
         super.save();
         for (CompositeObject object : this.getChilds())
         	object.save();
@@ -189,7 +190,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	public void addChild(CompositeObject parent, CompositeObject child) {
 		if (parent == this) {
 			this.add(child);
-//			child.setId(); FIXME
+			child.setId();
 		}
 		else
 		{

@@ -36,11 +36,11 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 	}
 	
 	/**
-	 * Gets the dao.
+	 * Gets the dao for type T.
 	 *
 	 * @param <T> the generic type
-	 * @param klass the klass
-	 * @return the dao
+	 * @param klass the Class<T> of type T
+	 * @return the DAO for type T
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Dao<T, Integer> getDao(Class<?> klass) {
@@ -54,7 +54,7 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 	}
 	
 	/**
-	 * Instantiates a new database.
+	 * Sets automagically the DAO for sub-classes
 	 */
 	@SuppressWarnings("unchecked")
 	public Database() {
@@ -67,7 +67,7 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 	}
 
     /**
-     * Save.
+     * Smartly saves the object in the database.
      */
     public void save() {
 		try {
@@ -83,6 +83,6 @@ public abstract class Database<T> extends BaseDaoEnabled<T, Integer> {
 		}
     }
     
-    /** The is new. */
+    /** Is the object new or does it already exists in the database. */
     protected Boolean isNew = false;
 }
