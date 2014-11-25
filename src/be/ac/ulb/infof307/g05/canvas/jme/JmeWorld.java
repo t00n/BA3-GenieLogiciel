@@ -126,8 +126,7 @@ public class JmeWorld extends SimpleApplication {
 	 * this method redraw all the scene
 	 */
 	public void draw() {
-    	rootNode.detachChild(_currentStage);
-    	_currentStage.detachAllChildren();
+		rootNode.detachAllChildren();
     	
     	Project project = _eventController.getProject();
     	_reference = new Reference(assetManager, project.getWidth(), project.getLength());
