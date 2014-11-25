@@ -28,7 +28,7 @@ public abstract class AbstractTool {
 		mouseClicks.add(vector);
 	}
 	
-	public void setCollision(String id) {
+	public void addCollision(String id) {
 		this.idCollisions.add(id);
 	}
 	
