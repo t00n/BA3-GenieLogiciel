@@ -80,8 +80,8 @@ public class ToolController {
 		_currentStage = stage;
 	}
 	
-	public CompositeObject getFloor(){
-		return _currentStage.getFloor();
+	public Stage getStage(){
+		return _currentStage;
 	}
 
 	private void purge(){
@@ -103,9 +103,9 @@ public class ToolController {
 		Vector3f one = _positionStack.pop();
 		Vector3f two = _positionStack.pop();
 		Cube newMesh = new Cube(one, two);
-		CompositeObject newObject = new CompositeObject(this.getFloor(), newMesh.getVertices(), newMesh.getOrder());
-		this._currentStage.addObject(this.getFloor(), newObject);	
-		_compositeObjectSelected = newObject;
+//FIXME		CompositeObject newObject = new CompositeObject(this.getStage(), newMesh.getVertices(), newMesh.getOrder());
+//		this._currentStage.addObject(this.getFloor(), newObject);	
+//		_compositeObjectSelected = newObject;
 	}
 
 	private void drawPolygon(){
@@ -125,7 +125,7 @@ public class ToolController {
 	    return true;
 	}
 	
-	private void toolDraw(String command, ActionEvent event){
+/**	private void toolDraw(String command, ActionEvent event){
 		if(command == "ENTER"){
 			if(_currentDrawingType.equals("Rectangle") && acceptDrawing("Rectangle"))
 				drawRectangle();
@@ -224,7 +224,7 @@ public class ToolController {
 				_compositeObjectSelected.rotateAroundY((float)-0.1);	
 		}else
 			enableTool(command);
-	}
+	}**/
 	
 	public void actionPerformed(ActionEvent event){
 		String command = event.getActionCommand();
@@ -233,15 +233,15 @@ public class ToolController {
 			_cursor.set((Vector3f) event.getSource());
 		}else if(getEnabledTool().isEmpty() && command != "comboBoxChanged"){
 			System.out.println("COMMAND: "+command);
-			enableTool(command);
+//			enableTool(command);
 		}else if(getEnabledTool().equals("Draw")){
-			toolDraw(command, event);
+//			toolDraw(command, event);
 		}else if(getEnabledTool().equals("Pull-Up")){
-			toolPullUp(command, event);
+//			toolPullUp(command, event);
 		}else if(getEnabledTool().equals("Move")){
-			toolMove(command, event);
+//			toolMove(command, event);
 		}else if(getEnabledTool().equals("Rotate")){
-			toolRotate(command, event);
+//			toolRotate(command, event);
 		}
 	}
 }

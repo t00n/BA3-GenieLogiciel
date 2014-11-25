@@ -34,8 +34,8 @@ public class TestMain {
         Vector3f vertex2 = new Vector3f(2,2,2);
 
         Cube cube = new Cube(vertex1, vertex2);
-        CompositeObject object = new CompositeObject(null, cube.getVertices(), cube.getOrder());
-        project.getStage(0).addObject(null, object);
+//FIXME        CompositeObject object = new CompositeObject(null, cube.getVertices(), cube.getOrder());
+//        project.getStage(0).addObject(null, object);
         
         project.save();
 	}
@@ -62,8 +62,8 @@ public class TestMain {
 	
 	@Test
 	public void testStaticID() {
-		TableUtils.dropTable(Database.getConnectionSource(), Static_ID.class, true);
-		TableUtils.createTableIfNotExists(Database.getConnectionSource(), Static_ID.class);
+//FIXME		TableUtils.dropTable(Database.getConnectionSource(), Static_ID.class, true);
+//		TableUtils.createTableIfNotExists(Database.getConnectionSource(), Static_ID.class);
 		assert(Static_ID.getCompositeObjectID() == 1);
 		assert(Static_ID.getCompositeObjectID() == 2);
 		assert(Static_ID.getRoomID() == 1);

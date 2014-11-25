@@ -49,12 +49,12 @@ public class JmeConverter {
 	private Geometry toGeometry(CompositeObject object, AssetManager assetManager){
 		/** this method convert a CompositeObject to a geometry **/
 		Mesh mesh = new Mesh();
-		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(object.getVerticesAsVector3f()));
-		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(object.getMeshOrderAsInt()));
+		//FIXME mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(object.getVerticesAsVector3f()));
+		//FIXME mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(object.getMeshOrderAsInt()));
 		mesh.updateBound();
 		mesh.setStatic();
 		
-		Geometry geo = new Geometry(object.getId().toString(), mesh);
+		Geometry geo = new Geometry(Integer.toString(object.getId()), mesh);
 		if(object.getTexture() == null){
 			Material texture = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 			texture.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);

@@ -10,7 +10,7 @@ import be.ac.ulb.infof307.g05.model.Static_ID;
 import be.ac.ulb.infof307.g05.model.Database;
 import be.ac.ulb.infof307.g05.model.Project;
 import be.ac.ulb.infof307.g05.model.Stage;
-import be.ac.ulb.infof307.g05.model.Texture;
+//import be.ac.ulb.infof307.g05.model.Texture;
 import be.ac.ulb.infof307.g05.model.Vertex;
 import be.ac.ulb.infof307.g05.view.MainWindow;
 
@@ -28,7 +28,7 @@ public class Main {
 		JdbcConnectionSource connectionSource = Database.getConnectionSource();
 		try {
 			TableUtils.createTableIfNotExists(connectionSource, Project.class);
-			TableUtils.createTableIfNotExists(connectionSource, Texture.class);
+//			TableUtils.createTableIfNotExists(connectionSource, Texture.class);
 			TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
 			TableUtils.createTableIfNotExists(connectionSource, Static_ID.class);
 			TableUtils.createTableIfNotExists(connectionSource, Stage.class);

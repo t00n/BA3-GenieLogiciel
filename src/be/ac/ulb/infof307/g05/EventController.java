@@ -74,10 +74,10 @@ public class EventController implements ActionListener {
 		return _toolController.getCursor();
 	}
 	
-	public CompositeObject getStage(){
-		/** this method return the root node of the scene built by toolController **/
-		return _toolController.getFloor();
-	}
+//FIXME	public CompositeObject getStage(){
+//		/** this method return the root node of the scene built by toolController **/
+//		return _toolController.getFloor();
+//	}
 	
 	/**
 	 * Adds the tool to the ToolController.

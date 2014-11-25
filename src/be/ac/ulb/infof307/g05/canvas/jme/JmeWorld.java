@@ -128,10 +128,10 @@ public class JmeWorld extends SimpleApplication {
 	private void draw() {
     	rootNode.detachChild(_currentStage);
     	_currentStage.detachAllChildren();
-    	if (_eventController.getStage() != null){
-	    	_converter.convert(_eventController.getStage(), _currentStage, assetManager);
-	    	rootNode.attachChild(_currentStage);
-    	}
+//FIXME    	if (_eventController.getStage() != null){
+//	    	_converter.convert(_eventController.getStage(), _currentStage, assetManager);
+//	    	rootNode.attachChild(_currentStage);
+//    	}
 	}
 	
     /* (non-Javadoc)
