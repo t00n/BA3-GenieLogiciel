@@ -57,8 +57,9 @@ public class JmeConverter {
 	}
 	
 	public Node convert(Floor floor, AssetManager assetManager) {
-		return new Node();
-		
+		Node node = new Node();
+		node.attachChild(this.toGeometry(floor, assetManager));
+		return node;		
 	}
 	
 	public Node convert(Wall wall, AssetManager assetManager) {
