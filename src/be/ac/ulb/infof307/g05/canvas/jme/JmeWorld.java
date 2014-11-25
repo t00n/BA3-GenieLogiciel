@@ -33,9 +33,6 @@ public class JmeWorld extends SimpleApplication {
 	/** The _event controller. */
 	private EventController _eventController;
 	
-	/** The _current stage. */
-	private Node _currentStage = new Node();
-	
 	/** The _converter. */
 	private JmeConverter _jmeConverter = new JmeConverter();
 
@@ -133,10 +130,9 @@ public class JmeWorld extends SimpleApplication {
     	_reference.setNode(rootNode, true);
     	
     	
-//    	if (_eventController.getStage() != null){
-//    		_jmeConverter.convert(_eventController.getStage(), _currentStage, assetManager);
-//	    	rootNode.attachChild(_currentStage);
-//    	}
+    	if (_eventController.getStage() != null){
+	    	rootNode.attachChild(_jmeConverter.convert(_eventController.getStage(), assetManager));
+    	}
 	}
 	
     /* (non-Javadoc)

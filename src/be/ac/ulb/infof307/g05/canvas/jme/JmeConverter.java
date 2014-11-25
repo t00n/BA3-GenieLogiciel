@@ -42,8 +42,18 @@ public class JmeConverter {
 	}
 	
 	public Node convert(Room room, AssetManager assetManager) {
-		return new Node();
-		
+		Node node = new Node();			
+		//Room
+		node.attachChild(this.convert(room.getFloor(), assetManager));
+		//Walls
+		for (Wall wall : room.getWalls()) {
+			node.attachChild(this.convert(wall, assetManager));
+		}
+		//CompositeObjects
+		for (CompositeObject compositeObject: room.getCompositeObjects()) {
+			node.attachChild(this.convert(compositeObject, assetManager));
+		}		
+		return node;
 	}
 	
 	public Node convert(Floor floor, AssetManager assetManager) {
@@ -80,7 +90,21 @@ public class JmeConverter {
 	}
 	
 	private Geometry toGeometry(Wall wall, AssetManager assetManager) {
-		return new Geometry();
+		ArrayList<Vertex> vertices = (ArrayList<Vertex>) wall.getVertices();
+		Cube cube = new Cube(vertices.get(0), vertices.get(1));
+		
+		Mesh mesh = new Mesh();
+//		mesh.updateBound();
+//		mesh.setStatic();
+		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(cube.getVertices()));
+		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(cube.getOrder()));
+		
+		Geometry geo = new Geometry(Integer.toString(wall.getId()), mesh);
+		Material texture = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+		texture.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
+		texture.setColor("Color", ColorRGBA.Gray);
+		geo.setMaterial(texture);
+		return geo;
 	}
 
 	
