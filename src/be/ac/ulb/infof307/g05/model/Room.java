@@ -74,7 +74,7 @@ public class Room extends Database<Room> {
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected Stage stage;
 	
-	@DatabaseField (canBeNull = false, foreign = true)
+	@DatabaseField (canBeNull = false, foreign = true, foreignAutoRefresh = true)
 	protected Floor floor;
 	
 	protected Collection<CompositeObject> compositeObjects;
