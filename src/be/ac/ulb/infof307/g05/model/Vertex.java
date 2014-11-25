@@ -16,15 +16,15 @@ public class Vertex extends Database<Vertex> {
 	
 	/** The x. */
 	@DatabaseField (canBeNull = false)
-	protected float x;
+	public float x;
 	
 	/** The y. */
 	@DatabaseField (canBeNull = false)
-	protected float y;
+	public float y;
 	
 	/** The z. */
 	@DatabaseField (canBeNull = false)
-	protected float z;
+	public float z;
 	
 	@DatabaseField (canBeNull = true, foreign = true)
 	protected Floor floor;

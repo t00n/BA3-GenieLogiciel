@@ -30,6 +30,10 @@ public class Floor extends Database<Floor> {
 		return this.id_floor;
 	}
 	
+	public float getHeight() {
+		return this.height;
+	}
+	
 	public Collection<Vertex> getVertices() {
 		if (this.vertices == null) {
 			Dao<Vertex, Integer> dao = Vertex.getDao(Vertex.class);
