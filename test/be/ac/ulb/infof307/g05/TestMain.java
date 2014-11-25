@@ -38,7 +38,7 @@ public class TestMain {
         
         Collection<Vector3f> vectors = new ArrayList<Vector3f>();
         vectors.add(new Vector3f(0,0,0));
-        vectors.add(new Vector3f(2,2,2));
+        vectors.add(new Vector3f(2,0,2));
         
         stage.addRoom(name, vectors);
         
@@ -68,7 +68,6 @@ public class TestMain {
 		TableUtils.createTableIfNotExists(connectionSource, Wall.class);
 		TableUtils.createTableIfNotExists(connectionSource, Vertex.class);
 		this.createTestProject("test project 1");
-		this.createTestProject("test project 2");
 	}
 	
 	@Test

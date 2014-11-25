@@ -77,8 +77,8 @@ public class JmeConverter {
 	private Geometry toGeometry(Floor floor, AssetManager assetManager) {
 		ArrayList<Vertex> vertices = (ArrayList<Vertex>) floor.getVertices();
 		Vertex vertex2 = vertices.get(1);
-		vertex2.y = floor.getHeight();
-		Cube cube = new Cube(vertices.get(0), vertices.get(1));
+		vertex2.y += floor.getHeight();
+		Cube cube = new Cube(vertices.get(0), vertex2);
 		
 		Mesh mesh = new Mesh();
 //		mesh.updateBound();
