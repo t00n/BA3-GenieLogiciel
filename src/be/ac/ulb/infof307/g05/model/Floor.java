@@ -26,7 +26,11 @@ public class Floor extends Database<Floor> {
 		this.isNew = true;
 	}
 	
-	protected Collection<Vertex> getVertices() {
+	public int getId() {
+		return this.id_floor;
+	}
+	
+	public Collection<Vertex> getVertices() {
 		if (this.vertices == null) {
 			Dao<Vertex, Integer> dao = Vertex.getDao(Vertex.class);
 			try {

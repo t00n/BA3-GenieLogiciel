@@ -1,5 +1,7 @@
 package be.ac.ulb.infof307.g05.canvas.jme;
 
+import java.util.ArrayList;
+
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState.FaceCullMode;
@@ -14,7 +16,9 @@ import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.Floor;
 import be.ac.ulb.infof307.g05.model.Room;
 import be.ac.ulb.infof307.g05.model.Stage;
+import be.ac.ulb.infof307.g05.model.Vertex;
 import be.ac.ulb.infof307.g05.model.Wall;
+import be.ac.ulb.infof307.g05.view.Cube;
 
 /**
  * The Class JmeConverter converts a CompositeObject into a JME one to take the objects from the database
@@ -58,7 +62,21 @@ public class JmeConverter {
 	}
 
 	private Geometry toGeometry(Floor floor, AssetManager assetManager) {
-		return new Geometry();
+		ArrayList<Vertex> vertices = (ArrayList<Vertex>) floor.getVertices();
+		Cube cube = new Cube(vertices.get(0), vertices.get(1));
+		
+		Mesh mesh = new Mesh();
+//		mesh.updateBound();
+//		mesh.setStatic();
+		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(cube.getVertices()));
+		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(cube.getOrder()));
+		
+		Geometry geo = new Geometry(Integer.toString(floor.getId()), mesh);
+		Material texture = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+		texture.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
+		texture.setColor("Color", ColorRGBA.Gray);
+		geo.setMaterial(texture);
+		return geo;
 	}
 	
 	private Geometry toGeometry(Wall wall, AssetManager assetManager) {
