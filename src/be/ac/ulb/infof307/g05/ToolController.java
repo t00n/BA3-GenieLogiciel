@@ -148,7 +148,7 @@ public class ToolController {
 				_currentTool.addPosition((Vector3f) event.getSource());
 			}
 			else if (command == "COLLISION") {
-				_currentTool.setCollision((String) event.getSource());
+				_currentTool.addCollision((String) event.getSource());
 			}
 			else if (command == "CURSOR_CLICK_DOWN") {
 				_currentTool.addClick((Vector3f) event.getSource());
