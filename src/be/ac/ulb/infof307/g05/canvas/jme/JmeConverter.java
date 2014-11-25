@@ -30,7 +30,11 @@ public class JmeConverter {
 	}
 
 	public Node convert(Stage stage, AssetManager assetManager) {
-		return new Node();
+		Node node = new Node();
+		for (Room room : stage.getRooms()) {
+			node.attachChild(this.convert(room, assetManager));
+		}
+		return node;
 	}
 	
 	public Node convert(Room room, AssetManager assetManager) {
