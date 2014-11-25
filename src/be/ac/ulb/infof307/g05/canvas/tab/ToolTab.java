@@ -71,7 +71,6 @@ public class ToolTab extends AbstractTab implements ItemListener {
 		button.addActionListener(_eventController);
 		button.addItemListener(this);
 		_buttonPanel.add(button);
-		_eventController.addTool(tool_name);
 	}
 	
 	/* (non-Javadoc)

@@ -8,7 +8,6 @@ import java.util.List;
 
 import be.ac.ulb.infof307.g05.AutoSaveThread;
 import be.ac.ulb.infof307.g05.ToolController;
-import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.Project;
 import be.ac.ulb.infof307.g05.model.Stage;
 import be.ac.ulb.infof307.g05.view.MainWindow;
@@ -48,7 +47,7 @@ public class EventController implements ActionListener {
 		_window = window;
 		//FIXME use _window.popUpLoad()
 
-		_toolController = new ToolController(this);
+		_toolController = new ToolController();
 		this.loadProject();
 		this._toolController.setStage(_currentProject.getStage(0));
 	}
@@ -78,19 +77,6 @@ public class EventController implements ActionListener {
 	public Stage getStage(){
 		/** this method return the root node of the scene built by toolController **/
 		return _toolController.getStage();
-	}
-	
-	/**
-	 * Adds the tool to the ToolController.
-	 *
-	 * @param tool_name the tool_name
-	 */
-	public void addTool(String tool_name) {
-		_toolController.addTool(tool_name);
-	}
-	
-	public String getEnableTool(){
-		return _toolController.getEnabledTool();
 	}
 	
 	/**
@@ -219,6 +205,7 @@ public class EventController implements ActionListener {
 			_currentProject.save();
 		}else if(command == "Quit"){
 			_window.dispose();
+			_saveThread.interrupt();
 		}else {
 			_toolController.actionPerformed(event);
 		}
