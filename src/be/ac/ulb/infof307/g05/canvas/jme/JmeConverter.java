@@ -63,13 +63,15 @@ public class JmeConverter {
 	}
 	
 	public Node convert(Wall wall, AssetManager assetManager) {
-		return new Node();
-		
+		Node node = new Node();
+		node.attachChild(this.toGeometry(wall, assetManager));
+		return node;		
 	}
 	
 	public Node convert(CompositeObject object, AssetManager assetManager) {
-		return new Node();
-		
+		Node node = new Node();
+		node.attachChild(this.toGeometry(object, assetManager));
+		return node;
 	}
 
 	private Geometry toGeometry(Floor floor, AssetManager assetManager) {
