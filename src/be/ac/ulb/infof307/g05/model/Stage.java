@@ -6,6 +6,7 @@ import java.util.Collection;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.jme3.math.Vector3f;
 
 /**
  * The Class Stage.
@@ -50,7 +51,7 @@ public class Stage extends Database<Stage> {
 		return this.rooms;
 	}
 	
-	public void addRoom(String name, Collection<Vertex> vertices){
+	public void addRoom(String name, Collection<Vector3f> vertices){
 		this.getRooms().add(new Room(this, name, vertices));
 	}
 

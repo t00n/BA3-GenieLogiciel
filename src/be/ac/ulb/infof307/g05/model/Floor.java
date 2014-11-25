@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g05.model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import be.ac.ulb.infof307.g05.view.Cube;
@@ -16,8 +17,11 @@ public class Floor extends Database<Floor> {
 		
 	}
 	
-	public Floor(Collection<Vertex> vertices) {
-		this.vertices = vertices;
+	public Floor(Collection<Vector3f> vector3fs) {
+		this.vertices = new ArrayList<Vertex>();
+		for (Vector3f vec : vector3fs) {
+			vertices.add(new Vertex(this, vec));
+		}
 		this.height = 0.1f; //FIXME magic number
 		this.isNew = true;
 	}
