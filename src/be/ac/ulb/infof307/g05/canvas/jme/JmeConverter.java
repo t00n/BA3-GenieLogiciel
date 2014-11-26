@@ -21,6 +21,7 @@ import be.ac.ulb.infof307.g05.model.Vertex;
 import be.ac.ulb.infof307.g05.model.Wall;
 import be.ac.ulb.infof307.g05.view.Cube;
 import be.ac.ulb.infof307.g05.view.Polygon;
+import be.ac.ulb.infof307.g05.view.Polyhedron;
 
 /**
  * The Class JmeConverter converts a CompositeObject into a JME one to take the objects from the database
@@ -82,8 +83,7 @@ public class JmeConverter {
 		for (Vertex vertex : floor.getVertices()) {
 			tmp.add(vertex.toVector3f());
 		}
-		// FIXME add 3D
-		Polygon poly = new Polygon(tmp);
+		Polyhedron poly = new Polyhedron(tmp, floor.getHeight());
 		
 		Mesh mesh = new Mesh();
 //		mesh.updateBound();

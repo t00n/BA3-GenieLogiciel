@@ -10,12 +10,12 @@ import be.ac.ulb.infof307.g05.model.Vertex;
 import com.jme3.math.Vector3f;
 
 public class Polygon {
-	Collection<Vector3f> vertices;
+	ArrayList<Vector3f> vertices;
 	Vector3f[] vectors;
 	int[] meshOrder;
 	
 	
-	public Polygon(Collection<Vector3f> vertices) {
+	public Polygon(ArrayList<Vector3f> vertices) {
 		this.vertices = vertices;
 		this.buildMeshOrder();
 	}

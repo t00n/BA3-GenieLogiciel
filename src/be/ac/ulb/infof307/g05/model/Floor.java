@@ -19,10 +19,9 @@ public class Floor extends Database<Floor> {
 		this.vertices = new ArrayList<Vertex>();
 		for (Vector3f vec : vector3fs) {
 			Vertex vertex = new Vertex(this, vec);
-			vertex.y += .1f;
 			vertices.add(vertex);
 		}
-		this.height = 0.2f;
+		this.height = .1f;
 		this.isNew = true;
 		this.setId();
 	}
