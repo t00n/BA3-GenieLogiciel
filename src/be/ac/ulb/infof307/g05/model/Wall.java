@@ -6,6 +6,7 @@ import java.util.Collection;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.jme3.math.Vector3f;
 
 @DatabaseTable (tableName = "walls")
 public class Wall extends Database<Wall> {
@@ -13,22 +14,25 @@ public class Wall extends Database<Wall> {
 		
 	}
 	
-	public Wall(Room room, int width, int height, Collection<Vertex> vertices) {
+	public Wall(Room room, Collection<Vector3f> vectors) {
 		this.room = room;
-		this.width = width;
-		this.height = height;
-		this.vertices = vertices;
+		this.width = 0.2f;
+		this.height = 2;
+		for (Vector3f vec : vectors) {
+			this.getVertices().add(new Vertex(this, vec));
+		}
 		this.isNew = true;
+		this.setId();
 	}
 	
 	@DatabaseField (generatedId = true)
 	protected int id_wall;
 	
 	@DatabaseField (canBeNull = false)
-	protected int width;
+	protected float width;
 	
 	@DatabaseField (canBeNull = false)
-	protected int height;
+	protected float height;
 	
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected Room room;
@@ -39,6 +43,14 @@ public class Wall extends Database<Wall> {
 	
 	public void setId() {
 		this.id_wall = Static_ID.getObjectID();
+	}
+
+	public float getWidth() {
+		return this.width;
+	}
+	
+	public float getHeight() {
+		return this.height;
 	}
 	
 	public Collection<Vertex> getVertices() {

@@ -74,6 +74,10 @@ public class Room extends Database<Room> {
 		return this.walls;
 	}
 	
+	public void addWall(Collection<Vector3f> vectors) {
+		this.getWalls().add(new Wall(this, vectors));
+	}
+	
 	@Override
 	public void save() {
 		this.floor.save();

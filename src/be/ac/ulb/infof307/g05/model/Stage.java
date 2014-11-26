@@ -60,6 +60,14 @@ public class Stage extends Database<Stage> {
 		return this.rooms;
 	}
 	
+	public Room getRoom(String name) {
+		for (Room room : this.getRooms()) {
+			if (room.getName() == name)
+				return room;
+		}
+		return null;
+	}
+	
 	public void addRoom(String name, Collection<Vector3f> vertices){
 		this.getRooms().add(new Room(this, name, vertices));
 	}
