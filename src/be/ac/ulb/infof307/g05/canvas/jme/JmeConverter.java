@@ -72,6 +72,9 @@ public class JmeConverter {
 	public Node convert(CompositeObject object, AssetManager assetManager) {
 		Node node = new Node();
 		node.attachChild(this.toGeometry(object, assetManager));
+		for (CompositeObject child : object.getChilds()) {
+			node.attachChild(this.convert(child, assetManager));
+		}
 		return node;
 	}
 
