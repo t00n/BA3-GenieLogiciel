@@ -68,7 +68,7 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	}
 	
 	public void setId() {
-		this.id_compositeObject = Static_ID.getCompositeObjectID();
+		this.id_compositeObject = Static_ID.getObjectID();
 	}
 
 	public Resource getTexture() {
@@ -92,18 +92,19 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return this.childs;
 	}
 	
-	public CompositeObject getWithId(int id) {
-		CompositeObject ret = null;
+	public boolean ownsId(int id) {
 		if (id == this.getId()) {
-			ret = this;
+			return true;
 		}
 		else {
 			for (CompositeObject child: this.getChilds())
 			{
-				ret = child.getWithId(id);
+				if (child.ownsId(id)) {
+					return true;
+				}
 			}
 		}
-		return ret;
+		return false;
 	}
 	
 //	public void extendAxeY(float range) {

@@ -38,7 +38,7 @@ public class Wall extends Database<Wall> {
 	public int getId() { return this.id_wall; }
 	
 	public void setId() {
-		this.id_wall = Static_ID.getWallID();
+		this.id_wall = Static_ID.getObjectID();
 	}
 	
 	public Collection<Vertex> getVertices() {

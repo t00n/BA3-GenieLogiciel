@@ -9,21 +9,21 @@ import be.ac.ulb.infof307.g05.model.Vertex;
 
 import com.jme3.math.Vector3f;
 
-public class Polyhedron {
-	ArrayList<Vector3f> vertices;
+public class Polygon {
+	Collection<Vector3f> vertices;
 	Vector3f[] vectors;
 	int[] meshOrder;
 	
 	
-	public Polyhedron(Collection<Vector3f> vertices) {
-		this.vertices = (ArrayList<Vector3f>) vertices;
-		this.buildPolygon(vertices);
+	public Polygon(Collection<Vector3f> vertices) {
+		this.vertices = vertices;
+		this.buildMeshOrder();
 	}
 	
 	public Vector3f[] getVectors() { return this.vectors; }
 	public int[] getMeshOrder() { return this.meshOrder; }
 	
-	protected void buildPolygon(Collection<Vector3f> vertices) {
+	protected void buildMeshOrder() {
 		// build vectors
 		this.vectors = new Vector3f[vertices.size()];
 		int i = 0;
@@ -31,18 +31,13 @@ public class Polyhedron {
 			this.vectors[i] = vec;
 			++i;
 		}
-		ArrayList<Integer> order = new ArrayList<Integer>();
-		for (i = 0; i < this.vectors.length; ++i) {
-			order.add(0);
+		int orderIndex = 0;
+		this.meshOrder = new int[(this.vectors.length-2) * 3];
+		for (i = 0; i < this.vectors.length - 2; ++i) {
+			this.meshOrder[orderIndex++] = 0;
 			for (int j = 1; j < 3; ++j) {
-				order.add((i+j) % this.vectors.length);
+				this.meshOrder[orderIndex++] = (i+j);
 			}
-		}
-		i = 0;
-		this.meshOrder = new int[order.size()];
-		for (Integer ord : order) {
-			this.meshOrder[i] = ord;
-			++i;
 		}
 	}
 }

@@ -6,6 +6,7 @@ import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.Stage;
 import be.ac.ulb.infof307.g05.tools.AbstractTool;
 import be.ac.ulb.infof307.g05.tools.DrawRoomTool;
+import be.ac.ulb.infof307.g05.tools.MoveRoomTool;
 
 import com.jme3.math.Vector3f;
 
@@ -148,6 +149,7 @@ public class ToolController {
 				_currentTool.addPosition((Vector3f) event.getSource());
 			}
 			else if (command == "COLLISION") {
+				System.out.println(event.getSource());
 				_currentTool.addCollision((String) event.getSource());
 			}
 			else if (command == "CURSOR_CLICK_DOWN") {
@@ -162,14 +164,17 @@ public class ToolController {
 			else if (command == "ESCAPE") {
 				_currentTool.purge();
 			}
-			else if (command == "Draw") {
+			else {
 				_currentTool = null;
 			}
 		}else if(_currentTool == null && command != "comboBoxChanged"){
-			System.out.println("COMMAND: "+command);
 			if (command == "Draw")
 			{
 				_currentTool = new DrawRoomTool(_currentStage);
+			}
+			else if (command == "Move")
+			{
+				_currentTool = new MoveRoomTool(_currentStage);
 			}
 		}
 	}

@@ -39,6 +39,15 @@ public class Stage extends Database<Stage> {
 	
 	public int getId() { return this.id_stage; }
 	
+	public Room getRoomByCollisionId(int id) {
+		for (Room room : this.getRooms()) {
+			if (room.ownsId(id)){
+				return room;
+			}
+		}
+		return null;
+	}
+	
 	public Collection<Room> getRooms() {
 		if (this.rooms == null) {
 			Dao<Room, Integer> dao = Room.getDao(Room.class);

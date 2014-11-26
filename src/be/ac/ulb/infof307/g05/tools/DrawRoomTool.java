@@ -9,8 +9,6 @@ import be.ac.ulb.infof307.g05.model.Room;
 import be.ac.ulb.infof307.g05.model.Stage;
 
 public class DrawRoomTool extends AbstractStageTool {
-	Room newRoom;
-
 	public DrawRoomTool(Stage stage) {
 		super(stage);
 	}
@@ -24,7 +22,7 @@ public class DrawRoomTool extends AbstractStageTool {
 				tmp.add(vec.clone());
 			}
 			tmp.add(cursor.clone());
-			this.newRoom.getFloor().setVertices(tmp);
+			this.room.getFloor().setVertices(tmp);
 		}
 	}
 	
@@ -32,18 +30,18 @@ public class DrawRoomTool extends AbstractStageTool {
 	public void addClick(Vector3f click) {
 		super.addClick(click);
 		if (this.mouseClicks.size() == 2) {
-			this.newRoom = new Room(null, "auto", this.mouseClicks);
-			this.currentStage.getRooms().add(newRoom);
+			this.room = new Room(null, "auto", this.mouseClicks);
+			this.currentStage.getRooms().add(room);
 		}
 		if (this.mouseClicks.size() >= 3) {
-			this.newRoom.getFloor().setVertices(this.mouseClicks);
+			this.room.getFloor().setVertices(this.mouseClicks);
 		}
 	}
 	
 	@Override
 	public void use() {
 		if (this.mouseClicks.size() >= 3) {
-			this.currentStage.addRoom(newRoom.getName(), this.mouseClicks);
+			this.currentStage.addRoom(room.getName(), this.mouseClicks);
 			this.purge();
 		}
 	}
@@ -51,7 +49,7 @@ public class DrawRoomTool extends AbstractStageTool {
 	@Override 
 	public void purge() {
 		super.purge();
-		this.currentStage.getRooms().remove(newRoom);
+		this.currentStage.getRooms().remove(room);
 	}
 
 }

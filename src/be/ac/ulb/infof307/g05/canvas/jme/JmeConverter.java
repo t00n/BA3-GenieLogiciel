@@ -20,7 +20,7 @@ import be.ac.ulb.infof307.g05.model.Stage;
 import be.ac.ulb.infof307.g05.model.Vertex;
 import be.ac.ulb.infof307.g05.model.Wall;
 import be.ac.ulb.infof307.g05.view.Cube;
-import be.ac.ulb.infof307.g05.view.Polyhedron;
+import be.ac.ulb.infof307.g05.view.Polygon;
 
 /**
  * The Class JmeConverter converts a CompositeObject into a JME one to take the objects from the database
@@ -83,7 +83,7 @@ public class JmeConverter {
 			tmp.add(vertex.toVector3f());
 		}
 		// FIXME add 3D
-		Polyhedron poly = new Polyhedron(tmp);
+		Polygon poly = new Polygon(tmp);
 		
 		Mesh mesh = new Mesh();
 //		mesh.updateBound();

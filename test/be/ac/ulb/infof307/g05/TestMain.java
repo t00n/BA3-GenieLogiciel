@@ -80,9 +80,7 @@ public class TestMain {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		assert(Static_ID.getCompositeObjectID() == 1);
-		assert(Static_ID.getCompositeObjectID() == 2);
-		assert(Static_ID.getFloorID() == 1);
-		assert(Static_ID.getFloorID() == 2);
+		assert(Static_ID.getObjectID() == 1);
+		assert(Static_ID.getObjectID() == 2);
 	}
 }

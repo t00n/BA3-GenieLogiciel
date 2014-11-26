@@ -18,7 +18,9 @@ public class Floor extends Database<Floor> {
 	public Floor(Collection<Vector3f> vector3fs) {
 		this.vertices = new ArrayList<Vertex>();
 		for (Vector3f vec : vector3fs) {
-			vertices.add(new Vertex(this, vec));
+			Vertex vertex = new Vertex(this, vec);
+			vertex.y += .1f;
+			vertices.add(vertex);
 		}
 		this.height = 0.2f;
 		this.isNew = true;
@@ -30,7 +32,7 @@ public class Floor extends Database<Floor> {
 	}
 	
 	public void setId() {
-		this.id_floor = Static_ID.getFloorID();
+		this.id_floor = Static_ID.getObjectID();
 	}
 	
 	public void setHeight(float height) {

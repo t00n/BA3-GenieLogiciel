@@ -61,15 +61,7 @@ public class Static_ID {
 		return ret;
 	}
 	
-	public static int getCompositeObjectID() {
-		return getID("composite_object");
-	}
-
-	public static int getFloorID() {
-		return getID("floor");
-	}
-	
-	public static int getWallID() {
-		return getID("wall");
+	public static int getObjectID() {
+		return getID("object");
 	}
 }

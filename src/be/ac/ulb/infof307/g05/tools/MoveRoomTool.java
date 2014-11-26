@@ -9,6 +9,18 @@ public class MoveRoomTool extends AbstractStageTool {
 	}
 	
 	@Override
+	public void addCollision(String id) {
+		super.addCollision(id);
+		try {
+			this.room = this.currentStage.getRoomByCollisionId(Integer.parseInt(id));
+		}
+		catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		System.out.println(this.room);
+	}
+	
+	@Override
 	public void use() {
 		// TODO Auto-generated method stub
 

@@ -33,6 +33,23 @@ public class Room extends Database<Room> {
 		return this.floor;
 	}
 	
+	public boolean ownsId(int id) {
+		if (this.getFloor().getId() == id) {
+			return true;
+		}
+		for (Wall wall : this.getWalls()) {
+			if (wall.getId() == id) {
+				return true;
+			}
+		}
+		for (CompositeObject object : this.getCompositeObjects()) {
+			if (object.ownsId(id)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public Collection<CompositeObject> getCompositeObjects() {
 		if (this.compositeObjects == null) {
 			Dao<CompositeObject, Integer> dao = CompositeObject.getDao(CompositeObject.class);
