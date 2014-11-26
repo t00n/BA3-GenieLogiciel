@@ -27,6 +27,10 @@ public class Floor extends Database<Floor> {
 		return this.id_floor;
 	}
 	
+	public void setId() {
+		this.id_floor = Static_ID.getFloorID();
+	}
+	
 	public void setHeight(float height) {
 		// FIXME
 	}
@@ -52,7 +56,7 @@ public class Floor extends Database<Floor> {
 		}
 	}
 	
-	@DatabaseField (generatedId = true)
+	@DatabaseField (id = true)
 	protected int id_floor;
 	
 	protected Collection<Vertex> vertices;

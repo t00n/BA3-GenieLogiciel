@@ -68,4 +68,12 @@ public class Static_ID {
 	public static int getRoomID() {
 		return getID("room");
 	}
+
+	public static int getFloorID() {
+		return getID("floor");
+	}
+	
+	public static int getWallID() {
+		return getID("wall");
+	}
 }

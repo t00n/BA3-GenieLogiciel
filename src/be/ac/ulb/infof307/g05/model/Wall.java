@@ -37,6 +37,10 @@ public class Wall extends Database<Wall> {
 	
 	public int getId() { return this.id_wall; }
 	
+	public void setId() {
+		this.id_wall = Static_ID.getWallID();
+	}
+	
 	public Collection<Vertex> getVertices() {
 		if (this.vertices == null) {
 			Dao<Vertex, Integer> dao = Vertex.getDao(Vertex.class);
