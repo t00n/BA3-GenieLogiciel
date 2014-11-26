@@ -6,6 +6,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState.FaceCullMode;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
@@ -76,7 +77,13 @@ public class JmeConverter {
 	}
 
 	private Geometry toGeometry(Floor floor, AssetManager assetManager) {
-		Polyhedron poly = new Polyhedron(floor.getVertices());
+		ArrayList<Vector3f> tmp = new ArrayList<Vector3f>();
+		// down side
+		for (Vertex vertex : floor.getVertices()) {
+			tmp.add(vertex.toVector3f());
+		}
+		// FIXME add 3D
+		Polyhedron poly = new Polyhedron(tmp);
 		
 		Mesh mesh = new Mesh();
 //		mesh.updateBound();

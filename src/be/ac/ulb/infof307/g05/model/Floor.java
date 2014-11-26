@@ -20,6 +20,7 @@ public class Floor extends Database<Floor> {
 		for (Vector3f vec : vector3fs) {
 			vertices.add(new Vertex(this, vec));
 		}
+		this.height = 0.2f;
 		this.isNew = true;
 		this.setId();
 	}
@@ -33,7 +34,19 @@ public class Floor extends Database<Floor> {
 	}
 	
 	public void setHeight(float height) {
-		// FIXME
+		this.height = height;
+	}
+
+	public float getHeight() {
+		return this.height;
+	}
+	
+	public void setVertices(Collection<Vector3f> mouseClicks) {
+		//FIXME delete old vertices from db
+		this.vertices = new ArrayList<Vertex>();
+		for (Vector3f vec : mouseClicks) {
+			vertices.add(new Vertex(this, vec));
+		}
 	}
 	
 	public Collection<Vertex> getVertices() {
@@ -60,13 +73,8 @@ public class Floor extends Database<Floor> {
 	@DatabaseField (id = true)
 	protected int id_floor;
 	
+	@DatabaseField (canBeNull = false)
+	protected float height;
+	
 	protected Collection<Vertex> vertices;
-
-	public void setVertices(Collection<Vector3f> mouseClicks) {
-		//FIXME delete old vertices from db
-		this.vertices = new ArrayList<Vertex>();
-		for (Vector3f vec : mouseClicks) {
-			vertices.add(new Vertex(this, vec));
-		}
-	}
 }
