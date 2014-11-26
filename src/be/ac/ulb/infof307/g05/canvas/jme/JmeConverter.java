@@ -19,8 +19,6 @@ import be.ac.ulb.infof307.g05.model.Room;
 import be.ac.ulb.infof307.g05.model.Stage;
 import be.ac.ulb.infof307.g05.model.Vertex;
 import be.ac.ulb.infof307.g05.model.Wall;
-import be.ac.ulb.infof307.g05.view.Cube;
-import be.ac.ulb.infof307.g05.view.Polygon;
 import be.ac.ulb.infof307.g05.view.Polyhedron;
 
 /**

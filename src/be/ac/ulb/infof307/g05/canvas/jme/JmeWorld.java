@@ -1,7 +1,5 @@
 package be.ac.ulb.infof307.g05.canvas.jme;
 
-import org.lwjgl.openal.AL;
-
 import be.ac.ulb.infof307.g05.EventController;
 import be.ac.ulb.infof307.g05.model.Project;
 
