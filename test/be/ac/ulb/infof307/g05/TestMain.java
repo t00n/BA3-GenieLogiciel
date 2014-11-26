@@ -37,9 +37,9 @@ public class TestMain {
         
         Collection<Vector3f> vectors = new ArrayList<Vector3f>();
         vectors.add(new Vector3f(0,0,0));
+        vectors.add(new Vector3f(2,0,2));
         vectors.add(new Vector3f(1,0,0));
         vectors.add(new Vector3f(1,0,1));
-        vectors.add(new Vector3f(2,0,2));
         
         stage.addRoom(name, vectors);
         
@@ -73,11 +73,16 @@ public class TestMain {
 	
 	@Test
 	public void testStaticID() {
-//FIXME		TableUtils.dropTable(Database.getConnectionSource(), Static_ID.class, true);
-//		TableUtils.createTableIfNotExists(Database.getConnectionSource(), Static_ID.class);
+		try {
+			TableUtils.dropTable(Database.getConnectionSource(), Static_ID.class, true);
+			TableUtils.createTableIfNotExists(Database.getConnectionSource(), Static_ID.class);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assert(Static_ID.getCompositeObjectID() == 1);
 		assert(Static_ID.getCompositeObjectID() == 2);
-		assert(Static_ID.getRoomID() == 1);
-		assert(Static_ID.getRoomID() == 2);
+		assert(Static_ID.getFloorID() == 1);
+		assert(Static_ID.getFloorID() == 2);
 	}
 }

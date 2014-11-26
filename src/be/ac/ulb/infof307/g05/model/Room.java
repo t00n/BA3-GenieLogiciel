@@ -25,10 +25,6 @@ public class Room extends Database<Room> {
 		return this.id_room;
 	}
 	
-	public void setId() {
-		this.id_room = Static_ID.getRoomID();
-	}
-	
 	public Floor getFloor() {
 		return this.floor;
 	}

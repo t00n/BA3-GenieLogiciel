@@ -28,7 +28,7 @@ public class Static_ID {
 	}
 	
 	private static Dao<Static_ID, String> dao;
-	private static HashMap<String, Static_ID> id_map;
+	private static HashMap<String, Static_ID> id_map = new HashMap<String, Static_ID>();
 	
 	private static int getID(String id) {
 		if (dao == null) {
@@ -63,10 +63,6 @@ public class Static_ID {
 	
 	public static int getCompositeObjectID() {
 		return getID("composite_object");
-	}
-	
-	public static int getRoomID() {
-		return getID("room");
 	}
 
 	public static int getFloorID() {

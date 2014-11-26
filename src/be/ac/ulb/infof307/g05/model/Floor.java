@@ -21,6 +21,7 @@ public class Floor extends Database<Floor> {
 			vertices.add(new Vertex(this, vec));
 		}
 		this.isNew = true;
+		this.setId();
 	}
 	
 	public int getId() {

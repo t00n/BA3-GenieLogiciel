@@ -19,6 +19,7 @@ import be.ac.ulb.infof307.g05.model.Stage;
 import be.ac.ulb.infof307.g05.model.Vertex;
 import be.ac.ulb.infof307.g05.model.Wall;
 import be.ac.ulb.infof307.g05.view.Cube;
+import be.ac.ulb.infof307.g05.view.Polyhedron;
 
 /**
  * The Class JmeConverter converts a CompositeObject into a JME one to take the objects from the database
@@ -75,14 +76,13 @@ public class JmeConverter {
 	}
 
 	private Geometry toGeometry(Floor floor, AssetManager assetManager) {
-		ArrayList<Vertex> vertices = (ArrayList<Vertex>) floor.getVertices();
-		Cube cube = new Cube(vertices.get(0), vertices.get(1));
+		Polyhedron poly = new Polyhedron(floor.getVertices());
 		
 		Mesh mesh = new Mesh();
 //		mesh.updateBound();
 //		mesh.setStatic();
-		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(cube.getVertices()));
-		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(cube.getOrder()));
+		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(poly.getVectors()));
+		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(poly.getMeshOrder()));
 		
 		Geometry geo = new Geometry(Integer.toString(floor.getId()), mesh);
 		Material texture = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
