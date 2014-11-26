@@ -18,6 +18,7 @@ public abstract class AbstractTool {
 	public void purge() {
 		this.mouseClicks.clear();
 		this.mousePositions.clear();
+		this.idCollisions.clear();
 	}
 	
 	public void addPosition(Vector3f vector) {

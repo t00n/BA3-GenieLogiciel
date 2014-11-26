@@ -25,6 +25,10 @@ public class Room extends Database<Room> {
 		return this.id_room;
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
 	public Floor getFloor() {
 		return this.floor;
 	}

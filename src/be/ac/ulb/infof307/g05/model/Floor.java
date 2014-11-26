@@ -61,4 +61,12 @@ public class Floor extends Database<Floor> {
 	protected int id_floor;
 	
 	protected Collection<Vertex> vertices;
+
+	public void setVertices(Collection<Vector3f> mouseClicks) {
+		//FIXME delete old vertices from db
+		this.vertices = new ArrayList<Vertex>();
+		for (Vector3f vec : mouseClicks) {
+			vertices.add(new Vertex(this, vec));
+		}
+	}
 }
