@@ -204,8 +204,8 @@ public class EventController implements ActionListener {
 		}else if(command == "Save"){
 			_currentProject.save();
 		}else if(command == "Quit"){
-			_window.dispose();
 			_saveThread.interrupt();
+			_window.quit();
 		}else {
 			_toolController.actionPerformed(event);
 		}

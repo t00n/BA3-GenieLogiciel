@@ -6,6 +6,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import be.ac.ulb.infof307.g05.model.CompositeObject;
+import be.ac.ulb.infof307.g05.model.Resource;
 import be.ac.ulb.infof307.g05.model.Static_ID;
 import be.ac.ulb.infof307.g05.model.Database;
 import be.ac.ulb.infof307.g05.model.Project;
@@ -28,7 +29,7 @@ public class Main {
 		JdbcConnectionSource connectionSource = Database.getConnectionSource();
 		try {
 			TableUtils.createTableIfNotExists(connectionSource, Project.class);
-//			TableUtils.createTableIfNotExists(connectionSource, Texture.class);
+			TableUtils.createTableIfNotExists(connectionSource, Resource.class);
 			TableUtils.createTableIfNotExists(connectionSource, CompositeObject.class);
 			TableUtils.createTableIfNotExists(connectionSource, Static_ID.class);
 			TableUtils.createTableIfNotExists(connectionSource, Stage.class);

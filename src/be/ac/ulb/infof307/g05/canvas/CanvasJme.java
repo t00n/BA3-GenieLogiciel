@@ -37,4 +37,8 @@ public class CanvasJme extends AbstractCanvas<Canvas> {
 		_jmeWorld.setViews(_eventController.getFlag2D(), _eventController.getFlag3D());
 		_jmeWorld.simpleUpdate((float)0.0);
 	}
+	
+	public void quit() {
+		_jmeWorld.stop();
+	}
 }
