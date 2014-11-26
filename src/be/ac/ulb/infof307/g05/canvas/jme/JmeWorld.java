@@ -132,6 +132,7 @@ public class JmeWorld extends SimpleApplication {
     	if (_eventController.getStage() != null){
 	    	rootNode.attachChild(_jmeConverter.convert(_eventController.getStage(), assetManager));
     	}
+    	rootNode.updateGeometricState();
 	}
 	
     /* (non-Javadoc)

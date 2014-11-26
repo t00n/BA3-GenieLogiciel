@@ -162,6 +162,9 @@ public class ToolController {
 			else if (command == "ESCAPE") {
 				_currentTool.purge();
 			}
+			else if (command == "Draw") {
+				_currentTool = null;
+			}
 		}else if(_currentTool == null && command != "comboBoxChanged"){
 			System.out.println("COMMAND: "+command);
 			if (command == "Draw")
