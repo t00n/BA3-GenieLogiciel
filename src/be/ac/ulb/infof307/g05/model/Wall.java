@@ -1,7 +1,5 @@
 package be.ac.ulb.infof307.g05.model;
 
-import java.util.ArrayList;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jme3.math.Vector3f;
