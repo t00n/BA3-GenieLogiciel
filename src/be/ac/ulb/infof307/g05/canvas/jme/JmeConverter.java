@@ -62,7 +62,7 @@ public class JmeConverter {
 		mesh.updateBound();
 		mesh.setStatic();
 		
-		Geometry geo = new Geometry(Integer.toString(object.getId()), mesh);
+		Geometry geo = new Geometry(object.getName(), mesh);
 		if(object.getTexture() == null){
 			Material texture = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 			texture.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);

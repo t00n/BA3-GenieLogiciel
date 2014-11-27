@@ -11,14 +11,9 @@ public class MoveRoomTool extends AbstractStageTool {
 	}
 	
 	@Override
-	public void addCollision(String id) {
+	public void addCollision(String name) {
 		if (this.currentObject == null) {
-			try {
-				this.currentObject = this.currentStage.getById(Integer.parseInt(id));
-			}
-			catch (NumberFormatException e) {
-				
-			}
+			this.currentObject = this.currentStage.getByName(name);
 		}
 		else {
 			this.currentObject = null;

@@ -13,7 +13,7 @@ public class DrawRoomTool extends AbstractStageTool {
 		super(stage);
 	}
 	
-	protected Collection<Vector3f> buildRoom(Vector3f cursor) {
+	protected Collection<Vector3f> buildFloor(Vector3f cursor) {
 		Collection<Vector3f> tmp = new ArrayList<Vector3f>();
 		for (Vector3f vec : this.mouseClicks) {
 			tmp.add(vec.clone());
@@ -32,7 +32,7 @@ public class DrawRoomTool extends AbstractStageTool {
 	public void addPosition(Vector3f cursor) {
 		super.addPosition(cursor);
 		if (this.mouseClicks.size() >= 2) {
-			this.currentObject.setVertices(this.buildRoom(cursor));
+			this.currentObject.setVertices(this.buildFloor(cursor));
 		}
 	}
 	
@@ -40,18 +40,19 @@ public class DrawRoomTool extends AbstractStageTool {
 	public void addClick(Vector3f click) {
 		super.addClick(click);
 		if (this.mouseClicks.size() == 2) {
-			this.currentObject = new CompositeObject(this.currentStage, this.buildRoom(click));
+			this.currentObject = new CompositeObject(this.currentStage, this.buildFloor(click));
+			this.currentObject.setId("Floor");
 			this.currentStage.getCompositeObjects().add(this.currentObject);
 		}
 		if (this.mouseClicks.size() >= 3) {
-			this.currentObject.setVertices(this.buildRoom(click));
+			this.currentObject.setVertices(this.buildFloor(click));
 		}
 	}
 	
 	@Override
 	public void use() {
 		if (this.mouseClicks.size() >= 3) {
-			this.currentStage.addCompositeObject(this.buildRoom(null));
+			this.currentStage.addCompositeObject("Floor", this.buildFloor(null));
 			this.purge();
 		}
 	}

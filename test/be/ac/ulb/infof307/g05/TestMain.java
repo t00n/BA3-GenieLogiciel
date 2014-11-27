@@ -44,26 +44,26 @@ public class TestMain {
         vectors.add(new Vector3f(2,0.1f,2));
         vectors.add(new Vector3f(0,0.1f,2));
         
-        stage.addCompositeObject(vectors);
+        stage.addCompositeObject("Floor", vectors);
         CompositeObject parent = (CompositeObject) stage.getCompositeObjects().toArray()[0];
         vectors.clear();
         vectors.add(new Vector3f(0,0,0));
         vectors.add(new Vector3f(2,0,0));
         vectors.add(new Vector3f(2,0,.1f));
         vectors.add(new Vector3f(0,0,.1f));
-        stage.addCompositeObject(parent, vectors);
+        stage.addCompositeObject("Wall", parent, vectors);
         vectors.clear();
         vectors.add(new Vector3f(2,0,0));
         vectors.add(new Vector3f(2,0,2));
-        stage.addCompositeObject(parent, vectors);
+        stage.addCompositeObject("Wall", parent, vectors);
         vectors.clear();
         vectors.add(new Vector3f(2,0,2));
         vectors.add(new Vector3f(0,0,2));
-        stage.addCompositeObject(parent, vectors);
+        stage.addCompositeObject("Wall", parent, vectors);
         vectors.clear();
         vectors.add(new Vector3f(0,0,2));
         vectors.add(new Vector3f(0,0,0));
-        stage.addCompositeObject(parent, vectors);
+        stage.addCompositeObject("Wall", parent, vectors);
         
         project.save();
 	}

@@ -39,9 +39,9 @@ public class Stage extends Database<Stage> {
 	
 	public int getId() { return this.id_stage; }
 	
-	public CompositeObject getById(int id) {
+	public CompositeObject getByName(String id) {
 		for (CompositeObject object : this.getCompositeObjects()) {
-			CompositeObject ret = object.getById(id);
+			CompositeObject ret = object.getByName(id);
 			if (ret != null) {
 				return ret;
 			}
@@ -61,13 +61,15 @@ public class Stage extends Database<Stage> {
 		return this.compositeObjects;
 	}
 	
-	public void addCompositeObject(Collection<Vector3f> vectors) {
-		this.getCompositeObjects().add(new CompositeObject(this, vectors));
+	public void addCompositeObject(String name, Collection<Vector3f> vectors) {
+		CompositeObject object = new CompositeObject(this, vectors);
+		this.getCompositeObjects().add(object);
+		object.setId(name);
 	}
 	
-	public void addCompositeObject(CompositeObject parent, Collection<Vector3f> vectors) {
+	public void addCompositeObject(String name, CompositeObject parent, Collection<Vector3f> vectors) {
 		for (CompositeObject object : this.getCompositeObjects()) {
-			object.addChild(parent, vectors);
+			object.addChild(name, parent, vectors);
 		}
 	}
 

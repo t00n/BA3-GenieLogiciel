@@ -79,12 +79,9 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return this.id_compositeObject;
 	}
 	
-	public void setId() {
+	public void setId(String type) {
 		this.id_compositeObject = Static_ID.getObjectID();
-	}
-	
-	public String getName() {
-		return this.name;
+		this.name = type + " " + this.id_compositeObject;
 	}
 
 	public Resource getTexture() {
@@ -95,13 +92,13 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return this.mesh;
 	}
 
-	public CompositeObject getById(int id) {
-		if (this.getId() == id) {
+	public CompositeObject getByName(String id) {
+		if (this.getName() == id) {
 			return this;
 		}
 		else {
 			for (CompositeObject child : this.getChilds()) {
-				CompositeObject ret = child.getById(id);
+				CompositeObject ret = child.getByName(id);
 				if (ret != null)
 				{
 					return ret;
@@ -111,6 +108,10 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return null;
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+
 	public Collection<CompositeObject> getChilds() {
 		if (this.childs == null) {
 			Dao<CompositeObject, Integer> dao = CompositeObject.getDao(CompositeObject.class);
@@ -192,16 +193,16 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		this.getChilds().add(object);
 	}
 
-	public void addChild(CompositeObject parent, Collection<Vector3f> vectors) {
+	public void addChild(String name, CompositeObject parent, Collection<Vector3f> vectors) {
 		if (parent == this) {
 			CompositeObject child = new CompositeObject(parent, vectors);
 			this.add(child);
-			child.setId();
+			child.setId(name);
 		}
 		else
 		{
 			for (CompositeObject c: this) {
-				c.addChild(parent, vectors);
+				c.addChild(name, parent, vectors);
 			}
 		}
 	}

@@ -35,11 +35,11 @@ public class LayerTab extends AbstractTab {
 		DefaultMutableTreeNode currentStage = null;
 		if (_eventController.getStage() != null) {
 			for (CompositeObject cobj : _eventController.getStage().getCompositeObjects()) {
-				if (cobj.getId() != 10000) {//.contains("Etage")) { // TODO avec les noms
-					currentStage = new DefaultMutableTreeNode(cobj.getId());
+				if (cobj.getName() != "caca") {//.contains("Etage")) { // TODO avec les noms
+					currentStage = new DefaultMutableTreeNode(cobj.getName());
 				}
 				if (currentStage != null) {
-					currentStage.add(new DefaultMutableTreeNode(cobj.getId())); // TODO Add a method to retieve the name
+					currentStage.add(new DefaultMutableTreeNode(cobj.getName())); // TODO Add a method to retieve the name
 				}
 				root.add(currentStage);
 			}
