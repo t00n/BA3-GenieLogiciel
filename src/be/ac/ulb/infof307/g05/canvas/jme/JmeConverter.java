@@ -87,10 +87,10 @@ public class JmeConverter {
 		Polyhedron poly = new Polyhedron(tmp, floor.getHeight());
 		
 		Mesh mesh = new Mesh();
-//		mesh.updateBound();
-//		mesh.setStatic();
 		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(poly.getVectors()));
 		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(poly.getMeshOrder()));
+		mesh.updateBound();
+		mesh.setStatic();
 		
 		Geometry geo = new Geometry(Integer.toString(floor.getId()), mesh);
 		Material texture = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -126,10 +126,10 @@ public class JmeConverter {
 		Polyhedron poly = new Polyhedron(tmp, wall.getHeight());
 		
 		Mesh mesh = new Mesh();
-//		mesh.updateBound();
-//		mesh.setStatic();
 		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(poly.getVectors()));
 		mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(poly.getMeshOrder()));
+		mesh.updateBound();
+		mesh.setStatic();
 		
 		Geometry geo = new Geometry(Integer.toString(wall.getId()), mesh);
 		Material texture = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");

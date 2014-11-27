@@ -78,6 +78,16 @@ public class Room extends Database<Room> {
 		this.getWalls().add(new Wall(this, vectors));
 	}
 	
+	public void moveTo(Vector3f position) {
+		this.floor.moveTo(position);
+		for (Wall wall : this.getWalls()) {
+			wall.moveTo(position);
+		}
+		for (CompositeObject object : this.getCompositeObjects()) {
+			object.moveTo(position);
+		}
+	}
+	
 	@Override
 	public void save() {
 		this.floor.save();

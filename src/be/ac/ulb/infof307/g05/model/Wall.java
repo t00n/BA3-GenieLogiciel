@@ -73,5 +73,10 @@ public class Wall extends Database<Wall> {
 			v.save();
 		}
 	}
+
+	public void moveTo(Vector3f position) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

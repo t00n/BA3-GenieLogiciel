@@ -3,6 +3,7 @@ package be.ac.ulb.infof307.g05.model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.jme3.math.Vector3f;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -220,5 +221,10 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	
 	public int size(){
 		return childs.size();
+	}
+
+	public void moveTo(Vector3f position2) {
+		// TODO Auto-generated method stub
+		
 	}
 }
