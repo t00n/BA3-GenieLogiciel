@@ -1,6 +1,5 @@
 package be.ac.ulb.infof307.g05.view;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.jme3.math.Vector3f;
