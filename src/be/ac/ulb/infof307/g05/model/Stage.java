@@ -1,7 +1,12 @@
 package be.ac.ulb.infof307.g05.model;
 
+import java.sql.SQLException;
+import java.util.Collection;
+
+import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.jme3.math.Vector3f;
 
 /**
  * The Class Stage.
@@ -32,21 +37,37 @@ public class Stage extends Database<Stage> {
 		return this.level;
 	}
 	
-	public CompositeObject getFloor() { return floor; }
+	public int getId() { return this.id_stage; }
 	
-	/**
-	 * Adds the object.
-	 *
-	 * @param parent the parent
-	 * @param child the child
-	 */
-	public void addObject(CompositeObject parent, CompositeObject child) {
-		if (this.floor == null) {
-			this.floor = child;
-			this.floor.setId();
+	public CompositeObject getById(int id) {
+		for (CompositeObject object : this.getCompositeObjects()) {
+			CompositeObject ret = object.getById(id);
+			if (ret != null) {
+				return ret;
+			}
 		}
-		else {
-			this.floor.addChild(parent, child);
+		return null;
+	}
+	
+	public Collection<CompositeObject> getCompositeObjects() {
+		if (this.compositeObjects == null) {
+			Dao<CompositeObject, Integer> dao = CompositeObject.getDao(CompositeObject.class);
+			try {
+				this.compositeObjects = dao.queryForEq("stage_id", this.getId());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return this.compositeObjects;
+	}
+	
+	public void addCompositeObject(Collection<Vector3f> vectors) {
+		this.getCompositeObjects().add(new CompositeObject(this, vectors));
+	}
+	
+	public void addCompositeObject(CompositeObject parent, Collection<Vector3f> vectors) {
+		for (CompositeObject object : this.getCompositeObjects()) {
+			object.addChild(parent, vectors);
 		}
 	}
 
@@ -55,10 +76,10 @@ public class Stage extends Database<Stage> {
      */
     @Override
     public void save() {
-        if (this.floor != null) {
-        	this.floor.save();
-        }
         super.save();
+        for (CompositeObject object : this.getCompositeObjects()) {
+        	object.save();
+        }
     }
 	
 	/** The id_stage. */
@@ -73,7 +94,5 @@ public class Stage extends Database<Stage> {
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected Project project;
 	
-	/** The floor. */
-	@DatabaseField (canBeNull = true, foreign = true, foreignAutoRefresh = true)
-	protected CompositeObject floor;
+	protected Collection<CompositeObject> compositeObjects;
 }

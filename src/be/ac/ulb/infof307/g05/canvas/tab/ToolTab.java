@@ -49,7 +49,6 @@ public class ToolTab extends AbstractTab implements ItemListener {
 		button_layout.setVgap(5);
 		_buttonPanel.setLayout(button_layout);
 		createButton("Draw");
-		createButton("Pull-Up");
 		createButton("Move");
 		createButton("Rotate");
 		createButton("Modify");
@@ -71,7 +70,6 @@ public class ToolTab extends AbstractTab implements ItemListener {
 		button.addActionListener(_eventController);
 		button.addItemListener(this);
 		_buttonPanel.add(button);
-		_eventController.addTool(tool_name);
 	}
 	
 	/* (non-Javadoc)
@@ -100,8 +98,8 @@ public class ToolTab extends AbstractTab implements ItemListener {
 	 * this method create options for "Draw" tool in option panel
 	 */
 	public void setDrawOption(){
-		JLabel shape_label = new JLabel("Shape :", SwingConstants.LEFT);
-		JComboBox<String> shape_choice = new JComboBox<String>(new String[] {"Rectangle","Polygon","Oval"});
+		JLabel shape_label = new JLabel("Object :", SwingConstants.LEFT);
+		JComboBox<String> shape_choice = new JComboBox<String>(new String[] {"Room","Wall","Floor"});
 		shape_choice.setFocusable(false);
 		shape_choice.addActionListener(_eventController);
 		_optionPanel.add(shape_label);

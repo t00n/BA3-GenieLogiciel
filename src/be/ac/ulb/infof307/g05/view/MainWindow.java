@@ -166,4 +166,8 @@ public class MainWindow extends JFrame {
 		_canvasMenuBar.update();
 		_canvasStatusBar.update();
 	}
+	
+	public void quit() {
+		this.dispose();
+	}
 }

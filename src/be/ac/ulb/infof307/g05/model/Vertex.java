@@ -16,19 +16,18 @@ public class Vertex extends Database<Vertex> {
 	
 	/** The x. */
 	@DatabaseField (canBeNull = false)
-	protected float x;
+	public float x;
 	
 	/** The y. */
 	@DatabaseField (canBeNull = false)
-	protected float y;
+	public float y;
 	
 	/** The z. */
 	@DatabaseField (canBeNull = false)
-	protected float z;
+	public float z;
 	
-	/** The referent. */
 	@DatabaseField (canBeNull = false, foreign = true)
-	private CompositeObject referent;
+	protected CompositeObject object;
 	
 	/**
 	 * Instantiates a new vertex.
@@ -43,8 +42,17 @@ public class Vertex extends Database<Vertex> {
 	 * @param referent the referent
 	 * @param vec the vec
 	 */
-	public Vertex(CompositeObject referent, Vector3f vec) {
-		this.referent = referent;
+	
+	public Vertex(Vector3f vec) {
+		this.init(null, vec);
+	}
+	
+	public Vertex(CompositeObject object, Vector3f vec) {
+		this.init(object, vec);
+	}
+	
+	private void init(CompositeObject object, Vector3f vec) {
+		this.object = object;
 		this.x = vec.getX();
 		this.y = vec.getY();
 		this.z = vec.getZ();

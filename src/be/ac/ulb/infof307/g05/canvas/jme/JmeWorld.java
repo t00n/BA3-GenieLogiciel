@@ -1,7 +1,5 @@
 package be.ac.ulb.infof307.g05.canvas.jme;
 
-import org.lwjgl.openal.AL;
-
 import be.ac.ulb.infof307.g05.EventController;
 import be.ac.ulb.infof307.g05.model.Project;
 
@@ -10,7 +8,6 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
-import com.jme3.scene.Node;
 import com.jme3.system.JmeCanvasContext;
 
 /**
@@ -33,11 +30,8 @@ public class JmeWorld extends SimpleApplication {
 	/** The _event controller. */
 	private EventController _eventController;
 	
-	/** The _current stage. */
-	private Node _currentStage = new Node();
-	
 	/** The _converter. */
-	private JmeConverter _converter = new JmeConverter();
+	private JmeConverter _jmeConverter = new JmeConverter();
 
 	
 	/**
@@ -119,19 +113,23 @@ public class JmeWorld extends SimpleApplication {
 	   
        _view[0].attachScene(rootNode);
        _view[1].attachScene(rootNode);
-       AL.destroy();
 	}
 	
 	/**
 	 * this method redraw all the scene
 	 */
-	private void draw() {
-    	rootNode.detachChild(_currentStage);
-    	_currentStage.detachAllChildren();
+	public void draw() {
+		rootNode.detachAllChildren();
+    	
+    	Project project = _eventController.getProject();
+    	_reference = new Reference(assetManager, project.getWidth(), project.getLength());
+    	_reference.setNode(rootNode, true);
+    	
+    	
     	if (_eventController.getStage() != null){
-	    	_converter.convert(_eventController.getStage(), _currentStage, assetManager);
-	    	rootNode.attachChild(_currentStage);
+	    	rootNode.attachChild(_jmeConverter.convert(_eventController.getStage(), assetManager));
     	}
+    	rootNode.updateGeometricState();
 	}
 	
     /* (non-Javadoc)
