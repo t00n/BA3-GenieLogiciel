@@ -4,6 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import be.ac.ulb.infof307.g05.EventController;
@@ -55,21 +56,54 @@ public class LayerTab extends AbstractTab {
 		_eventController = eventController;
 		
 		this.m_objects = makeTree();
+		setActionsAvailablesForTheTreeObjects(this.m_objects);
 		this.add(m_objects);
 		
 	}
 	
+	/**
+	 * Add actions management to the JTree
+	 * @note We can't directly add an event listener to the JTree directly because it's not a Component.
+	 * @param tree
+	 */
+	private void setActionsAvailablesForTheTreeObjects(JTree tree) {
+		tree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+	        public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+	            jTreeActionListener(evt);
+	        	String node = evt.getNewLeadSelectionPath().getLastPathComponent().toString();
+	        	System.out.println(node);
+	        }
+	    });		
+	}
+	
+	/**
+	 * Action Listener when we select an element on the list.
+	 * @param tse
+	 */
+	private void jTreeActionListener(TreeSelectionEvent tse ) {
+	    String node = tse.getNewLeadSelectionPath().getLastPathComponent().toString();
+	    if (node.contains("Etage")) {
+	    	// TODO changer d'etage
+	    	System.out.println("Étage sélectionné" + node);
+	    }
+	    else {
+	    	// TODO selectionner l'objet
+	    	System.out.println("Selectionne l'objet " + node);
+	    }
+	}
+
 	public String getName(){
 		return _name;
 	}
 	
 	public void update() { // TODO trop d'updates <- améilloré.. mais le code est un peu dégueulasse a refaire.
-		int currentChilds = this._childObjectsNumber;
+		int currentChildsNumber = this._childObjectsNumber;
 		JTree objects = makeTree(); // will modify _childObjectsNumber
 		
-		if (currentChilds != this._childObjectsNumber) {
+		if (currentChildsNumber != this._childObjectsNumber) {
 			this.remove(m_objects);
 			this.m_objects = objects;
+			setActionsAvailablesForTheTreeObjects(this.m_objects);
 			this.add(m_objects);
 		}
 	}
