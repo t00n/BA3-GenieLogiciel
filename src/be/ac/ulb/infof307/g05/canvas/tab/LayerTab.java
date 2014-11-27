@@ -2,28 +2,70 @@ package be.ac.ulb.infof307.g05.canvas.tab;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import be.ac.ulb.infof307.g05.EventController;
+import be.ac.ulb.infof307.g05.model.CompositeObject;
 
 /**
- * The Class LayerTab. (TODO ITS ONLY A TEST FOR SOME BUTTONS AND ELEMENTS, IT WILL BE DEPRECATED SOON)
+ * The Class LayerTab contains the different layers like the objects in the house and the stages.
  */
 public class LayerTab extends AbstractTab {
 		
 	/**
+	 * Contains the object's tree.
+	 */
+	private JTree m_objects;
+	
+	/**
+	 * Contains only the stage's tree.
+	 */
+	private JTree m_stages; // TODO
+	
+	/**
+	 * Make an object tree with the current stage childs.
+	 * @return A new tree to be shown
+	 */
+	private JTree makeTree() {
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("root");
+		DefaultMutableTreeNode currentStage = null;
+		if (_eventController.getStage() != null) {
+			for (CompositeObject cobj : _eventController.getStage().getChilds()) {
+				if (cobj.getId() != 10000) {//.contains("Etage")) { // TODO avec les noms
+					currentStage = new DefaultMutableTreeNode(cobj.getId());
+				}
+				if (currentStage != null) {
+					currentStage.add(new DefaultMutableTreeNode(cobj.getId())); // TODO Add a method to retieve the name
+				}
+				root.add(currentStage);
+			}
+		}
+		System.out.println(root.getChildCount());
+		return new JTree(root);
+	}
+	
+	/**
 	 * Instantiates a new layer tab.
 	 */
-	public LayerTab(){
+	public LayerTab(EventController eventController){
 		_name = new String("Layers");
+		_eventController = eventController;
 		
-		JButton button = new JButton("button2");
-		this.add(button);
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.addItem("element 1");
-		comboBox.addItem("element 2");
-		comboBox.addItem("element 3");
-		this.add(comboBox);
+		this.m_objects = makeTree();
+		this.add(m_objects);
+		
 	}
 	
 	public String getName(){
 		return _name;
+	}
+	
+	public void update() { // TODO trop d'updates
+		this.remove(m_objects);
+		this.m_objects = makeTree();
+		this.add(m_objects);
+		//this.m_objects.repaint();
 	}
 }

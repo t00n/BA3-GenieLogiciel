@@ -17,6 +17,7 @@ public class TabCanvas extends AbstractCanvas<JTabbedPane> {
 	
 	/** The _tabs. */
 	private Vector<AbstractTab> _tabs = new Vector<AbstractTab>();
+	private LayerTab _layerTab;
 	
 	/**
 	 * Instantiates a new tab canvas.
@@ -27,9 +28,10 @@ public class TabCanvas extends AbstractCanvas<JTabbedPane> {
 		/** constructor **/
 		_panel = new JTabbedPane();
 		_eventController = eventController;
+		_layerTab = new LayerTab(_eventController);
 		
 		_tabs.add(new ToolTab(_eventController));
-		_tabs.add(new LayerTab());
+		_tabs.add(_layerTab);
 		
 		appendTabs();
 	}
@@ -42,6 +44,10 @@ public class TabCanvas extends AbstractCanvas<JTabbedPane> {
 		for(JPanel tab:_tabs){
 			_panel.addTab(tab.getName(), tab);
 		}
+	}
+	
+	public void update() {
+		_layerTab.update();
 	}
 	
 }
