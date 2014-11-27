@@ -3,6 +3,7 @@ package be.ac.ulb.infof307.g05;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 import be.ac.ulb.infof307.g05.AutoSaveThread;
@@ -154,6 +155,15 @@ public class EventController implements ActionListener {
 		this.launchSaveThread();
 	}
 	
+	public void setStageByName(String stageName) {
+		Collection<Stage> stages = _currentProject.getStages();
+		for (Stage stage : stages) {
+			if (stage.toString() == "stageName") {
+				this._currentStage = stage;
+			}
+		}
+	}
+	
 	/**
 	 * Make a new project.
 	 */
@@ -207,6 +217,12 @@ public class EventController implements ActionListener {
 		}
 		else if (command == "Move"){
 			_currentTool = new MoveRoomTool(_currentStage);
+		} else if (command == "SelectObjectFromTree"){
+			_currentTool = new MoveRoomTool(_currentStage);
+		} else if (command == "SelectStageFromTree"){
+			_currentTool = new MoveRoomTool(_currentStage);
+		} else if(command == "ADD STAGE"){
+			_currentProject.addStage(_currentProject.getStages().size() + 1);
 		}
 		else if (command == "Rotate"){
 			_currentTool = new RotateRoomTool(_currentStage);

@@ -1,8 +1,7 @@
 package be.ac.ulb.infof307.g05.canvas.tab;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
+import java.awt.event.ActionEvent;
+
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -35,18 +34,35 @@ public class LayerTab extends AbstractTab {
 		DefaultMutableTreeNode currentStage = null;
 		if (_eventController.getStage() != null) {
 			for (CompositeObject cobj : _eventController.getStage().getCompositeObjects()) {
-				if (cobj.getId() != 10000) {//.getName().contains("Etage")) { // TODO avec les noms
+				if (cobj.getId() != 100000) { //Name().contains("Etage")) {
 					currentStage = new DefaultMutableTreeNode(cobj.getId());
 				}
 				if (currentStage != null) {
-					currentStage.add(new DefaultMutableTreeNode(cobj.getId())); // TODO Add a method to retieve the name
+					currentStage.add(new DefaultMutableTreeNode(cobj.getId()));
 				}
 				root.add(currentStage);
 			}
 			_childObjectsNumber = root.getChildCount();
 		}
 		return new JTree(root);
-	}
+	}/*
+	private JTree makeTree() {
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("root");
+		DefaultMutableTreeNode currentStage = null;
+		if (_eventController.getStage() != null) {
+			for (CompositeObject cobj : _eventController.getStage().getCompositeObjects()) {
+				if (cobj.getName().contains("Etage")) {
+					currentStage = new DefaultMutableTreeNode(cobj.getName());
+				}
+				if (currentStage != null) {
+					currentStage.add(new DefaultMutableTreeNode(cobj.getName()));
+				}
+				root.add(currentStage);
+			}
+			_childObjectsNumber = root.getChildCount();
+		}
+		return new JTree(root);
+	}*/
 	
 	/**
 	 * Instantiates a new layer tab.
@@ -70,8 +86,6 @@ public class LayerTab extends AbstractTab {
 		tree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
 	        public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
 	            jTreeActionListener(evt);
-	        	String node = evt.getNewLeadSelectionPath().getLastPathComponent().toString();
-	        	System.out.println(node);
 	        }
 	    });		
 	}
@@ -84,10 +98,20 @@ public class LayerTab extends AbstractTab {
 	    String node = tse.getNewLeadSelectionPath().getLastPathComponent().toString();
 	    if (node.contains("Etage")) {
 	    	// TODO changer d'etage
+	    	/*int uniqueId = (int) System.currentTimeMillis();
+	    	ActionEvent action = new ActionEvent(this, uniqueId, "SelectStageFromTree");
+	    	System.out.println(action.getActionCommand());
+	    	*/
+	    	_eventController.setStageByName(node); /*
+	    	_eventController.actionPerformed(action);*/
 	    	System.out.println("Étage sélectionné" + node);
 	    }
 	    else {
 	    	// TODO selectionner l'objet
+	    	int uniqueId = (int) System.currentTimeMillis();
+	    	ActionEvent action = new ActionEvent(this, uniqueId, "SelectObjectFromTree");
+	    	System.out.println(action.getActionCommand());
+	    	_eventController.actionPerformed(action);
 	    	System.out.println("Selectionne l'objet " + node);
 	    }
 	}
@@ -96,7 +120,7 @@ public class LayerTab extends AbstractTab {
 		return _name;
 	}
 	
-	public void update() { // TODO trop d'updates <- améilloré.. mais le code est un peu dégueulasse a refaire.
+	public void update() { // TODO trop d'updates <- améilloré.. mais le code est un peu dégueulasse.. à refaire.
 		int currentChildsNumber = this._childObjectsNumber;
 		JTree objects = makeTree(); // will modify _childObjectsNumber
 		

@@ -44,7 +44,7 @@ public class ToolTab extends AbstractTab implements ItemListener {
 		this.add(new JSeparator(SwingConstants.HORIZONTAL));
 		this.add(_optionPanel);
 
-		GridLayout button_layout = new GridLayout(5,2);
+		GridLayout button_layout = new GridLayout(6,2);
 		button_layout.setHgap(5);
 		button_layout.setVgap(5);
 		_buttonPanel.setLayout(button_layout);
@@ -53,6 +53,7 @@ public class ToolTab extends AbstractTab implements ItemListener {
 		createButton("Rotate");
 		createButton("Modify");
 		createButton("Paint");
+		createButton("ADD STAGE"); // TODO rename, inherit from AbstractStageTool ?? @Toon
 		
 		_optionPanel.setLayout(new GridLayout(5,2));
 	}
