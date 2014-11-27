@@ -68,8 +68,12 @@ public class Wall extends Database<Wall> {
 	}
 
 	public void moveTo(Vector3f position) {
-		// TODO Auto-generated method stub
-		
+		this.beginning.x += position.x;
+		this.beginning.y += position.y;
+		this.beginning.z += position.z;
+		this.end.x += position.x;
+		this.end.y += position.y;
+		this.end.z += position.z;
 	}
 	
 }

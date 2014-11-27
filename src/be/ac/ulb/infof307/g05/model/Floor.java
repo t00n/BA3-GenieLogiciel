@@ -61,21 +61,16 @@ public class Floor extends Database<Floor> {
 		return this.vertices;
 	}
 
-	public void moveTo(Vector3f position) {
-		ArrayList<Vector3f> vectors = new ArrayList<Vector3f>();
+	public void moveTo(Vector3f difference) {
 		for (Vertex vertex : this.getVertices()) {
-			vectors.add(vertex.toVector3f());
+			vertex.x += difference.x;
+			vertex.y += difference.y;
+			vertex.z += difference.z;
 		}
-		Vector3f difference = position.subtract(vectors.get(0));
-		for (Vector3f vec : vectors) {
-			vec.add(difference, vec);
-		}
-		int i = 0;
-		for (Vertex vertex : this.getVertices()) {
-			vertex.x = vectors.get(i).x;
-			vertex.y = vectors.get(i).y;
-			vertex.z = vectors.get(i++).z;
-		}
+	}
+	
+	public Vector3f getDifference(Vector3f position) {
+		return position.subtract(((Vertex)this.getVertices().toArray()[0]).toVector3f());
 	}
 	
 	@Override

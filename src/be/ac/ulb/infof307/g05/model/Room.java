@@ -79,12 +79,13 @@ public class Room extends Database<Room> {
 	}
 	
 	public void moveTo(Vector3f position) {
-		this.floor.moveTo(position);
+		Vector3f difference = this.getFloor().getDifference(position);
+		this.floor.moveTo(difference);
 		for (Wall wall : this.getWalls()) {
-			wall.moveTo(position);
+			wall.moveTo(difference);
 		}
 		for (CompositeObject object : this.getCompositeObjects()) {
-			object.moveTo(position);
+			object.moveTo(difference);
 		}
 	}
 	
