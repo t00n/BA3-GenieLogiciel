@@ -89,6 +89,10 @@ public class Room extends Database<Room> {
 		}
 	}
 	
+	public void rotate(float angle) {
+		this.getFloor().rotate(angle);
+	}
+	
 	@Override
 	public void save() {
 		this.floor.save();

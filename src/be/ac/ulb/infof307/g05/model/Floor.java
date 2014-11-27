@@ -68,6 +68,18 @@ public class Floor extends Database<Floor> {
 			vertex.z += difference.z;
 		}
 	}
+
+	public void rotate(float range) {
+		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
+		float posX;
+		float posZ;
+		for (int i = 0; i < (tmp.size()); ++i) {
+			posX = tmp.get(i).x;
+			posZ = tmp.get(i).z;
+			tmp.get(i).x = (float) ((posX*Math.cos(range)) - (posZ*Math.sin(range)));
+			tmp.get(i).z = (float) ((posZ*Math.cos(range)) + (posX*Math.sin(range)));
+		}
+	}
 	
 	public Vector3f getDifference(Vector3f position) {
 		return position.subtract(((Vertex)this.getVertices().toArray()[0]).toVector3f());

@@ -7,6 +7,7 @@ import be.ac.ulb.infof307.g05.model.Stage;
 import be.ac.ulb.infof307.g05.tools.AbstractTool;
 import be.ac.ulb.infof307.g05.tools.DrawRoomTool;
 import be.ac.ulb.infof307.g05.tools.MoveRoomTool;
+import be.ac.ulb.infof307.g05.tools.RotateRoomTool;
 
 import com.jme3.math.Vector3f;
 
@@ -174,6 +175,10 @@ public class ToolController {
 			else if (command == "Move")
 			{
 				_currentTool = new MoveRoomTool(_currentStage);
+			}
+			else if (command == "Rotate")
+			{
+				_currentTool = new RotateRoomTool(_currentStage);
 			}
 		}
 	}
