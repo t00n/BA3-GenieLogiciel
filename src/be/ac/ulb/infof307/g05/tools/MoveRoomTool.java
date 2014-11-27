@@ -13,7 +13,12 @@ public class MoveRoomTool extends AbstractStageTool {
 	@Override
 	public void addCollision(String id) {
 		if (this.room == null) {
-			this.room = this.currentStage.getRoomByCollisionId(Integer.parseInt(id));
+			try {
+				this.room = this.currentStage.getRoomByCollisionId(Integer.parseInt(id));
+			}
+			catch (NumberFormatException e) {
+				
+			}
 		}
 		else {
 			this.room = null;

@@ -82,7 +82,7 @@ public class Floor extends Database<Floor> {
 	}
 	
 	public Vector3f getDifference(Vector3f position) {
-		return (((Vertex)this.getVertices().toArray()[0]).toVector3f()).subtract(position);
+		return (((Vertex)this.getVertices().toArray()[0]).toVector3f()).subtract(position).subtract(new Vector3f(.1f,.1f,.1f));
 	}
 	
 	@Override
