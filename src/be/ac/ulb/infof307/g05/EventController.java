@@ -38,7 +38,7 @@ public class EventController implements ActionListener {
 
 	private AbstractTool _currentTool;
 
-	private Vector3f _cursor;
+	private Vector3f _cursor = new Vector3f();
 	
 	/**
 	 * Instantiates a new event controller that take care of all the events,
@@ -182,7 +182,7 @@ public class EventController implements ActionListener {
 	public void actionPerformed(ActionEvent event){
 		/** this method manage events **/
 		String command = event.getActionCommand();
-
+		
 		if(command == "2D view"){
 			_flag2D = true;
 			_flag3D = false;
@@ -210,9 +210,6 @@ public class EventController implements ActionListener {
 		}
 		else if (command == "Rotate"){
 			_currentTool = new RotateRoomTool(_currentStage);
-		}
-		else if (command == "cursor_move"){
-			this._cursor = new Vector3f((Vector3f)event.getSource());
 		}
 		if (_currentTool != null) {
 			if(command == "cursor_move"){

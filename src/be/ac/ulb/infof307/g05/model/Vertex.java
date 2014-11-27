@@ -26,8 +26,8 @@ public class Vertex extends Database<Vertex> {
 	@DatabaseField (canBeNull = false)
 	public float z;
 	
-	@DatabaseField (canBeNull = true, foreign = true)
-	protected Floor floor;
+	@DatabaseField (canBeNull = false, foreign = true)
+	protected CompositeObject object;
 	
 	/**
 	 * Instantiates a new vertex.
@@ -47,12 +47,12 @@ public class Vertex extends Database<Vertex> {
 		this.init(null, vec);
 	}
 	
-	public Vertex(Floor floor, Vector3f vec) {
-		this.init(floor, vec);
+	public Vertex(CompositeObject object, Vector3f vec) {
+		this.init(object, vec);
 	}
 	
-	private void init(Floor floor, Vector3f vec) {
-		this.floor = floor;
+	private void init(CompositeObject object, Vector3f vec) {
+		this.object = object;
 		this.x = vec.getX();
 		this.y = vec.getY();
 		this.z = vec.getZ();

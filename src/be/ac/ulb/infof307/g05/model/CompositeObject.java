@@ -6,6 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import com.jme3.math.Vector3f;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.lang.Math;
@@ -17,48 +18,58 @@ import java.lang.Math;
 public class CompositeObject extends Database<CompositeObject> implements Iterable<CompositeObject> {	
 	
 	@DatabaseField (id=true)
-	protected Integer id_compositeObject;
+	protected int id_compositeObject;
+	
+	@DatabaseField (unique = true)
+	protected String name;
+	
+	@DatabaseField (canBeNull = true, foreign = true)
+	protected Resource texture;
+	
+	@DatabaseField (canBeNull = true, foreign = true)
+	protected Resource mesh;
 	
 	@DatabaseField (canBeNull = true, foreign = true)
 	protected CompositeObject parent;
 	
 	@DatabaseField (canBeNull = true, foreign = true)
-	protected Room room;
-	
-	@DatabaseField (canBeNull = true, foreign = true)
-	protected Resource texture;
-	
-	@DatabaseField (canBeNull = false, foreign = true)
-	protected Resource mesh;
-	
-	@DatabaseField (canBeNull = false, foreign = true)
-	protected Vertex position;
+	protected Stage stage;
 
 	protected Collection<CompositeObject> childs;
+	
+	protected Collection<Vertex> vertices;
 	
 	protected CompositeObject() {
 		
 	}
     
+	public CompositeObject(Collection<Vector3f> vertices) {
+		this.init(null, null, vertices, null, null);
+	}
+	
+	public CompositeObject(Stage stage, Collection<Vector3f> vertices) {
+		this.init(null, stage, vertices, null, null);
+	}
+	
+	public CompositeObject(CompositeObject parent, Collection<Vector3f> vertices) {
+		this.init(parent, null, vertices, null, null);
+	}
+	
 	public CompositeObject(CompositeObject parent, Resource mesh) {
-		this.init(parent, null, mesh, null);
+		this.init(parent, null, null, mesh, null);
 	}
 	
 	public CompositeObject(CompositeObject parent, Resource mesh, Resource texture) {
-		this.init(parent, null, mesh, texture);
+		this.init(parent, null, null, mesh, texture);
 	}
 	
-	public CompositeObject(Room room, Resource mesh) {
-		this.init(null, room, mesh, null);
-	}
-	
-	public CompositeObject(Room room, Resource mesh, Resource texture) {
-		this.init(null, room, mesh, texture);
-	}
-	
-	private void init(CompositeObject parent, Room room, Resource mesh, Resource texture) {
+	private void init(CompositeObject parent, Stage stage, Collection<Vector3f> vertices, Resource mesh, Resource texture) {
 		this.parent = parent;
-		this.room = room;
+		this.stage = stage;
+		this.vertices = new ArrayList<Vertex>();
+		for (Vector3f vec : vertices) {
+			this.vertices.add(new Vertex(this, vec));
+		}
 		this.mesh = mesh;
 		this.texture = texture;
 		this.isNew = true;
@@ -71,6 +82,10 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	public void setId() {
 		this.id_compositeObject = Static_ID.getObjectID();
 	}
+	
+	public String getName() {
+		return this.name;
+	}
 
 	public Resource getTexture() {
 		return this.texture;
@@ -78,6 +93,22 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	
 	public Resource getMesh() {
 		return this.mesh;
+	}
+
+	public CompositeObject getById(int id) {
+		if (this.getId() == id) {
+			return this;
+		}
+		else {
+			for (CompositeObject child : this.getChilds()) {
+				CompositeObject ret = child.getById(id);
+				if (ret != null)
+				{
+					return ret;
+				}
+			}
+		}
+		return null;
 	}
 	
 	public Collection<CompositeObject> getChilds() {
@@ -93,45 +124,58 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return this.childs;
 	}
 	
-	public boolean ownsId(int id) {
-		if (id == this.getId()) {
-			return true;
-		}
-		else {
-			for (CompositeObject child: this.getChilds())
-			{
-				if (child.ownsId(id)) {
-					return true;
-				}
+	public Collection<Vertex> getVertices() {
+		if (this.vertices == null) {
+			Dao<Vertex, Integer> dao = Vertex.getDao(Vertex.class);
+			try {
+				this.vertices = dao.queryForEq("object_id", this.getId());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
-		return false;
+		return this.vertices;
 	}
 
+	public void setVertices(Collection<Vector3f> vectors) {
+		this.vertices = new ArrayList<Vertex>();
+		for (Vector3f vec : vectors) {
+			this.vertices.add(new Vertex(this, vec));
+		}
+		
+	}
 
 	public void moveTo(Vector3f difference) {
-		this.position.x -= difference.x;
-		this.position.y -= difference.y;
-		this.position.z -= difference.z;
+		for (Vertex vertex : this.getVertices()) {
+			vertex.x -= difference.x;
+			vertex.y -= difference.y;
+			vertex.z -= difference.z;
+		}
 	}
 
-	public void rotateAroundY(float angle) {
+	public void rotateAroundY(float range) {
+		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
 		float posX;
 		float posZ;
-		posX = this.position.x;
-		posZ = this.position.z;
-		this.position.x = (float) ((posX*Math.cos(angle)) - (posZ*Math.sin(angle)));
-		this.position.z = (float) ((posZ*Math.cos(angle)) + (posX*Math.sin(angle)));		
+		for (int i = 0; i < (tmp.size()); ++i) {
+			posX = tmp.get(i).x;
+			posZ = tmp.get(i).z;
+			tmp.get(i).x = (float) ((posX*Math.cos(range)) - (posZ*Math.sin(range)));
+			tmp.get(i).z = (float) ((posZ*Math.cos(range)) + (posX*Math.sin(range)));
+		}
 	}
 	
     @Override
     public void save() {
         if (this.texture != null)
             this.texture.save();
-        this.mesh.save();
+        if (this.mesh != null)
+        	this.mesh.save();
         super.save();
         for (CompositeObject object : this.getChilds())
         	object.save();
+        for (Vertex vertex : this.getVertices())
+        	vertex.save();
     }
 	
 	@Override
@@ -141,18 +185,19 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	}
 	
 	public void add(CompositeObject object){
-		childs.add(object);
+		this.getChilds().add(object);
 	}
 
-	public void addChild(CompositeObject parent, CompositeObject child) {
+	public void addChild(CompositeObject parent, Collection<Vector3f> vectors) {
 		if (parent == this) {
+			CompositeObject child = new CompositeObject(parent, vectors);
 			this.add(child);
 			child.setId();
 		}
 		else
 		{
 			for (CompositeObject c: this) {
-				c.addChild(parent, child);
+				c.addChild(parent, vectors);
 			}
 		}
 	}
@@ -160,10 +205,10 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	public boolean remove(CompositeObject object){
 		boolean isFound = false;
 
-		if(childs.contains(object)){
-			childs.remove(object);
+		if(this.getChilds().contains(object)){
+			this.getChilds().remove(object);
 		}else{
-			for(CompositeObject child:this.childs){
+			for(CompositeObject child:this.getChilds()){
 				if(!isFound)
 					isFound = child.remove(object);
 			}
@@ -172,6 +217,6 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	}
 	
 	public int size(){
-		return childs.size();
+		return this.getChilds().size();
 	}
 }

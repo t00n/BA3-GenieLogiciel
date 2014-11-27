@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import com.jme3.math.Vector3f;
 
-import be.ac.ulb.infof307.g05.model.Room;
+import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.Stage;
 
 public class DrawRoomTool extends AbstractStageTool {
@@ -13,16 +13,26 @@ public class DrawRoomTool extends AbstractStageTool {
 		super(stage);
 	}
 	
+	protected Collection<Vector3f> buildRoom(Vector3f cursor) {
+		Collection<Vector3f> tmp = new ArrayList<Vector3f>();
+		for (Vector3f vec : this.mouseClicks) {
+			tmp.add(vec.clone());
+		}
+		if (cursor != null)
+			tmp.add(cursor.clone());
+		for (Vector3f vec : this.mouseClicks) {
+			tmp.add(new Vector3f(vec).add(new Vector3f(0,.1f,0)));
+		}
+		if (cursor != null)
+			tmp.add(new Vector3f(cursor).add(new Vector3f(0,.1f,0)));
+		return tmp;
+	}
+	
 	@Override
 	public void addPosition(Vector3f cursor) {
 		super.addPosition(cursor);
 		if (this.mouseClicks.size() >= 2) {
-			Collection<Vector3f> tmp = new ArrayList<Vector3f>();
-			for (Vector3f vec : this.mouseClicks) {
-				tmp.add(vec.clone());
-			}
-			tmp.add(cursor.clone());
-			this.room.getFloor().setVertices(tmp);
+			this.currentObject.setVertices(this.buildRoom(cursor));
 		}
 	}
 	
@@ -30,18 +40,18 @@ public class DrawRoomTool extends AbstractStageTool {
 	public void addClick(Vector3f click) {
 		super.addClick(click);
 		if (this.mouseClicks.size() == 2) {
-			this.room = new Room(null, "auto", this.mouseClicks);
-			this.currentStage.getRooms().add(room);
+			this.currentObject = new CompositeObject(this.currentStage, this.buildRoom(click));
+			this.currentStage.getCompositeObjects().add(this.currentObject);
 		}
 		if (this.mouseClicks.size() >= 3) {
-			this.room.getFloor().setVertices(this.mouseClicks);
+			this.currentObject.setVertices(this.buildRoom(click));
 		}
 	}
 	
 	@Override
 	public void use() {
 		if (this.mouseClicks.size() >= 3) {
-			this.currentStage.addRoom(room.getName(), this.mouseClicks);
+			this.currentStage.addCompositeObject(this.buildRoom(null));
 			this.purge();
 		}
 	}
@@ -49,7 +59,7 @@ public class DrawRoomTool extends AbstractStageTool {
 	@Override 
 	public void purge() {
 		super.purge();
-		this.currentStage.getRooms().remove(room);
+		this.currentStage.getCompositeObjects().remove(currentObject);
 	}
 
 }

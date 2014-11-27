@@ -12,24 +12,24 @@ public class MoveRoomTool extends AbstractStageTool {
 	
 	@Override
 	public void addCollision(String id) {
-		if (this.room == null) {
+		if (this.currentObject == null) {
 			try {
-				this.room = this.currentStage.getRoomByCollisionId(Integer.parseInt(id));
+				this.currentObject = this.currentStage.getById(Integer.parseInt(id));
 			}
 			catch (NumberFormatException e) {
 				
 			}
 		}
 		else {
-			this.room = null;
+			this.currentObject = null;
 			this.purge();
 		}
 	}
 	
 	@Override
 	public void addPosition(Vector3f position) {
-		if (this.room != null) {
-			this.room.moveTo(position);
+		if (this.currentObject != null) {
+			this.currentObject.moveTo(position);
 		}
 	}
 	

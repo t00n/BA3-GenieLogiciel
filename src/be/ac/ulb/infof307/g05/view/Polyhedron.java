@@ -1,27 +1,23 @@
 package be.ac.ulb.infof307.g05.view;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.jme3.math.Vector3f;
 
 public class Polyhedron {
-	ArrayList<Vector3f> downSide;
-	ArrayList<Vector3f> upSide;
+	List<Vector3f> downSide;
+	List<Vector3f> upSide;
 	ArrayList<ArrayList<Vector3f>> sides;
 	
 	Vector3f[] vectors;
 	int[] meshOrder;
 	
-	public Polyhedron(ArrayList<Vector3f> vectors, float height) {
+	public Polyhedron(ArrayList<Vector3f> vectors) {
 		// create all polygons
-		this.downSide = vectors;
-		this.upSide = new ArrayList<Vector3f>();
+		this.downSide = vectors.subList(0, (vectors.size()/2)-1);
+		this.upSide = vectors.subList(vectors.size()/2, vectors.size()-1);
 		this.sides = new ArrayList<ArrayList<Vector3f>>();
-		for (Vector3f vector : vectors) {
-			Vector3f vec = new Vector3f(vector);
-			vec.y += height;
-			this.upSide.add(vec);
-		}
 		for (int i = 0; i < this.downSide.size(); ++i) {
 			this.sides.add(new ArrayList<Vector3f>());
 			this.sides.get(i).add(this.downSide.get(i));
@@ -30,12 +26,9 @@ public class Polyhedron {
 			this.sides.get(i).add(this.upSide.get(i));
 		}
 		// copy in Vector3f[]
-		this.vectors = new Vector3f[this.downSide.size()*2];
+		this.vectors = new Vector3f[vectors.size()];
 		int index = 0;
-		for (Vector3f vector : this.downSide) {
-			this.vectors[index++] = vector;
-		}
-		for (Vector3f vector : this.upSide) {
+		for (Vector3f vector : vectors) {
 			this.vectors[index++] = vector;
 		}
 		// build mesh order

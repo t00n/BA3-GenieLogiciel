@@ -39,37 +39,36 @@ public class Stage extends Database<Stage> {
 	
 	public int getId() { return this.id_stage; }
 	
-	public Room getRoomByCollisionId(int id) {
-		for (Room room : this.getRooms()) {
-			if (room.ownsId(id)){
-				return room;
+	public CompositeObject getById(int id) {
+		for (CompositeObject object : this.getCompositeObjects()) {
+			CompositeObject ret = object.getById(id);
+			if (ret != null) {
+				return ret;
 			}
 		}
 		return null;
 	}
 	
-	public Collection<Room> getRooms() {
-		if (this.rooms == null) {
-			Dao<Room, Integer> dao = Room.getDao(Room.class);
+	public Collection<CompositeObject> getCompositeObjects() {
+		if (this.compositeObjects == null) {
+			Dao<CompositeObject, Integer> dao = CompositeObject.getDao(CompositeObject.class);
 			try {
-				this.rooms = dao.queryForEq("stage_id", this.getId());
+				this.compositeObjects = dao.queryForEq("stage_id", this.getId());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return this.rooms;
+		return this.compositeObjects;
 	}
 	
-	public Room getRoom(String name) {
-		for (Room room : this.getRooms()) {
-			if (room.getName() == name)
-				return room;
+	public void addCompositeObject(Collection<Vector3f> vectors) {
+		this.getCompositeObjects().add(new CompositeObject(this, vectors));
+	}
+	
+	public void addCompositeObject(CompositeObject parent, Collection<Vector3f> vectors) {
+		for (CompositeObject object : this.getCompositeObjects()) {
+			object.addChild(parent, vectors);
 		}
-		return null;
-	}
-	
-	public void addRoom(String name, Collection<Vector3f> vertices){
-		this.getRooms().add(new Room(this, name, vertices));
 	}
 
     /* (non-Javadoc)
@@ -78,8 +77,8 @@ public class Stage extends Database<Stage> {
     @Override
     public void save() {
         super.save();
-        for (Room room : this.getRooms()) {
-        	room.save();
+        for (CompositeObject object : this.getCompositeObjects()) {
+        	object.save();
         }
     }
 	
@@ -95,5 +94,5 @@ public class Stage extends Database<Stage> {
 	@DatabaseField (canBeNull = false, foreign = true)
 	protected Project project;
 	
-	protected Collection<Room> rooms;
+	protected Collection<CompositeObject> compositeObjects;
 }

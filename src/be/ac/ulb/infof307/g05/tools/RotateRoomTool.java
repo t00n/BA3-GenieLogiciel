@@ -12,16 +12,16 @@ public class RotateRoomTool extends AbstractStageTool {
 
 	@Override
 	public void addCollision(String id) {
-		if (this.room == null) {
+		if (this.currentObject == null) {
 			try {
-				this.room = this.currentStage.getRoomByCollisionId(Integer.parseInt(id));
+				this.currentObject = this.currentStage.getById(Integer.parseInt(id));
 			}
 			catch (NumberFormatException e) {
 				
 			}
 		}
 		else {
-			this.room = null;
+			this.currentObject = null;
 			this.purge();
 		}
 	}
@@ -29,9 +29,9 @@ public class RotateRoomTool extends AbstractStageTool {
 	@Override
 	public void addPosition(Vector3f position) {
 		super.addPosition(position);
-		if (this.room != null && this.mousePositions.size() >= 2) {
+		if (this.currentObject != null && this.mousePositions.size() >= 2) {
 			float angle = this.mousePositions.get(this.mousePositions.size()-1).x - this.mousePositions.get(this.mousePositions.size()-2).x;
-			this.room.rotate(angle);
+			this.currentObject.rotateAroundY(angle);
 		}
 	}
 	
