@@ -223,8 +223,9 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		return childs.size();
 	}
 
-	public void moveTo(Vector3f position2) {
-		// TODO Auto-generated method stub
-		
+	public void moveTo(Vector3f difference) {
+		this.position.x += difference.x;
+		this.position.y += difference.y;
+		this.position.z += difference.z;
 	}
 }
