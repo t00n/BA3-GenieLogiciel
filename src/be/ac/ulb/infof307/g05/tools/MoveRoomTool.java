@@ -29,7 +29,7 @@ public class MoveRoomTool extends AbstractStageTool {
 	@Override
 	public void addPosition(Vector3f position) {
 		if (this.currentObject != null) {
-			this.currentObject.moveTo(position);
+			this.currentObject.moveTo(this.currentObject.getDifference((position)));
 		}
 	}
 	

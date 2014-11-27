@@ -144,6 +144,10 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		}
 		
 	}
+	
+	public Vector3f getDifference(Vector3f position) {
+		return ((Vertex)this.getVertices().toArray()[0]).toVector3f().subtract(position);
+	}
 
 	public void moveTo(Vector3f difference) {
 		for (Vertex vertex : this.getVertices()) {
