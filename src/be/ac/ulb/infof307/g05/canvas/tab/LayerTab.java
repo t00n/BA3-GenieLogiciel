@@ -14,6 +14,7 @@ import be.ac.ulb.infof307.g05.model.CompositeObject;
  */
 public class LayerTab extends AbstractTab {
 		
+	private int _childObjectsNumber = 0;
 	/**
 	 * Contains the object's tree.
 	 */
@@ -41,8 +42,8 @@ public class LayerTab extends AbstractTab {
 				}
 				root.add(currentStage);
 			}
+			_childObjectsNumber = root.getChildCount();
 		}
-		System.out.println(root.getChildCount());
 		return new JTree(root);
 	}
 	
@@ -62,10 +63,14 @@ public class LayerTab extends AbstractTab {
 		return _name;
 	}
 	
-	public void update() { // TODO trop d'updates
-		this.remove(m_objects);
-		this.m_objects = makeTree();
-		this.add(m_objects);
-		//this.m_objects.repaint();
+	public void update() { // TODO trop d'updates <- améilloré.. mais le code est un peu dégueulasse a refaire.
+		int currentChilds = this._childObjectsNumber;
+		JTree objects = makeTree(); // will modify _childObjectsNumber
+		
+		if (currentChilds != this._childObjectsNumber) {
+			this.remove(m_objects);
+			this.m_objects = objects;
+			this.add(m_objects);
+		}
 	}
 }
