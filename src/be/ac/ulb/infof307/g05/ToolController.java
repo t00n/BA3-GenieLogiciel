@@ -145,7 +145,20 @@ public class ToolController {
 	public void actionPerformed(ActionEvent event){
 		String command = event.getActionCommand();
 
-		if (_currentTool != null) {
+
+		if (command == "Draw")
+		{
+			_currentTool = new DrawRoomTool(_currentStage);
+		}
+		else if (command == "Move")
+		{
+			_currentTool = new MoveRoomTool(_currentStage);
+		}
+		else if (command == "Rotate")
+		{
+			_currentTool = new RotateRoomTool(_currentStage);
+		}
+		else if (_currentTool != null) {
 			if(command == "cursor_move"){
 				_currentTool.addPosition((Vector3f) event.getSource());
 			}
@@ -163,22 +176,6 @@ public class ToolController {
 			}
 			else if (command == "ESCAPE") {
 				_currentTool.purge();
-			}
-			else {
-				_currentTool = null;
-			}
-		}else if(_currentTool == null && command != "comboBoxChanged"){
-			if (command == "Draw")
-			{
-				_currentTool = new DrawRoomTool(_currentStage);
-			}
-			else if (command == "Move")
-			{
-				_currentTool = new MoveRoomTool(_currentStage);
-			}
-			else if (command == "Rotate")
-			{
-				_currentTool = new RotateRoomTool(_currentStage);
 			}
 		}
 	}
