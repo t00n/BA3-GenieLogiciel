@@ -63,13 +63,13 @@ public class Floor extends Database<Floor> {
 
 	public void moveTo(Vector3f difference) {
 		for (Vertex vertex : this.getVertices()) {
-			vertex.x += difference.x;
-			vertex.y += difference.y;
-			vertex.z += difference.z;
+			vertex.x -= difference.x;
+			vertex.y -= difference.y;
+			vertex.z -= difference.z;
 		}
 	}
 
-	public void rotate(float range) {
+	public void rotateAroundY(float range) {
 		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
 		float posX;
 		float posZ;
@@ -82,7 +82,7 @@ public class Floor extends Database<Floor> {
 	}
 	
 	public Vector3f getDifference(Vector3f position) {
-		return position.subtract(((Vertex)this.getVertices().toArray()[0]).toVector3f());
+		return (((Vertex)this.getVertices().toArray()[0]).toVector3f()).subtract(position);
 	}
 	
 	@Override

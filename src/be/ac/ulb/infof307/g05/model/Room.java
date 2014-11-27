@@ -90,7 +90,16 @@ public class Room extends Database<Room> {
 	}
 	
 	public void rotate(float angle) {
-		this.getFloor().rotate(angle);
+		Vector3f currentPos = this.getFloor().getDifference(new Vector3f(0,0,0));
+		this.moveTo(new Vector3f(0,0,0));
+		this.getFloor().rotateAroundY(angle);
+		for (Wall wall : this.getWalls()) {
+			wall.rotateAroundY(angle);
+		}
+		for (CompositeObject object : this.getCompositeObjects()) {
+			object.rotateAroundY(angle);
+		}
+		this.moveTo(currentPos);
 	}
 	
 	@Override

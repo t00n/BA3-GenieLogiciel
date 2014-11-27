@@ -107,42 +107,22 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 		}
 		return false;
 	}
-	
-//	public void rotateAroundZ(float range) {
-//		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
-//		float posX;
-//		float posY;
-//		for (int i = 0; i < (tmp.size()); ++i) {
-//			posX = tmp.get(i).x;
-//			posY = tmp.get(i).y;
-//			tmp.get(i).x = (float) ((posX*Math.cos(range)) - (posY*Math.sin(range)));
-//			tmp.get(i).y = (float) ((posY*Math.cos(range)) + (posX*Math.sin(range)));
-//		}
-//	}
-//
-//	public void rotateAroundY(float range) {
-//		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
-//		float posX;
-//		float posZ;
-//		for (int i = 0; i < (tmp.size()); ++i) {
-//			posX = tmp.get(i).x;
-//			posZ = tmp.get(i).z;
-//			tmp.get(i).x = (float) ((posX*Math.cos(range)) - (posZ*Math.sin(range)));
-//			tmp.get(i).z = (float) ((posZ*Math.cos(range)) + (posX*Math.sin(range)));
-//		}
-//	}
-//	
-//	public void rotateAroundX(float range) {
-//		ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.getVertices();
-//		float posY;
-//		float posZ;
-//		for (int i = 0; i < (tmp.size()); ++i) {
-//			posY = tmp.get(i).y;
-//			posZ = tmp.get(i).z;
-//			tmp.get(i).y = (float) ((posY*Math.cos(range)) - (posZ*Math.sin(range)));
-//			tmp.get(i).z = (float) ((posZ*Math.cos(range)) + (posY*Math.sin(range)));
-//		}
-//	}
+
+
+	public void moveTo(Vector3f difference) {
+		this.position.x -= difference.x;
+		this.position.y -= difference.y;
+		this.position.z -= difference.z;
+	}
+
+	public void rotateAroundY(float angle) {
+		float posX;
+		float posZ;
+		posX = this.position.x;
+		posZ = this.position.z;
+		this.position.x = (float) ((posX*Math.cos(angle)) - (posZ*Math.sin(angle)));
+		this.position.z = (float) ((posZ*Math.cos(angle)) + (posX*Math.sin(angle)));		
+	}
 	
     @Override
     public void save() {
@@ -193,11 +173,5 @@ public class CompositeObject extends Database<CompositeObject> implements Iterab
 	
 	public int size(){
 		return childs.size();
-	}
-
-	public void moveTo(Vector3f difference) {
-		this.position.x += difference.x;
-		this.position.y += difference.y;
-		this.position.z += difference.z;
 	}
 }

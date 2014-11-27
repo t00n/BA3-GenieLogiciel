@@ -1,5 +1,7 @@
 package be.ac.ulb.infof307.g05.model;
 
+import java.util.ArrayList;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jme3.math.Vector3f;
@@ -67,13 +69,26 @@ public class Wall extends Database<Wall> {
 		super.save();
 	}
 
-	public void moveTo(Vector3f position) {
-		this.beginning.x += position.x;
-		this.beginning.y += position.y;
-		this.beginning.z += position.z;
-		this.end.x += position.x;
-		this.end.y += position.y;
-		this.end.z += position.z;
+	public void moveTo(Vector3f difference) {
+		this.beginning.x -= difference.x;
+		this.beginning.y -= difference.y;
+		this.beginning.z -= difference.z;
+		this.end.x -= difference.x;
+		this.end.y -= difference.y;
+		this.end.z -= difference.z;
+	}
+	
+	public void rotateAroundY(float angle) {
+		float posX;
+		float posZ;
+		posX = this.beginning.x;
+		posZ = this.beginning.z;
+		this.beginning.x = (float) ((posX*Math.cos(angle)) - (posZ*Math.sin(angle)));
+		this.beginning.z = (float) ((posZ*Math.cos(angle)) + (posX*Math.sin(angle)));
+		posX = this.end.x;
+		posZ = this.end.z;
+		this.end.x = (float) ((posX*Math.cos(angle)) - (posZ*Math.sin(angle)));
+		this.end.z = (float) ((posZ*Math.cos(angle)) + (posX*Math.sin(angle)));
 	}
 	
 }

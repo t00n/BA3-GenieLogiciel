@@ -158,7 +158,7 @@ public class ToolController {
 		{
 			_currentTool = new RotateRoomTool(_currentStage);
 		}
-		else if (_currentTool != null) {
+		if (_currentTool != null) {
 			if(command == "cursor_move"){
 				_currentTool.addPosition((Vector3f) event.getSource());
 			}
