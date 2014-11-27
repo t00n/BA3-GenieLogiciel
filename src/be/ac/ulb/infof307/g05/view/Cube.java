@@ -19,8 +19,24 @@ public class Cube {
 	/** The _orders. */
 	private Collection<Integer> _orders = new Vector<Integer>();
 	
-	public Collection<Vector3f> getVertices() { return _vertexes; }
-	public Collection<Integer> getOrder() { return _orders; }
+	public Vector3f[] getVertices() {
+		Vector3f[] ret = new Vector3f[this._vertexes.size()];
+		int i = 0;
+		for (Vector3f vec : this._vertexes) {
+			ret[i] = vec;
+			++i;
+		}
+		return ret;
+	}
+	public int[] getOrder() {
+		int[] ret = new int[this._orders.size()];
+		int i = 0;
+		for (Integer order : this._orders) {
+			ret[i] = order;
+			++i;
+		}
+		return ret;
+	}
 	
 	/**
 	 * Instantiates a new cube.

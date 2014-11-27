@@ -3,13 +3,15 @@ package be.ac.ulb.infof307.g05;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import be.ac.ulb.infof307.g05.AutoSaveThread;
-import be.ac.ulb.infof307.g05.ToolController;
-import be.ac.ulb.infof307.g05.model.CompositeObject;
 import be.ac.ulb.infof307.g05.model.Project;
+import be.ac.ulb.infof307.g05.model.Stage;
+import be.ac.ulb.infof307.g05.tools.AbstractTool;
+import be.ac.ulb.infof307.g05.tools.DrawRoomTool;
+import be.ac.ulb.infof307.g05.tools.MoveRoomTool;
+import be.ac.ulb.infof307.g05.tools.RotateRoomTool;
 import be.ac.ulb.infof307.g05.view.MainWindow;
 import be.ac.ulb.infof307.g05.view.ProjectStruct;
 
@@ -27,14 +29,16 @@ public class EventController implements ActionListener {
 	private boolean  _flag3D = true;
 	private boolean  _toolIsActivated = false;
 	
-	private ToolController   _toolController;
 	private Project		 _currentProject;
+	private Stage 	_currentStage;
 	private Dao<Project, Integer> _daoProject = Project.getDao(Project.class);
 	private List<Project> _projects;
 	
 	private AutoSaveThread _saveThread;
-	
-	public ToolController getToolController() { return _toolController; }
+
+	private AbstractTool _currentTool;
+
+	private Vector3f _cursor = new Vector3f();
 	
 	/**
 	 * Instantiates a new event controller that take care of all the events,
@@ -47,9 +51,7 @@ public class EventController implements ActionListener {
 		_window = window;
 		//FIXME use _window.popUpLoad()
 
-		_toolController = new ToolController(this);
 		this.loadProject();
-		this._toolController.setStage(_currentProject.getStage(0));
 	}
 	
 	public Project getProject() { return _currentProject; }
@@ -70,26 +72,13 @@ public class EventController implements ActionListener {
 		_toolIsActivated = toolIsActivated;
 	}
 	
-	public Vector3f getCursor(){
-		return _toolController.getCursor();
-	}
-	
-	public CompositeObject getStage(){
+	public Stage getStage(){
 		/** this method return the root node of the scene built by toolController **/
-		return _toolController.getFloor();
+		return _currentStage;
 	}
 	
-	/**
-	 * Adds the tool to the ToolController.
-	 *
-	 * @param tool_name the tool_name
-	 */
-	public void addTool(String tool_name) {
-		_toolController.addTool(tool_name);
-	}
-	
-	public String getEnableTool(){
-		return _toolController.getEnabledTool();
+	public Vector3f getCursor() {
+		return _cursor;
 	}
 	
 	/**
@@ -109,13 +98,7 @@ public class EventController implements ActionListener {
 	public void loadProject() {
 		try {
 			_projects = _daoProject.queryForAll();
-			ArrayList<Project> currentProjects = (ArrayList<Project>) _daoProject.queryForEq("current", true);
-			if (currentProjects.size() == 1)
-			{
-				_currentProject = currentProjects.get(0);
-				this.launchSaveThread();
-			}
-			else if (_projects.size() == 0) {
+			if (_projects.size() == 0) {
 				this.newProject();
 			}
 			else {
@@ -167,7 +150,7 @@ public class EventController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this._toolController.setStage(_currentProject.getStage(0));
+		this._currentStage = _currentProject.getStage(0);
 		this.launchSaveThread();
 	}
 	
@@ -188,7 +171,7 @@ public class EventController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this._toolController.setStage(_currentProject.getStage(0));
+		this._currentStage = _currentProject.getStage(0);
 		this.launchSaveThread();
 	}
 	
@@ -217,9 +200,36 @@ public class EventController implements ActionListener {
 		}else if(command == "Save"){
 			_currentProject.save();
 		}else if(command == "Quit"){
-			_window.dispose();
-		}else {
-			_toolController.actionPerformed(event);
+			_saveThread.interrupt();
+			_window.quit();
+		}else if (command == "Draw"){
+			_currentTool = new DrawRoomTool(_currentStage);
+		}
+		else if (command == "Move"){
+			_currentTool = new MoveRoomTool(_currentStage);
+		}
+		else if (command == "Rotate"){
+			_currentTool = new RotateRoomTool(_currentStage);
+		}
+		if (_currentTool != null) {
+			if(command == "cursor_move"){
+				_currentTool.addPosition((Vector3f) event.getSource());
+			}
+			else if (command == "COLLISION") {
+				_currentTool.addCollision((String) event.getSource());
+			}
+			else if (command == "CURSOR_CLICK_DOWN") {
+				_currentTool.addClick((Vector3f) event.getSource());
+			}
+			else if (command == "comboBoxChanged") {
+				// FIXME
+			}
+			else if (command == "ENTER") {
+				_currentTool.use();
+			}
+			else if (command == "ESCAPE") {
+				_currentTool.purge();
+			}
 		}
 		
 		_window.update();

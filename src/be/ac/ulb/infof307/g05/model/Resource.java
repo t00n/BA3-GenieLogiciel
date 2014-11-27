@@ -4,25 +4,25 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
- * The Class Texture.
+ * The Class Resource.
  */
-@DatabaseTable (tableName = "textures")
-public class Texture extends Database<Texture> {
+@DatabaseTable (tableName = "resources")
+public class Resource extends Database<Resource> {
 	
 	/**
-	 * Instantiates a new texture.
+	 * Instantiates a new Resource.
 	 */
-	protected Texture() {
+	protected Resource() {
 		
 	}
 	
 	/**
-	 * Instantiates a new texture.
+	 * Instantiates a new Resource.
 	 *
 	 * @param name the name
 	 * @param fileLocation the file location
 	 */
-	public Texture(String name, String fileLocation) {
+	public Resource(String name, String fileLocation) {
 		this.name = name;
 		this.fileLocation = fileLocation;
 		this.isNew = true;
