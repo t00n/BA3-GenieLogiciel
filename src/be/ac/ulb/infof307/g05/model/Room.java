@@ -74,8 +74,8 @@ public class Room extends Database<Room> {
 		return this.walls;
 	}
 	
-	public void addWall(Collection<Vector3f> vectors) {
-		this.getWalls().add(new Wall(this, vectors));
+	public void addWall(Vector3f beg, Vector3f end) {
+		this.getWalls().add(new Wall(this, beg, end));
 	}
 	
 	public void moveTo(Vector3f position) {

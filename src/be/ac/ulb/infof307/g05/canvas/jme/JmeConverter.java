@@ -103,9 +103,8 @@ public class JmeConverter {
 	private Geometry toGeometry(Wall wall, AssetManager assetManager) {
 		ArrayList<Vector3f> tmp = new ArrayList<Vector3f>();
 		// down side
-		for (Vertex vertex : wall.getVertices()) {
-			tmp.add(vertex.toVector3f());
-		}
+		tmp.add(wall.getBeginning().toVector3f());
+		tmp.add(wall.getEnd().toVector3f());
 		// FIXME round() or something ?
 		if (tmp.get(0).x == tmp.get(1).x) {
 			tmp.get(0).x += wall.getWidth()/2;

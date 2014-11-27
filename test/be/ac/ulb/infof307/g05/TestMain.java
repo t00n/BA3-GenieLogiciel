@@ -43,26 +43,11 @@ public class TestMain {
         vectors.add(new Vector3f(0,0,2));
         
         stage.addRoom(name, vectors);
-        Collection<Vector3f> wall1 = new ArrayList<Vector3f>();
-        wall1.add(new Vector3f(0,0,0));
-        wall1.add(new Vector3f(2,0,0));
-        Collection<Vector3f> wall2 = new ArrayList<Vector3f>();
-        wall2.add(new Vector3f(2,0,0));
-        wall2.add(new Vector3f(3,0,1));
-        Collection<Vector3f> wall3 = new ArrayList<Vector3f>();
-        wall3.add(new Vector3f(3,0,1));
-        wall3.add(new Vector3f(2,0,2));
-        Collection<Vector3f> wall4 = new ArrayList<Vector3f>();
-        wall4.add(new Vector3f(2,0,2));
-        wall4.add(new Vector3f(0,0,2));
-        Collection<Vector3f> wall5 = new ArrayList<Vector3f>();
-        wall5.add(new Vector3f(0,0,2));
-        wall5.add(new Vector3f(0,0,0));
-        stage.getRoom(name).addWall(wall1);
-        stage.getRoom(name).addWall(wall2);
-        stage.getRoom(name).addWall(wall3);
-        stage.getRoom(name).addWall(wall4);
-        stage.getRoom(name).addWall(wall5);
+        stage.getRoom(name).addWall(new Vector3f(0,0,0), new Vector3f(2,0,0));
+        stage.getRoom(name).addWall(new Vector3f(2,0,0), new Vector3f(3,0,1));
+        stage.getRoom(name).addWall(new Vector3f(3,0,1), new Vector3f(2,0,2));
+        stage.getRoom(name).addWall(new Vector3f(2,0,2), new Vector3f(0,0,2));
+        stage.getRoom(name).addWall(new Vector3f(0,0,2), new Vector3f(0,0,0));
         
         project.save();
 	}

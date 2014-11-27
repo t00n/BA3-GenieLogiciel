@@ -29,9 +29,6 @@ public class Vertex extends Database<Vertex> {
 	@DatabaseField (canBeNull = true, foreign = true)
 	protected Floor floor;
 	
-	@DatabaseField (canBeNull = true, foreign = true)
-	protected Wall wall;
-	
 	/**
 	 * Instantiates a new vertex.
 	 */
@@ -46,17 +43,16 @@ public class Vertex extends Database<Vertex> {
 	 * @param vec the vec
 	 */
 	
+	public Vertex(Vector3f vec) {
+		this.init(null, vec);
+	}
+	
 	public Vertex(Floor floor, Vector3f vec) {
-		this.init(floor, null, vec);
+		this.init(floor, vec);
 	}
 	
-	public Vertex(Wall wall, Vector3f vec) {
-		this.init(null, wall, vec);
-	}
-	
-	private void init(Floor floor, Wall wall, Vector3f vec) {
+	private void init(Floor floor, Vector3f vec) {
 		this.floor = floor;
-		this.wall = wall;
 		this.x = vec.getX();
 		this.y = vec.getY();
 		this.z = vec.getZ();
