@@ -8,6 +8,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import be.ac.ulb.infof307.g05.EventController;
 import be.ac.ulb.infof307.g05.model.CompositeObject;
+import be.ac.ulb.infof307.g05.model.Stage;
 
 /**
  * The Class LayerTab contains the different layers like the objects in the house and the stages.
@@ -31,38 +32,22 @@ public class LayerTab extends AbstractTab {
 	 */
 	private JTree makeTree() {
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("root");
-		DefaultMutableTreeNode currentStage = null;
-		if (_eventController.getStage() != null) {
-			for (CompositeObject cobj : _eventController.getStage().getCompositeObjects()) {
-				if (cobj.getName() != "caca") {//.contains("Etage")) { // TODO avec les noms
-					currentStage = new DefaultMutableTreeNode(cobj.getName());
+		DefaultMutableTreeNode currentStageNode = null;
+		Stage currentStage = _eventController.getStage();
+		int childsPerStage = 0;
+		if (currentStage != null) {
+			for (Stage stage : _eventController.getProject().getStages()) {
+				currentStageNode = new DefaultMutableTreeNode("Stage " + stage.getLevel());
+				for (CompositeObject cobj : stage.getCompositeObjects()) {
+					currentStageNode.add(new DefaultMutableTreeNode(cobj.getName()));
+					childsPerStage++;
 				}
-				if (currentStage != null) {
-					currentStage.add(new DefaultMutableTreeNode(cobj.getName())); // TODO Add a method to retieve the name
-				}
-				root.add(currentStage);
+				root.add(currentStageNode);
 			}
-			_childObjectsNumber = root.getChildCount();
+			_childObjectsNumber = root.getChildCount() + childsPerStage;
 		}
 		return new JTree(root);
-	}/*
-	private JTree makeTree() {
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("root");
-		DefaultMutableTreeNode currentStage = null;
-		if (_eventController.getStage() != null) {
-			for (CompositeObject cobj : _eventController.getStage().getCompositeObjects()) {
-				if (cobj.getName().contains("Etage")) {
-					currentStage = new DefaultMutableTreeNode(cobj.getName());
-				}
-				if (currentStage != null) {
-					currentStage.add(new DefaultMutableTreeNode(cobj.getName()));
-				}
-				root.add(currentStage);
-			}
-			_childObjectsNumber = root.getChildCount();
-		}
-		return new JTree(root);
-	}*/
+	}
 	
 	/**
 	 * Instantiates a new layer tab.
@@ -96,15 +81,16 @@ public class LayerTab extends AbstractTab {
 	 */
 	private void jTreeActionListener(TreeSelectionEvent tse ) {
 	    String node = tse.getNewLeadSelectionPath().getLastPathComponent().toString();
-	    if (node.contains("Etage")) {
-	    	// TODO changer d'etage
+	    if (node.contains("Stage")) {
+	    	// TODO Refactorer en plus joli..
 	    	/*int uniqueId = (int) System.currentTimeMillis();
 	    	ActionEvent action = new ActionEvent(this, uniqueId, "SelectStageFromTree");
 	    	System.out.println(action.getActionCommand());
 	    	*/
-	    	_eventController.setStageByName(node); /*
+	    	String[] parts = node.split(" ");
+	    	_eventController.setStageByName(parts[1]); /*
 	    	_eventController.actionPerformed(action);*/
-	    	System.out.println("Étage sélectionné" + node);
+	    	System.out.println("Étage sélectionné" + parts[1]);
 	    }
 	    else {
 	    	// TODO selectionner l'objet

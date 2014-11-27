@@ -158,7 +158,7 @@ public class EventController implements ActionListener {
 	public void setStageByName(String stageName) {
 		Collection<Stage> stages = _currentProject.getStages();
 		for (Stage stage : stages) {
-			if (stage.toString() == "stageName") {
+			if (stage.getLevel() == Integer.parseInt(stageName)) {
 				this._currentStage = stage;
 			}
 		}
@@ -219,10 +219,11 @@ public class EventController implements ActionListener {
 			_currentTool = new MoveRoomTool(_currentStage);
 		} else if (command == "SelectObjectFromTree"){
 			_currentTool = new MoveRoomTool(_currentStage);
-		} else if (command == "SelectStageFromTree"){
+		} else if (command == "SelectStageFromTree"){ // TODO Useless at the moment
 			_currentTool = new MoveRoomTool(_currentStage);
 		} else if(command == "ADD STAGE"){
 			_currentProject.addStage(_currentProject.getStages().size() + 1);
+			System.out.println("Nombre d'etages : " + _currentProject.getStages().size());
 		}
 		else if (command == "Rotate"){
 			_currentTool = new RotateRoomTool(_currentStage);
