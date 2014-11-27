@@ -24,7 +24,7 @@ public class LayerTab extends AbstractTab {
 	/**
 	 * Contains only the stage's tree.
 	 */
-	private JTree m_stages; // TODO
+	private JTree m_stages; // TODO ajouter les étages
 	
 	/**
 	 * Make an object tree with the current stage childs.
@@ -35,7 +35,7 @@ public class LayerTab extends AbstractTab {
 		DefaultMutableTreeNode currentStage = null;
 		if (_eventController.getStage() != null) {
 			for (CompositeObject cobj : _eventController.getStage().getCompositeObjects()) {
-				if (cobj.getId() != 10000) {//.contains("Etage")) { // TODO avec les noms
+				if (cobj.getId() != 10000) {//.getName().contains("Etage")) { // TODO avec les noms
 					currentStage = new DefaultMutableTreeNode(cobj.getId());
 				}
 				if (currentStage != null) {
